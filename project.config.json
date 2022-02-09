@@ -4,7 +4,7 @@
   "description": "myApp2",
   "appid": "wx92873f5cfd455ae4",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "enhance": true,
     "postcss": false,

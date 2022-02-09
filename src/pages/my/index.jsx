@@ -1,11 +1,26 @@
+import { Component } from 'react'
+import { connect } from 'react-redux'
+import { View, Button, Text } from '@tarojs/components'
 import React from 'react';
 
-function Favorite() {
-  return (
-    <div>
-      Favorite
-    </div>
-  );
-}
+class Index extends Component {
+  componentWillReceiveProps (nextProps) {
+    console.log(this.props, nextProps)
+  }
 
-export default Favorite;
+  componentWillUnmount () { }
+
+  componentDidShow () { }
+
+  componentDidHide () { }
+
+  render () {
+    return (
+      <View className='index'>
+        <View><Text>Hello, World</Text></View>
+      </View>
+    )
+  }
+}
+export default Index
+

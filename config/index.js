@@ -55,6 +55,24 @@ const config = {
     },
     esnextModules: ['taro-ui'],
   },
+  plugins: [
+    // 引入 npm 安装的插件
+    '@tarojs/plugin-mock',
+    // 引入 npm 安装的插件，并传入插件参数
+    [
+      '@tarojs/plugin-mock',
+      {
+        host: 'localhost', //	设置数据 mock 服务地址，默认为 127.0.0.1
+        port: 9999, //设置数据 mock 服务端口，默认为 9527
+        mocks: {
+          '/api/user/list': {
+            name: 'judy',
+            desc: 'Mental guy',
+          },
+        },
+      },
+    ],
+  ],
 };
 
 module.exports = function (merge) {

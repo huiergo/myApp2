@@ -5,6 +5,7 @@ import 'taro-ui/dist/style/index.scss';
 
 import { AtTabs, AtTabsPane ,AtFloatLayout } from 'taro-ui'
 import { connect } from 'react-redux';
+import {getClockIn} from '../../services/request'
 
 const asyncDec=(timeout)=>{
   return dispatch=>{
@@ -33,6 +34,11 @@ const asyncDec=(timeout)=>{
     this.state = {
       current: 0
     }
+  }
+  componentDidMount(){
+    getClockIn().then(res=>{
+      console.log("didmout request...",res)
+    })
   }
 
   handleClick (value) {
@@ -65,6 +71,7 @@ const asyncDec=(timeout)=>{
   ]
     return (
       <View className='index-page'>
+        <button open-type='feedback' type='primary'>意见反馈</button>
         {/* <View onClick={this.props.add}>+</View>
         <View  onClick={this.props.asyncDec}>-</View>
         <View>{this.props.counter.num}</View> */}
