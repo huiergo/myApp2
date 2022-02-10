@@ -6,25 +6,23 @@ import 'taro-ui/dist/style/index.scss';
 import { AtTabs, AtTabsPane ,AtFloatLayout } from 'taro-ui'
 import { connect } from 'react-redux';
 import {getClockIn} from '../../services/request'
+import { add , asyncDec} from '../../actions/counter'
+import {changeMenu} from "../../actions/menu"
+import Question from "../../components/question"
 
-const asyncDec=(timeout)=>{
-  return dispatch=>{
-    setTimeout(() => {
-      dispatch({type:'MINUS'})
-    }, timeout);
-  }
-}
-
-@connect(({counter})=>({counter}),
+@connect((store)=>({...store,tabList:store.menu.menuList}),
 (dispatch)=>({
   add(){
-    dispatch({type:'ADD'})
+    dispatch(add)
   },
   dec(){
     dispatch({type:'MINUS'})
   },
   asyncDec(){
     dispatch(asyncDec(1000))
+  },
+  changeMenu(){
+    dispatch(changeMenu)
   }
 })
 )
@@ -36,6 +34,7 @@ const asyncDec=(timeout)=>{
     }
   }
   componentDidMount(){
+    console.log(this.props)
     getClockIn().then(res=>{
       console.log("didmout request...",res)
     })
@@ -45,6 +44,8 @@ const asyncDec=(timeout)=>{
     this.setState({
       current: value
     })
+    console.log("点击的标签是--",value)
+    changeMenu(value)
   }
 
   handleClose(){
@@ -56,31 +57,19 @@ const asyncDec=(timeout)=>{
 
 
   render () {
-    const tabList = [ 
-    { title: '全部' },
-    { title: 'JavaScript' },
-    { title: 'React' },
-    { title: 'Vue' },
-    { title: '移动端布局' },
-    { title: 'CSS' },
-    { title: 'JavaScript' },
-    { title: 'React' },
-    { title: 'Vue' },
-    { title: '移动端布局' },
-    { title: 'CSS' }
-  ]
     return (
       <View className='index-page'>
-        <button open-type='feedback' type='primary'>意见反馈</button>
+        {/* <button open-type='feedback' type='primary'>意见反馈</button> */}
         {/* <View onClick={this.props.add}>+</View>
         <View  onClick={this.props.asyncDec}>-</View>
         <View>{this.props.counter.num}</View> */}
-      <AtTabs scroll current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)}>
+      <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={this.handleClick.bind(this)}>
         <AtTabsPane current={this.state.current} index={0} >
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >标签页一的内容</View>
+          <Question data={this.props.tabList[0].result} />
+          {/* <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >标签页一的内容</View> */}
         </AtTabsPane>
         <AtTabsPane current={this.state.current} index={1}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
+          <Question data={this.props.tabList[1].result} />
         </AtTabsPane>
         <AtTabsPane current={this.state.current} index={2}>
           <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页三的内容</View>
