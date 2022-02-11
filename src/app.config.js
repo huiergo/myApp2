@@ -1,11 +1,12 @@
 export default defineAppConfig({
-  pages: ['pages/index/index', 'pages/experience/index', 'pages/favorite/index', 'pages/my/index'],
+  pages: ['pages/home/index', 'pages/experience/index', 'pages/favorite/index', 'pages/my/index'],
   tabBar: {
     list: [
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/index/index',
+        // pagePath: 'pages/index/index',
+        pagePath: 'pages/home/index',
         text: '首页',
       },
       {

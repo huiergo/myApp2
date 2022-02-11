@@ -5,9 +5,8 @@ import 'taro-ui/dist/style/index.scss';
 
 import { AtTabs, AtTabsPane ,AtFloatLayout } from 'taro-ui'
 import { connect } from 'react-redux';
-import {getClockIn} from '../../services/request'
 import { add , asyncDec} from '../../actions/counter'
-import {changeMenu} from "../../actions/menu"
+import {changeMenu,getClockIn} from "../../actions/menu"
 import Question from "../../components/question"
 
 @connect((store)=>({...store,tabList:store.menu.menuList}),
@@ -30,7 +29,7 @@ import Question from "../../components/question"
   constructor () {
     super(...arguments)
     this.state = {
-      current: 0
+      current: 0 //current index 的值
     }
   }
   componentDidMount(){
@@ -65,11 +64,11 @@ import Question from "../../components/question"
         <View>{this.props.counter.num}</View> */}
       <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={this.handleClick.bind(this)}>
         <AtTabsPane current={this.state.current} index={0} >
-          <Question data={this.props.tabList[0].result} />
+          <Question data={this.props.tabList[0].tabs.list} />
           {/* <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >标签页一的内容</View> */}
         </AtTabsPane>
         <AtTabsPane current={this.state.current} index={1}>
-          <Question data={this.props.tabList[1].result} />
+          <Question data={this.props.tabList[1].tabs.list} />
         </AtTabsPane>
         <AtTabsPane current={this.state.current} index={2}>
           <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页三的内容</View>

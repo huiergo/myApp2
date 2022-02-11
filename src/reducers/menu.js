@@ -3,26 +3,10 @@ const menuState = {
     {
       type: 'all',
       title: '全部',
-      result: [
-        {
-          title: '全部1',
-        },
-        {
-          title: '全部2',
-        },
-      ],
     },
     {
       type: 'JavaScript',
       title: 'JavaScript',
-      result: [
-        {
-          title: 'JavaScript1',
-        },
-        {
-          title: 'JavaScript2',
-        },
-      ],
     },
     { type: 'React', title: 'React' },
     { type: 'Vue', title: 'Vue' },
