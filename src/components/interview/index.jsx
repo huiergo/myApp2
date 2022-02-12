@@ -1,20 +1,18 @@
-import { Component } from 'react'
-import { connect } from 'react-redux'
-import { View, Button, Text } from '@tarojs/components'
-import React from 'react';
+import React, { Component } from 'react'
+import { View, Text } from '@tarojs/components'
 
 class Index extends Component {
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps)
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
-  render () {
+  render() {
     return (
       <View className='index'>
         <View><Text>面经scroll模板</Text></View>

@@ -1,3 +1,6 @@
+import Taro, { Events } from '@tarojs/taro';
+const eventsInstance = new Events();
+
 const menuState = {
   list: [
     { type: 'all', title: '全部' },
@@ -15,15 +18,19 @@ const menuState = {
 };
 
 export default function home(preState = menuState, action) {
+  console.log('reducer ...', action);
   switch (action.type) {
     case 'changeMenu':
       return {
         ...preState,
         currentIdx: action.currentIdx,
+        currentValue: action.currentValue,
+        events: eventsInstance,
       };
     default:
       return {
         ...preState,
+        events: eventsInstance,
       };
   }
 }

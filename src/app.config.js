@@ -5,7 +5,6 @@ export default defineAppConfig({
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
-        // pagePath: 'pages/index/index',
         pagePath: 'pages/home/index',
         text: '首页',
       },

@@ -1,109 +1,162 @@
-import { Component } from 'react'
-import { connect } from 'react-redux'
-import { View, Button, Text } from '@tarojs/components'
-import React from 'react';
+import React, { Component } from 'react'
+import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro'
 import VirtualList from '@tarojs/components/virtual-list'
-import Taro from '@tarojs/taro';
-import { getInitList, getNextList } from '../../actions/question';
+import { connect } from 'react-redux'
+import { View } from '@tarojs/components'
+import { getInitList, getMoreList } from '../../actions/question'
 
 const Row = React.memo(({ id, index, style, data }) => {
-  console.log("Row 接收到的",data)
+  console.log('[Row...]', data)
   return (
     <View id={id} className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
-      Row {index} : {data[index]}
+      Row {id}={index}+{data[index].title}
     </View>
   );
 })
-@connect((store)=>({...store,current:store.menu.current, }),(dispatch)=>({
-  getInitList(params){
-    dispatch(getInitList(params))
-  },
-  getNextList(params){
-    dispatch(getNextList(params))
-  }
+@connect((store) => ({
+  ...store,
+  currentValue: store.home.currentValue,
+  events: store.home.events,
+  store
 }))
 
- class Index extends Component {
-  state = {
-    data:[]
-   
+class Index extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      list: []
+    }
   }
-  init=false
-  loading=false
-  page=1
 
-  // ===  从外界传入进来的  ====
-  current=1
-  //===  end  ====
+  init = true
+  loading = false
+  page = 1
+  $instance = getCurrentInstance()
 
-//1、 菜单切换的时候，判断（包含初始化和切换）
- async compareType(){
-    if(this.props.type===this.current){
-      if(!this.init){
-        let params={
-          page:1
-        }
-        await getInitList(params)
+  componentWillMount() {
+    console.log('willmount...')
+
+    if (this.init && (this.props.type === this.props.currentValue.type)) {
+      console.log("满足相等...")
+      this.init = false
+      this.initList()
+    }
+    // 监听一个事件，接受参数
+    this.props.events.on('eventName', (currentValue) => {
+      console.log("eventname 回调了。。。", this.props.type, this.props.currentValue.type)
+      if (this.init && (this.props.type === currentValue.type)) {
+        console.log("满足相等...")
+        this.init = false
+        this.initList()
       }
-    }
+    })
+    // const onShowEventId = this.$instance.router.onShow
+    // // 监听
+    // eventCenter.on(onShowEventId, this.onShow)
   }
 
-// 3、下拉刷新（根据currentMenu），数据合成到对一个的index的data上
-// 刷新的时候 多列表数据, 根据 currentMenu 知道应该刷新哪个
- async refreshMulList() {
-  Taro.showLoading()
-  this.loading = true
-    let params={
-      page:1
-    }
-    await getInitList(params)
-    Taro.hideLoading()
-    this.loading=false
+  componentWillUnmount() {
+    const onShowEventId = this.$instance.router.onShow
+    // 卸载
+    eventCenter.off(onShowEventId, this.onShow)
+  }
+
+  onShow = () => {
+    console.log("onshow ...传进来的type和currentValue", this.props.type, this.props.currentValue.type)
+    console.log("当前的store...", this.props.store)
+    // console.log("[this.props.currentValue.type]", this.props.currentValue.type)
+    // if (this.init && (this.props.type === this.props.currentValue.type)) {
+    //   console.log("满足if...")
+    //   this.initList()
+    // }
+    // 监听一个事件，接受参数
+    this.props.events.on('eventName', (currentValue) => {
+      console.log("eventname 回调了。。。", this.props.type, this.props.currentValue.type)
+      if (this.init && (this.props.type === currentValue.type)) {
+        console.log("满足相等...")
+        this.init = false
+        this.initList()
+      }
+    })
   }
 
 
- async listReachBottom(){
+  initList() {
     Taro.showLoading()
     this.loading = true
-    let params={
-      page:1
-    }
-    getNextList(params)
+    setTimeout(() => {
+      let params = {
+        type: this.props.type,
+        questionBankType: 10,
+        page: 1
+      }
+      getInitList(params).then(res => {
+        if (res) {
+          this.setState({
+            list: res
+          })
+        }
+      })
+      this.page = 1;
+    }, 1000);
     Taro.hideLoading()
-    this.loading=false
+    this.loading = false
+  }
+
+  loadMore = () => {
+    Taro.showLoading()
+    this.loading = true
+    this.page = this.page + 1
+    let params = {
+      type: this.props.type,
+      questionBankType: 10,
+      page: this.page
+    }
+    setTimeout(() => {
+
+      getMoreList(params).then(res => {
+        if (res) {
+          this.setState({
+            list: this.state.list.concat(res)
+          })
+        }
+      })
+    }, 1000);
+
+    Taro.hideLoading()
+    this.loading = false
   }
 
   render() {
-    const { data } = this.state
-    // const {data}=this.props
-    const dataLen = data.length
-    const height=400
-    const itemSize=100
+    const { list } = this.state
+    const dataLen = list.length
+    const height = 400
+    const itemSize = 100
     return (
       <VirtualList
         height={height} /* 列表的高度 */
         width='100%' /* 列表的宽度 */
-        itemData={data} /* 渲染列表的数据 */
+        itemData={list} /* 渲染列表的数据 */
         itemCount={dataLen} /*  渲染列表的长度 */
         itemSize={itemSize} /* 列表单项的高度  */
-        onScroll={({scrollDirection, scrollOffset})=>{
-          console.log('scrollOffset',scrollOffset,'固定',(data.length-6)*itemSize)
-            if(!this.loading&&scrollDirection==='forward'&&
-              scrollOffset>((data.length-6)*itemSize)
-            ){
-             console.log('if...')
-              this.listReachBottom()
-            }
-        }}  
-        onScrollToUpper={()=>{
-          console.log('触发顶部了。。。。')
-          this.refreshMulList.bind(this)
+        onScroll={({ scrollDirection, scrollOffset }) => {
+          console.log('scrollOffset', scrollOffset, '固定', (list.length - 6) * itemSize)
+          if (!this.loading && scrollDirection === 'forward' && list.length > 0 &&
+            scrollOffset > ((list.length - 6) * itemSize)
+          ) {
+            // this.loadMore()
+            console.log('[func loadMore]', this.props.type, this.props.currentValue.type)
+          }
+        }}
+        onScrollToUpper={() => {
+          // this.initList()
+          console.log('[func initList]', this.props.type, this.props.currentValue.type)
         }}
       >
-        {Row} 
+        {Row}
       </VirtualList>
-    );
+    )
   }
 }
-
 export default Index
+

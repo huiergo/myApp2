@@ -1,62 +1,61 @@
 import { Component } from 'react'
+import { AtTabs, AtTabsPane } from 'taro-ui'
 import { View, Text } from '@tarojs/components'
-import {connect} from 'react-redux'
-import Panel from '../../components/questionPanel'
-import { AtTabs, AtTabsPane  } from 'taro-ui'
-import {changeMenu} from "../../actions/menu"
+import { connect } from 'react-redux'
+import Question from '../../components/question'
+import { changeMenu } from "../../actions/menu"
 
-@connect((store)=>({...store, tabList:store.home.list, currentIdx:store.home.currentIdx}),(dispatch)=>({
-  changeMenu(){
-    dispatch(changeMenu)
+@connect((store) => ({ ...store, tabList: store.home.list, events: store.home.events }), (dispatch) => ({
+  changeMenu(cata) {
+    dispatch(changeMenu(cata))
   }
 }))
 
-// 请求menu
-// 传递current--可以让组件从store中取值
-// type 类型 给 Question组件
-
 class Index extends Component {
-  constructor () {
+  constructor() {
     super(...arguments)
     this.state = {
       current: 0 //current index 的值
     }
   }
-  componentWillMount () { }
+  componentWillMount() {
+    console.log('[test events...]', this.props.events)
+  }
 
-  componentDidMount () { }
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
-  handleClick (value) {
+  async handleClick(value) {
     this.setState({
       current: value
     })
-    console.log("点击的标签是--",value)
-    changeMenu({
-      currentIdx:value,
-      currentValue:this.props.tabList[value]
+    await changeMenu({
+      currentIdx: value,
+      currentValue: this.props.tabList[value]
     })
+    // 触发事件，传入多个参数
+    this.props.events.trigger('eventName', this.props.tabList[value])
   }
 
-  render () {
+  render() {
     console.log(this.props)
     return (
       <View className='index-page'>
         <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={this.handleClick.bind(this)}>
-        {
-              this.props.tabList.map((item,idx) => {
-                return (
-                  <AtTabsPane key={idx} current={this.state.current} index={idx} >
-                    <Panel   type={item.type} index={idx} />
-                  </AtTabsPane>
-                )
-              })
-            }
+          {
+            this.props.tabList.map((item, idx) => {
+              return (
+                <AtTabsPane key={idx} current={this.state.current} index={idx} >
+                  <Question type={item.type} index={idx} />
+                </AtTabsPane>
+              )
+            })
+          }
         </AtTabs>
       </View>
     )
