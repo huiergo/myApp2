@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { eventCenter } from '@tarojs/taro'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import { View, Text } from '@tarojs/components'
 import { connect } from 'react-redux'
@@ -19,7 +20,6 @@ class Index extends Component {
     }
   }
   componentWillMount() {
-    console.log('[test events...]', this.props.events)
   }
 
   componentDidMount() { }
@@ -39,7 +39,7 @@ class Index extends Component {
       currentValue: this.props.tabList[value]
     })
     // 触发事件，传入多个参数
-    this.props.events.trigger('eventName', this.props.tabList[value])
+    eventCenter.trigger('eventChange', this.props.tabList[value])
   }
 
   render() {

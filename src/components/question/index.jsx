@@ -6,7 +6,6 @@ import { View } from '@tarojs/components'
 import { getInitList, getMoreList } from '../../actions/question'
 
 const Row = React.memo(({ id, index, style, data }) => {
-  console.log('[Row...]', data)
   return (
     <View id={id} className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
       Row {id}={index}+{data[index].title}
@@ -17,7 +16,6 @@ const Row = React.memo(({ id, index, style, data }) => {
   ...store,
   currentValue: store.home.currentValue,
   events: store.home.events,
-  store
 }))
 
 class Index extends Component {
@@ -34,52 +32,24 @@ class Index extends Component {
   $instance = getCurrentInstance()
 
   componentWillMount() {
-    console.log('willmount...')
+    this.initByTabChange()
+    // 监听一个事件，接受参数
+    eventCenter.on('eventChange', (currentValue) => {
+      this.initByTabChange(currentValue)
+    })
+  }
 
-    if (this.init && (this.props.type === this.props.currentValue.type)) {
-      console.log("满足相等...")
+  initByTabChange(currentValue = this.props.currentValue) {
+    if (this.init && (this.props.type === currentValue.type)) {
       this.init = false
       this.initList()
     }
-    // 监听一个事件，接受参数
-    this.props.events.on('eventName', (currentValue) => {
-      console.log("eventname 回调了。。。", this.props.type, this.props.currentValue.type)
-      if (this.init && (this.props.type === currentValue.type)) {
-        console.log("满足相等...")
-        this.init = false
-        this.initList()
-      }
-    })
-    // const onShowEventId = this.$instance.router.onShow
-    // // 监听
-    // eventCenter.on(onShowEventId, this.onShow)
   }
 
   componentWillUnmount() {
-    const onShowEventId = this.$instance.router.onShow
     // 卸载
-    eventCenter.off(onShowEventId, this.onShow)
+    eventCenter.off('eventChange')
   }
-
-  onShow = () => {
-    console.log("onshow ...传进来的type和currentValue", this.props.type, this.props.currentValue.type)
-    console.log("当前的store...", this.props.store)
-    // console.log("[this.props.currentValue.type]", this.props.currentValue.type)
-    // if (this.init && (this.props.type === this.props.currentValue.type)) {
-    //   console.log("满足if...")
-    //   this.initList()
-    // }
-    // 监听一个事件，接受参数
-    this.props.events.on('eventName', (currentValue) => {
-      console.log("eventname 回调了。。。", this.props.type, this.props.currentValue.type)
-      if (this.init && (this.props.type === currentValue.type)) {
-        console.log("满足相等...")
-        this.init = false
-        this.initList()
-      }
-    })
-  }
-
 
   initList() {
     Taro.showLoading()
@@ -139,18 +109,15 @@ class Index extends Component {
         itemData={list} /* 渲染列表的数据 */
         itemCount={dataLen} /*  渲染列表的长度 */
         itemSize={itemSize} /* 列表单项的高度  */
-        onScroll={({ scrollDirection, scrollOffset }) => {
-          console.log('scrollOffset', scrollOffset, '固定', (list.length - 6) * itemSize)
-          if (!this.loading && scrollDirection === 'forward' && list.length > 0 &&
-            scrollOffset > ((list.length - 6) * itemSize)
-          ) {
-            // this.loadMore()
-            console.log('[func loadMore]', this.props.type, this.props.currentValue.type)
+        onScrollToLower={() => {
+          if (!this.loading) {
+            this.loadMore()
           }
         }}
         onScrollToUpper={() => {
-          // this.initList()
-          console.log('[func initList]', this.props.type, this.props.currentValue.type)
+          if (!this.loading) {
+            this.initList()
+          }
         }}
       >
         {Row}
