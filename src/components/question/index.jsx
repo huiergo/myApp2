@@ -14,8 +14,7 @@ const Row = React.memo(({ id, index, style, data }) => {
 })
 @connect((store) => ({
   ...store,
-  currentValue: store.home.currentValue,
-  events: store.home.events,
+  currentValue: store.home.currentValue
 }))
 
 class Index extends Component {

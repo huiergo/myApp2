@@ -1,11 +1,9 @@
 import Taro from '@tarojs/taro';
-import { getJSON, postJSON } from '../services/method';
+import { getJSON } from '../services/method';
 import apis from '../services/apis';
 
 // 切换当前分类
 export function changeMenu({ currentIdx, currentValue }) {
-  console.log('[currentIdx, currentValu=====]', currentIdx, currentValue);
-
   return (dispatch) => {
     dispatch({
       type: 'changeMenu',
@@ -13,12 +11,8 @@ export function changeMenu({ currentIdx, currentValue }) {
       currentValue,
     });
   };
-  // return {
-  //   type: 'changeMenu',
-  //   currentIdx,
-  //   currentValue,
-  // };
 }
+
 //首页打卡
 export async function getClockIn() {
   let result = await getJSON(apis.getClockIn);

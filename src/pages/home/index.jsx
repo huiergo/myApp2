@@ -1,12 +1,12 @@
 import { Component } from 'react'
 import { eventCenter } from '@tarojs/taro'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { connect } from 'react-redux'
 import Question from '../../components/question'
 import { changeMenu } from "../../actions/menu"
 
-@connect((store) => ({ ...store, tabList: store.home.list, events: store.home.events }), (dispatch) => ({
+@connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
   changeMenu(cata) {
     dispatch(changeMenu(cata))
   }
@@ -19,16 +19,6 @@ class Index extends Component {
       current: 0 //current index 的值
     }
   }
-  componentWillMount() {
-  }
-
-  componentDidMount() { }
-
-  componentWillUnmount() { }
-
-  componentDidShow() { }
-
-  componentDidHide() { }
 
   async handleClick(value) {
     this.setState({
