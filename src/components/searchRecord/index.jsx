@@ -19,7 +19,6 @@ import { initRecord, edit, deleteAll, quitEdit, searchItem, deleItem } from '../
       dispatch(quitEdit())
     },
     searchItem(index, item) {
-
       dispatch(searchItem(index, item))
     },
     deleItem(index) {

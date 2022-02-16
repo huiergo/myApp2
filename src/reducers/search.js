@@ -42,7 +42,7 @@ export default function search(preState = searchState, action) {
         ...preState,
         isEdit: false,
         searchValue: action.searchValue,
-        list: action.list,
+        recordList: action.recordList,
       };
     case 'deleItem':
       return {
