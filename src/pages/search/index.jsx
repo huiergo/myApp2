@@ -4,9 +4,12 @@ import { connect } from 'react-redux'
 import { AtSearchBar } from 'taro-ui'
 import SearchResult from '../../components/searchResult'
 import SearchRecord from '../../components/searchRecord'
+import { searchItem } from '../../actions/search'
 
 @connect((store) => ({ ...store, recordList: store.search.recordList }), (dispatch) => ({
-
+  searchItem(value) {
+    dispatch(searchItem(value))
+  }
 }))
 class Index extends Component {
   constructor(props) {
@@ -15,6 +18,12 @@ class Index extends Component {
       hasInput: false
     }
   }
+  onChange(value) {
+    console.log("[onchange...", value)
+    this.setState({
+      value: value
+    })
+  }
   render() {
     const { hasInput } = this.state
     const showRecordList = this.props.recordList && this.props.recordList.length > 0
@@ -22,6 +31,8 @@ class Index extends Component {
       <View className='index'>
         <AtSearchBar
           value={this.state.value}
+          onChange={(value) => this.onChange(value)}
+          onActionClick={() => this.props.searchItem(this.state.value)}
         />
         {!hasInput && showRecordList && <SearchRecord />}
         {hasInput && <SearchResult />}

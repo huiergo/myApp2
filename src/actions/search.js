@@ -63,8 +63,8 @@ export function deleteAll() {
   };
 }
 
-export function searchItem(index, item) {
-  const temp = removeAndAppendItemToStorage('recordList', index, item);
+export function searchItem(item) {
+  const temp = removeAndAppendItemToStorage('recordList', item);
   return (dispatch) => {
     dispatch({
       type: 'searchItem',
@@ -74,13 +74,11 @@ export function searchItem(index, item) {
 }
 
 export function deleItem(index) {
-  console.log('[[deleItem---', index);
   const temp = removeItemFromStorage('recordList', index);
   return (dispatch) => {
     dispatch({
       type: 'deleItem',
       recordList: temp,
     });
-    // dispatch(getSearchHistory());
   };
 }

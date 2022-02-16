@@ -8,7 +8,7 @@ export function getStorage(key) {
   return Taro.getStorageSync(key);
 }
 
-export function removeAndAppendItemToStorage(key, index, item) {
+export function removeAndAppendItemToStorage(key, item) {
   let arr = getStorage(key);
   arr.unshift(item);
   let newArr = Array.from(new Set(arr));
