@@ -10,10 +10,10 @@ export function getStorage(key) {
 
 export function removeAndAppendItemToStorage(key, index, item) {
   let arr = getStorage(key);
-  arr.splice(index, 1);
   arr.unshift(item);
-  setStorage(key, arr);
-  return arr;
+  let newArr = Array.from(new Set(arr));
+  setStorage(key, newArr);
+  return newArr;
 }
 
 export function removeItemFromStorage(key, index) {
