@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Provider } from 'react-redux';
+import Taro from '@tarojs/taro';
 import configStore from './store';
 
 import './app.scss';
@@ -9,7 +10,11 @@ const store = configStore();
 class App extends Component {
   componentDidMount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    // componentDidMount() {
+    console.log('App挂载了', Taro.getCurrentInstance().router.path);
+    // }
+  }
 
   componentDidHide() {}
 

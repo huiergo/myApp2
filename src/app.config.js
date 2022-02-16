@@ -1,5 +1,11 @@
 export default defineAppConfig({
-  pages: ['pages/home/index', 'pages/experience/index', 'pages/favorite/index', 'pages/my/index'],
+  pages: [
+    'pages/home/index',
+    'pages/experience/index',
+    'pages/favorite/index',
+    'pages/my/index',
+    'pages/search/index',
+  ],
   tabBar: {
     list: [
       {

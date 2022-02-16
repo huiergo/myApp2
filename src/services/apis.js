@@ -51,6 +51,6 @@ const apiObject = {
 
   // ========  delete 请求 ========
   //   删除试题/面经搜索记录(单条或者全部） 入参： id，type(为空或者0，删除单条，1删除全部)
-  collection: `${baseUrl}/wxmini/question/searchHistory`,
+  deleteSearchHistory: `${baseUrl}/wxmini/question/searchHistory`,
 };
 export default apiObject;

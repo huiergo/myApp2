@@ -1,14 +1,18 @@
 import { Component } from 'react'
-import { eventCenter } from '@tarojs/taro'
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import Taro, { eventCenter } from '@tarojs/taro'
+import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
 import { View } from '@tarojs/components'
 import { connect } from 'react-redux'
 import Question from '../../components/question'
 import { changeMenu } from "../../actions/menu"
+import { tabShow } from "../../actions/common"
 
 @connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
   changeMenu(cata) {
     dispatch(changeMenu(cata))
+  },
+  tabShow(params) {
+    dispatch(tabShow(params))
   }
 }))
 
@@ -19,6 +23,11 @@ class Index extends Component {
       current: 0 //current index 的值
     }
   }
+
+  componentDidShow() {
+    tabShow('home')
+  }
+
 
   async handleClick(value) {
     this.setState({
@@ -36,6 +45,16 @@ class Index extends Component {
     console.log(this.props)
     return (
       <View className='index-page'>
+        <View onClick={() => { Taro.navigateTo({ url: '/pages/search/index' }) }}>
+          <AtSearchBar
+            disabled
+            placeholder='请输入关键词'
+            showActionButton={false}
+            onFocus={() => { console.log("onfocus") }}
+            onActionClick={() => { console.log("onActionClick") }}
+          />
+        </View>
+
         <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={this.handleClick.bind(this)}>
           {
             this.props.tabList.map((item, idx) => {
@@ -47,6 +66,7 @@ class Index extends Component {
             })
           }
         </AtTabs>
+
       </View>
     )
   }
