@@ -9,6 +9,66 @@ import { tabShow } from "../../actions/common"
 import Filter from '../../components/filter'
 import Tags from '../../components/tags'
 
+
+const sortList = [
+  {
+    specialStatus: 0,
+    special: false,
+    name: '默认',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: true,
+    name: '难易',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: true,
+    name: '浏览量',
+    active: false
+  }
+]
+const cataList = [
+  {
+    specialStatus: 0,
+    special: false,
+    name: '美国',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: true,
+    name: '中国',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: false,
+    name: '巴西',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: false,
+    name: '日本',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: false,
+    name: '英国',
+    active: false
+  },
+  {
+    specialStatus: 0,
+    special: false,
+    name: '法国',
+    active: false
+  }
+]
+
 @connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
   changeMenu(cata) {
     dispatch(changeMenu(cata))
@@ -22,7 +82,7 @@ class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      current: 0, //current index 的值
+      current: 6, //current index 的值
       isOpen: true
     }
   }
@@ -58,11 +118,11 @@ class Index extends Component {
         <View>
           <View dangerouslySetInnerHTML={{ __html: html }}></View>
           <View onClick={() => this.openFilter()}>筛选按钮</View>
-          <Filter isOpened={isOpen} title="重置" closeText="完成" onReset={() => console.log('reset...')} onClose={() => console.log('close..')}>
+          <Filter isOpened={isOpen} title='重置' closeText='完成' onReset={() => console.log('reset...')} onClose={() => console.log('close..')}>
             题目排序
-            <Tags />
+            <Tags list={sortList} />
             选择阶段
-            <Tags />
+            <Tags list={cataList} />
           </Filter>
           <AtSearchBar
             onFocus={() => { Taro.navigateTo({ url: '/pages/search/index' }) }}

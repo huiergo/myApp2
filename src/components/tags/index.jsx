@@ -3,60 +3,38 @@ import { View } from '@tarojs/components'
 import { AtTag } from 'taro-ui'
 
 export default class Tags extends Component {
-  state = {
-    list: [
-      {
-        specialStatus: 0,
-        special: false,
-        name: '美国',
-        active: false
-      },
-      {
-        specialStatus: 0,
-        special: true,
-        name: '中国',
-        active: false
-      },
-      {
-        specialStatus: 0,
-        special: false,
-        name: '巴西',
-        active: false
-      },
-      {
-        specialStatus: 0,
-        special: false,
-        name: '日本',
-        active: false
-      },
-      {
-        specialStatus: 0,
-        special: false,
-        name: '英国',
-        active: false
-      },
-      {
-        specialStatus: 0,
-        special: false,
-        name: '法国',
-        active: false
-      }
-    ]
+  constructor(props) {
+    super(props)
+    this.state = {
+      list: props.list
+    }
   }
+
+  componentDidMount() {
+    console.log("[componentDidMount]", this.state.list)
+  }
+
   onClick(item, index) {
     let { list } = this.state
-    list.map((item, i) => {
+    let list2 = list.map((item, i) => {
       if (!item.special) {
-        i == index ? list[i].active = true : list[i].active = false
+        i == index ? item.active = true : item.active = false;
       } else {
-        i == index ? list[i].active = true : list[i].active = false
-        list[index].specialStatus == 0 ? list[index].specialStatus = 1 : list[index].specialStatus = 0
+        i == index ? item.active = true : item.active = false;
+        if (i == index && item.specialStatus == 0) {
+          console.log("if", i)
+          item.specialStatus = 1
+        } else {
+          console.log("else", i)
+          item.specialStatus = 0
+        }
       }
+      return item
 
     })
-    console.log(list)
+    console.log("list2---", list2)
     this.setState({
-      list
+      list: list2
     })
   }
   render() {
