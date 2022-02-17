@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import Question from '../../components/question'
 import { changeMenu } from "../../actions/menu"
 import { tabShow } from "../../actions/common"
+import Filter from '../../components/filter'
+import Tags from '../../components/tags'
 
 @connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
   changeMenu(cata) {
@@ -20,7 +22,8 @@ class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      current: 0 //current index 的值
+      current: 0, //current index 的值
+      isOpen: true
     }
   }
 
@@ -41,16 +44,31 @@ class Index extends Component {
     eventCenter.trigger('eventChange', this.props.tabList[value])
   }
 
+  openFilter() {
+    this.setState({
+      isOpen: true
+    })
+  }
   render() {
     console.log(this.props)
+    const { isOpen } = this.state
+    const html = `<h1 style="color: red">Wallace is way taller than other reporters.</h1>`
     return (
       <View className='index-page'>
-        <View onClick={() => { Taro.navigateTo({ url: '/pages/search/index' }) }}>
+        <View>
+          <View dangerouslySetInnerHTML={{ __html: html }}></View>
+          <View onClick={() => this.openFilter()}>筛选按钮</View>
+          <Filter isOpened={isOpen} title="重置" closeText="完成" onReset={() => console.log('reset...')} onClose={() => console.log('close..')}>
+            题目排序
+            <Tags />
+            选择阶段
+            <Tags />
+          </Filter>
           <AtSearchBar
+            onFocus={() => { Taro.navigateTo({ url: '/pages/search/index' }) }}
             disabled
             placeholder='请输入关键词'
             showActionButton={false}
-            onFocus={() => { console.log("onfocus") }}
             onActionClick={() => { console.log("onActionClick") }}
           />
         </View>
