@@ -6,75 +6,19 @@ import { connect } from 'react-redux'
 import Question from '../../components/question'
 import { changeMenu } from "../../actions/menu"
 import { tabShow } from "../../actions/common"
+import { resetTags } from "../../actions/tags"
 import Filter from '../../components/filter'
 import Tags from '../../components/tags'
 
-
-const sortList = [
-  {
-    specialStatus: 0,
-    special: false,
-    name: '默认',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: true,
-    name: '难易',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: true,
-    name: '浏览量',
-    active: false
-  }
-]
-const cataList = [
-  {
-    specialStatus: 0,
-    special: false,
-    name: '美国',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: true,
-    name: '中国',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: false,
-    name: '巴西',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: false,
-    name: '日本',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: false,
-    name: '英国',
-    active: false
-  },
-  {
-    specialStatus: 0,
-    special: false,
-    name: '法国',
-    active: false
-  }
-]
-
-@connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
+@connect((store) => ({ store, ...store, tabList: store.home.list, sortList: store.tags.sortList, cataList: store.tags.cataList, extraParams: store.home.extraParams }), (dispatch) => ({
   changeMenu(cata) {
     dispatch(changeMenu(cata))
   },
   tabShow(params) {
     dispatch(tabShow(params))
+  },
+  resetTags() {
+    dispatch(resetTags())
   }
 }))
 
@@ -83,7 +27,7 @@ class Index extends Component {
     super(...arguments)
     this.state = {
       current: 6, //current index 的值
-      isOpen: true
+      isOpen: false
     }
   }
 
@@ -92,16 +36,17 @@ class Index extends Component {
   }
 
 
-  async handleClick(value) {
+  async handleClick(value, extraParams = {}) {
     this.setState({
       current: value
     })
     await changeMenu({
       currentIdx: value,
-      currentValue: this.props.tabList[value]
+      currentValue: this.props.tabList[value],
     })
     // 触发事件，传入多个参数
-    eventCenter.trigger('eventChange', this.props.tabList[value])
+    eventCenter.trigger('eventChange', this.props.tabList[value], extraParams)
+    console.log("store---", this.props.store)
   }
 
   openFilter() {
@@ -109,20 +54,51 @@ class Index extends Component {
       isOpen: true
     })
   }
+
+  reset() {
+    // 重置只是把两个原本的mockList再次注入下，所以这两个mock 看是不是需要redux关联到状态库中
+    this.props.resetTags()
+  }
+
+  async complete() {
+
+    console.log(" this.props----", this.props)
+    let params = {}
+    let curVal = ''
+    this.props.cataList.map((item, index) => {
+      if (item.active) {
+        console.log("cataList active----", item, index)
+        params = { ...params, type: item.name }
+        curVal = index
+      }
+    })
+
+    this.props.sortList.map((item, index) => {
+      if (item.active) {
+        console.log("sortList active----", item, index)
+        params = { ...params, sort: item.name }
+      }
+    })
+
+    console.log("store params----", params)
+    this.handleClick(curVal, params)
+  }
+
   render() {
     console.log(this.props)
     const { isOpen } = this.state
+    const { sortList, cataList } = this.props
     const html = `<h1 style="color: red">Wallace is way taller than other reporters.</h1>`
     return (
       <View className='index-page'>
         <View>
           <View dangerouslySetInnerHTML={{ __html: html }}></View>
           <View onClick={() => this.openFilter()}>筛选按钮</View>
-          <Filter isOpened={isOpen} title='重置' closeText='完成' onReset={() => console.log('reset...')} onClose={() => console.log('close..')}>
+          <Filter isOpened={isOpen} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
             题目排序
-            <Tags list={sortList} />
+            <Tags type='sort' list={sortList} />
             选择阶段
-            <Tags list={cataList} />
+            <Tags type='cata' list={cataList} />
           </Filter>
           <AtSearchBar
             onFocus={() => { Taro.navigateTo({ url: '/pages/search/index' }) }}

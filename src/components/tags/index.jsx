@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import { View } from '@tarojs/components'
 import { AtTag } from 'taro-ui'
+import { connect } from 'react-redux'
+import { updateTags } from '../../actions/tags'
 
-export default class Tags extends Component {
+@connect((store) => (store), (dispatch) => ({
+  updateTags(params) {
+    dispatch(updateTags(params))
+  }
+}))
+class Tags extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +23,7 @@ export default class Tags extends Component {
 
   onClick(item, index) {
     let { list } = this.state
-    let list2 = list.map((item, i) => {
+    let tempList = list.map((item, i) => {
       if (!item.special) {
         i == index ? item.active = true : item.active = false;
       } else {
@@ -32,10 +39,15 @@ export default class Tags extends Component {
       return item
 
     })
-    console.log("list2---", list2)
     this.setState({
-      list: list2
+      list: tempList
     })
+    if (this.props.type === 'sort') {
+      updateTags('sort', tempList)
+    }
+    if (this.props.type === 'cata') {
+      updateTags('cata', tempList)
+    }
   }
   render() {
     return (
@@ -61,3 +73,5 @@ export default class Tags extends Component {
     )
   }
 }
+
+export default Tags

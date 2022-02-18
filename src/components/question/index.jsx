@@ -28,7 +28,6 @@ class Index extends Component {
   init = true
   loading = false
   page = 1
-  $instance = getCurrentInstance()
 
   componentWillMount() {
     this.initByTabChange()
