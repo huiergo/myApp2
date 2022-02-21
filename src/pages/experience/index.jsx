@@ -3,6 +3,9 @@ import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from 'react-redux'
 import { tabShow } from "../../actions/common"
+import QuestionItem from '../../components/questionItem'
+import InterviewItem from '../../components/interviewItem'
+
 
 @connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
   tabShow(params) {
@@ -25,8 +28,9 @@ class Experience extends Component {
 
   render() {
     return (
-      <View className='index'>
-        <View>Hello, World</View>
+      <View className='experience-page'>
+        <QuestionItem />
+        <InterviewItem />
       </View>
     )
   }

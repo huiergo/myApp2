@@ -1,0 +1,78 @@
+import React, { Component } from 'react'
+import { View, Text, Image } from '@tarojs/components'
+import './index.scss'
+
+let item = {
+  difficulty: 1,
+  title: 'Question的优势是什么？',
+  likeNum: 666,
+  pvNum: 99,
+  isLike: true
+}
+const handleTag = (tag) => {
+  switch (tag) {
+    case 1:
+      return {
+        className: 'simple',
+        des: '简单'
+      }
+    case 2:
+      return {
+        className: 'normal',
+        des: '一般'
+      }
+    case 3:
+      return {
+        className: 'hard',
+        des: '困难'
+      }
+    default:
+      return {
+        className: 'normal',
+        des: '一般'
+      }
+  }
+}
+const Split = () => {
+  return <View className='split'>
+  </View>
+}
+class Index extends Component {
+  constructor(props) {
+    super(props)
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props, nextProps)
+  }
+
+  componentWillUnmount() { }
+
+  componentDidShow() { }
+
+  componentDidHide() { }
+
+  render() {
+    return (
+      <View className='question-item'>
+        <View className='question-item__top'>
+          <View className={`question-item__tag ${handleTag(item.difficulty).className}`}>
+            {handleTag(item.difficulty).des}
+          </View>
+          <Text className='question-item__title'>{item.title}</Text>
+        </View>
+        <View className='question-item__bottom'>
+          <View className='question-item__like-num'>
+            {item.isLike ? <Image className='question-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
+            {"  " + item.likeNum}
+          </View>
+          <Split />
+          <View className='question-item__pv-num'>浏览 {item.pvNum}</View>
+          <Split />
+          <Image className='question-item__share-icon' src={require('../../assets/share.png')} />
+        </View>
+      </View>
+    )
+  }
+}
+export default Index
+

@@ -28,12 +28,14 @@ class Index extends Component {
   init = true
   loading = false
   page = 1
+  extraParams = {}
 
   componentWillMount() {
     this.initByTabChange()
     // 监听一个事件，接受参数
-    eventCenter.on('eventChange', (currentValue) => {
+    eventCenter.on('eventChange', (currentValue, params = {}) => {
       this.initByTabChange(currentValue)
+      console.log("this.extraparams----", params)
     })
   }
 

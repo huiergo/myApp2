@@ -35,8 +35,8 @@ class Index extends Component {
     tabShow('home')
   }
 
-
   async handleClick(value, extraParams = {}) {
+    console.log("[handleClick 入参---", value, extraParams)
     this.setState({
       current: value
     })
@@ -56,8 +56,8 @@ class Index extends Component {
   }
 
   reset() {
-    // 重置只是把两个原本的mockList再次注入下，所以这两个mock 看是不是需要redux关联到状态库中
-    this.props.resetTags()
+    console.log("reset...")
+    resetTags()
   }
 
   async complete() {
@@ -81,7 +81,11 @@ class Index extends Component {
     })
 
     console.log("store params----", params)
+    this.setState({
+      isOpen: false
+    })
     this.handleClick(curVal, params)
+
   }
 
   render() {
@@ -109,7 +113,7 @@ class Index extends Component {
           />
         </View>
 
-        <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={this.handleClick.bind(this)}>
+        <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={() => this.handleClick(this.state.current)}>
           {
             this.props.tabList.map((item, idx) => {
               return (
