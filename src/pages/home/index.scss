@@ -1,0 +1,33 @@
+.index-page-bg {
+  width: 100%;
+  height: 440rpx;
+  // z-index: -1;
+  // position: fixed;
+}
+
+.index-page__clock-in {
+  width: 243px;
+  height: 74px;
+  line-height: 74px;
+  text-align: center;
+  margin-left: auto;
+  color: #fff;
+  background: black;
+  // margin-top: -150px;
+}
+
+.at-search-bar {
+  background: none !important;
+  margin-top: -250px;
+}
+// .at-search-bar__input-cnt {
+//   background-color: #f6f7f9;
+// }
+
+// .at-icon-search {
+//   color: #fff !important;
+// }
+
+// .at-search-bar__placeholder {
+//   color: #fff;
+// }
