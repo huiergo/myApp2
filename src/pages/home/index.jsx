@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import Taro, { eventCenter } from '@tarojs/taro'
 import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Button } from '@tarojs/components'
 import { connect } from 'react-redux'
 import Question from '../../components/question'
 import { changeMenu } from "../../actions/menu"
@@ -27,7 +27,7 @@ class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      current: 6, //current index 的值
+      current: 0, //current index 的值
       isOpen: false
     }
   }
@@ -35,9 +35,18 @@ class Index extends Component {
   componentDidShow() {
     tabShow('home')
   }
-
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/page/user?id=123'
+    }
+  }
   async handleClick(value, extraParams = {}) {
-    console.log("[handleClick 入参---", value, extraParams)
+    console.log("[[[[handleClick 入参---", value, extraParams)
     this.setState({
       current: value
     })
@@ -104,9 +113,10 @@ class Index extends Component {
           showActionButton={false}
           onActionClick={() => { console.log("onActionClick") }}
         />
-        <View className='index-page__clock-in'>去打卡</View>
+
+        <Button className='index-page__clock-in'>去打卡</Button>
         {/* 分类tab */}
-        <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={() => this.handleClick(this.state.current)}>
+        <AtTabs scroll current={this.state.current} tabList={this.props.tabList} onClick={this.handleClick.bind(this)}>
           {
             this.props.tabList.map((item, idx) => {
               return (
