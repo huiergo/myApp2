@@ -2,13 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import './index.scss'
 
-let item = {
-  difficulty: 1,
-  title: 'Question的优势是什么？',
-  likeNum: 666,
-  pvNum: 99,
-  isLike: true
-}
+
 const handleTag = (tag) => {
   switch (tag) {
     case 1:
@@ -52,6 +46,7 @@ class Index extends Component {
   componentDidHide() { }
 
   render() {
+    const { item } = this.props
     return (
       <View className='question-item'>
         <View className='question-item__top'>

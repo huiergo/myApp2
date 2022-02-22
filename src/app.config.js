@@ -1,25 +1,25 @@
 export default defineAppConfig({
   pages: [
-    'pages/home/index',
-    'pages/experience/index',
+    'pages/mine/index',
+    // 'pages/home/index',
+    // 'pages/experience/index',
     'pages/favorite/index',
-    'pages/my/index',
-    'pages/search/index',
+    // 'pages/search/index',
   ],
   tabBar: {
     list: [
-      {
-        iconPath: 'assets/home.png',
-        selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/home/index',
-        text: '首页',
-      },
-      {
-        iconPath: 'assets/home.png',
-        selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/experience/index',
-        text: '面经',
-      },
+      // {
+      //   iconPath: 'assets/home.png',
+      //   selectedIconPath: 'assets/home_select.png',
+      //   pagePath: 'pages/home/index',
+      //   text: '首页',
+      // },
+      // {
+      //   iconPath: 'assets/home.png',
+      //   selectedIconPath: 'assets/home_select.png',
+      //   pagePath: 'pages/experience/index',
+      //   text: '面经',
+      // },
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
@@ -29,7 +29,7 @@ export default defineAppConfig({
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/my/index',
+        pagePath: 'pages/mine/index',
         text: '我的',
       },
     ],

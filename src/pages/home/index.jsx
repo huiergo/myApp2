@@ -31,6 +31,9 @@ class Index extends Component {
       isOpen: false
     }
   }
+  componentDidMount() {
+    console.log("didmount...")
+  }
 
   componentDidShow() {
     tabShow('home')

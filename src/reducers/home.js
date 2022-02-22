@@ -25,6 +25,7 @@ export default function home(preState = menuState, action) {
         currentIdx: action.currentIdx,
         currentValue: action.currentValue,
       };
+
     default:
       return {
         ...preState,

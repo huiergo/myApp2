@@ -41,7 +41,6 @@ class Index extends Component {
             <View className='interview-item__top-content-title'>面经 | {item.title}</View>
             <View className='interview-item__top-content-des'>油炸小饭团 | {item.date}</View>
           </View>
-
         </View>
 
         <View className='interview-item__center'>

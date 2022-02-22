@@ -4,11 +4,20 @@ import VirtualList from '@tarojs/components/virtual-list'
 import { connect } from 'react-redux'
 import { View } from '@tarojs/components'
 import { getInitList, getMoreList } from '../../actions/question'
+import QuestionItem from '../../components/questionItem'
 
+let item = {
+  difficulty: 1,
+  title: 'Question的优势是什么？',
+  likeNum: 666,
+  pvNum: 99,
+  isLike: true
+}
 const Row = React.memo(({ id, index, style, data }) => {
   return (
     <View id={id} className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
       Row {id}={index}+{data[index].title}
+      <QuestionItem item={item} />
     </View>
   );
 })
