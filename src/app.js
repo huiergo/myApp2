@@ -4,8 +4,10 @@ import Taro from '@tarojs/taro';
 import configStore from './store';
 
 import './app.scss';
+import rootSaga from './sagas/root';
 
 const store = configStore();
+store.runSaga(rootSaga);
 
 class App extends Component {
   componentDidMount() {}

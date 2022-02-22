@@ -50,24 +50,11 @@ export async function getUserInfo() {
       userInfo: {
         avatar:
           'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-        name: '油炸小饭团',
+        name: '油炸小饭团1',
         zanNum: 32,
         clockInNum: 12,
       },
     };
-    // return (dispatch) => {
-    //   console.log(222);
-    //   dispatch({
-    //     type: 'getUserInfo',
-    //     userInfo: {
-    //       avatar:
-    //         'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-    //       name: '油炸小饭团',
-    //       zanNum: 32,
-    //       clockInNum: 12,
-    //     },
-    //   });
-    // };
   }
 }
 
