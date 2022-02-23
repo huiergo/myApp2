@@ -36,7 +36,7 @@ function* handleFlag(params) {
   let result = yield getJSON(apis.getFlag, params);
   if (result && result.data && result.data.data) {
     let flag = false; // || result.data.data;
-    yield put(saveMineData({ key: 'flag', value: flag }));
+    yield put(saveMineData({ flag }));
   }
 }
 /**
