@@ -4,7 +4,7 @@ const apiObject = {
   //  首页-分类 （待补充）
 
   //   首页-是否已经打卡
-  getClockIn: `${baseUrl}/wxmini/hasClockIn`,
+  getFlag: `${baseUrl}/wxmini/hasClockIn`,
 
   //   查询试题/面经列表---> 入参：type（0全部&模块的类型），questionBankType（9面经10小程序面试题），非必选：keyword，sort，pageSize，page
   getQuestionList: `${baseUrl}/wxmini/question/list`,

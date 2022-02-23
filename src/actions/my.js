@@ -26,38 +26,6 @@ export async function getRefreshToken({ refreshToken }) {
   }
 }
 
-// 签到
-export async function getClockIn(params) {
-  let result = await getJSON(apis.getClockIn, params);
-  if (result && result.data && result.data.data) {
-    return (dispatch) => {
-      dispatch({
-        type: 'changeClockInStatus',
-        flag: result.data.data.flag,
-      });
-    };
-  } else {
-    Taro.showToast({ title: '拉取失败' });
-  }
-}
-
-// 获取用户数据（用于我的tab）
-export async function getUserInfo() {
-  let result = await getJSON(apis.getUserInfo);
-  if (result && result.data && result.data.data) {
-    console.log(111);
-    return {
-      userInfo: {
-        avatar:
-          'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-        name: '油炸小饭团1',
-        zanNum: 32,
-        clockInNum: 12,
-      },
-    };
-  }
-}
-
 /**
  * 状态： userInfo
  * 更新状态刷新： 点赞数， 签到数

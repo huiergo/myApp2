@@ -1,18 +1,21 @@
 import { handleActions as createReducer } from 'redux-actions';
-import { saveUserInfo } from '../actions/mine.action';
+import { saveMineData } from '../actions/mine.action';
 
-const handleSaveUserInfo = (state, action) => {
-  console.log('[handleSaveUserInfo====]', state, action);
-  return {
-    userInfo: action.payload,
-  };
-};
 const initialState = {
   userInfo: '',
+  flag: '',
+};
+
+const handleSaveData = (state, action) => {
+  let { key, value } = action.payload;
+  return {
+    ...state,
+    [key]: value,
+  };
 };
 export default createReducer(
   {
-    [saveUserInfo]: handleSaveUserInfo,
+    [saveMineData]: handleSaveData,
   },
   initialState,
 );

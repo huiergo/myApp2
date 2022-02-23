@@ -1,6 +1,8 @@
+import Taro from '@tarojs/taro';
+import { getJSON, postJSON } from '../services/method';
+import apis from '../services/apis';
 import { takeEvery, put } from 'redux-saga/effects';
-import { loadUserInfo, saveUserInfo } from '../actions/mine.action';
-import { getUserInfo } from '../actions/my';
+import { loadUserInfo, loadFlag, clockIn, saveMineData } from '../actions/mine.action';
 
 /**
  * 1、获取用户头像和昵称
@@ -9,13 +11,49 @@ import { getUserInfo } from '../actions/my';
  * 4、点击签到，请求接口
  */
 
+/**
+ * 获取用户信息，并同步到store
+ */
 function* handleLoadUserInfo() {
-  const { userInfo } = yield getUserInfo();
-  yield put(saveUserInfo(userInfo));
+  let result = yield getJSON(apis.getUserInfo);
+  if (result && result.data && result.data.data) {
+    console.log(111);
+    let userInfo = {
+      avatar:
+        'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      name: '油炸小饭团1',
+      zanNum: 32,
+      clockInNum: 12,
+    };
+    // yield put(saveUserInfo(userInfo));
+    yield put(saveMineData({ key: 'userInfo', value: userInfo }));
+  }
 }
+
+/**
+ * 获取是否打卡状态，并同步到store
+ */
+function* handleFlag(params) {
+  let result = yield getJSON(apis.getFlag, params);
+  if (result && result.data && result.data.data) {
+    let flag = true || result.data.data;
+    yield put(saveMineData({ key: 'flag', value: flag }));
+  }
+}
+/**
+ * 打卡签到
+ */
+function* handleClockIn(params) {
+  // todo : params 应该从store中取得，不应该组件传递
+  let result = yield getJSON(apis.clockIn, params);
+  if (result && result.data && result.data.data) {
+    let flag = true || result.data.data;
+    yield put(saveMineData({ key: 'flag', value: flag }));
+  }
+}
+
 export default function* mineSaga() {
   yield takeEvery(loadUserInfo, handleLoadUserInfo);
-
-  // 其他方法
-  // yield takeEvery(deleteProductFromCart, handleDeleteProductFromCart);
+  yield takeEvery(loadFlag, handleFlag);
+  yield takeEvery(clockIn, handleClockIn);
 }

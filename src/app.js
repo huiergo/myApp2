@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro';
 import configStore from './store';
 
 import './app.scss';
-import rootSaga from './sagas/root';
+import rootSaga from './sagas/root.saga';
 
 const store = configStore();
 store.runSaga(rootSaga);

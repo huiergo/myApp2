@@ -1,10 +1,19 @@
 import { createAction } from 'redux-actions';
 
+/**
+ * 获取用户信息
+ */
 export const loadUserInfo = createAction('load userInfo');
-export const saveUserInfo = createAction('save userInfo');
-
-// 5. 向服务器端发送请求 告诉服务器端我们要删除哪一个商品
-export const deleteProductFromCart = createAction('deleteProductFromCart');
+/**
+ * 获取是否打卡状态
+ */
+export const loadFlag = createAction('load flag');
+/**
+ * 打卡签到
+ */
+export const clockIn = createAction('clock in');
+// 同步数据
+export const saveMineData = createAction('save data');
 
 // * 1、获取用户数据
 // pageshow时候: 刷新页面（点赞数和签到数）
