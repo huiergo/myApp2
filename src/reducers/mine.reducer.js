@@ -7,10 +7,10 @@ const initialState = {
 };
 
 const handleSaveData = (state, action) => {
-  let { key, value } = action.payload;
+  // let { key, value } = action.payload;
   return {
     ...state,
-    [key]: value,
+    ...action.payload,
   };
 };
 export default createReducer(

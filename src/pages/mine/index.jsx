@@ -1,22 +1,41 @@
 import React, { Component } from "react";
+import Taro from '@tarojs/taro';
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components'
 import { AtList, AtListItem, AtGrid } from "taro-ui"
 
 import * as mineActions from "../../actions/mine.action";
+import * as loginActions from "../../actions/login.action"
+// * 1、获取用户数据
+// pageshow时候: 刷新页面（点赞数和签到数）
+// * 3、flag: 判断签到模块的展示
+// * 4、点击签到，请求接口
 
 class Mine extends Component {
   constructor(props) {
     super(props)
   }
   componentDidMount() {
-    const { loadUserInfo } = this.props;
-    loadUserInfo();
+    this.props.getToken()
+    return
+    // Taro.getAppBaseInfo({
+    //   success: res => console.log('00000======', res)
+    // })
+    //   .then(res => console.log(res))
+    let result = Taro.getAccountInfoSync()
+    console.log('00000======', result)
+    this.initData()
   }
-  componentWillReceiveProps(nextProps) {
-    console.log("will receive=====", this.props, nextProps)
+  componentDidShow() {
+    this.initData()
+  }
 
+  initData() {
+    const { loadUserInfo, loadFlag } = this.props;
+    loadUserInfo();
+    loadFlag()
   }
 
   handleListClick({ type }) {
@@ -26,11 +45,12 @@ class Mine extends Component {
   handleClockInClick(flag) {
     if (!flag) {
       // 调用签到接口
-      this.props.getClockIn()
+      this.props.clockIn()
     }
   }
 
   render() {
+
     const { avatar, name, zanNum, clockInNum } = this.props.userInfo
     const { flag } = this.props
     return (
@@ -77,12 +97,14 @@ class Mine extends Component {
 
 const mapStateToProps = (state) => {
   console.log("mapStateToProps====", state)
+  const { userInfo, flag } = state.mine
   return {
-    userInfo: state.mine.userInfo,
+    userInfo, flag
   }
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(mineActions, dispatch),
+  ...bindActionCreators(loginActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mine);

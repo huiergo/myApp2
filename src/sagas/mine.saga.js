@@ -25,8 +25,7 @@ function* handleLoadUserInfo() {
       zanNum: 32,
       clockInNum: 12,
     };
-    // yield put(saveUserInfo(userInfo));
-    yield put(saveMineData({ key: 'userInfo', value: userInfo }));
+    yield put(saveMineData({ userInfo: userInfo }));
   }
 }
 
@@ -36,19 +35,20 @@ function* handleLoadUserInfo() {
 function* handleFlag(params) {
   let result = yield getJSON(apis.getFlag, params);
   if (result && result.data && result.data.data) {
-    let flag = true || result.data.data;
+    let flag = false; // || result.data.data;
     yield put(saveMineData({ key: 'flag', value: flag }));
   }
 }
 /**
  * 打卡签到
  */
-function* handleClockIn(params) {
+function* handleClockIn() {
   // todo : params 应该从store中取得，不应该组件传递
-  let result = yield getJSON(apis.clockIn, params);
+  let result = yield postJSON(apis.clockIn);
+  console.log('44====', result);
   if (result && result.data && result.data.data) {
     let flag = true || result.data.data;
-    yield put(saveMineData({ key: 'flag', value: flag }));
+    yield put(saveMineData({ flag }));
   }
 }
 

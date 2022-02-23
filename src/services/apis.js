@@ -38,7 +38,7 @@ const apiObject = {
   refreshToken: `${baseUrl}/wxmini/refreshToken`,
 
   //   首页-打卡 入参：无
-  clockIn: `${baseUrl}/wxmini/clockIn`,
+  clockIn: `${baseUrl}/wxmini/clockin`,
 
   //   收藏试题或者面经  入参： id，type(0面试题1面经)
   collection: `${baseUrl}/wxmini/question/collection`,
