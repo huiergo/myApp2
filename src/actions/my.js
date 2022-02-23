@@ -68,8 +68,8 @@ export async function getUserInfo() {
  * 刷新登录态
  *
  *
- * 1、获取用户头像和昵称
- * 2、pageshow时候: 刷新页面（点赞数和签到数）
+ * 1、获取用户数据
+      pageshow时候: 刷新页面（点赞数和签到数）
  * 3、flag: 判断签到模块的展示
  * 4、点击签到，请求接口
  *
