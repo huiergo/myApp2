@@ -1,44 +1,59 @@
 import { Component } from 'react'
 import { View, Button, Text } from '@tarojs/components'
-import { connect } from 'react-redux'
 import { AtSearchBar } from 'taro-ui'
-import SearchResult from '../../components/searchResult'
-import SearchRecord from '../../components/searchRecord'
-import { searchItem } from '../../actions/search'
 
-@connect((store) => ({ ...store, recordList: store.search.recordList }), (dispatch) => ({
-  searchItem(value) {
-    dispatch(searchItem(value))
-  }
-}))
-class Index extends Component {
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as searchActions from "../../actions/search.action";
+import SearchRecord from '../../components/searchRecord'
+import SearchList from '../../components/searchList'
+
+class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      hasInput: false
+      value: ''
     }
   }
+
   onChange(value) {
-    console.log("[onchange...", value)
     this.setState({
       value: value
     })
   }
+
   render() {
-    const { hasInput } = this.state
-    const showRecordList = this.props.recordList && this.props.recordList.length > 0
+    const { initSearchData, loadSearchMore } = this.props
     return (
       <View className='index'>
+        搜索框
         <AtSearchBar
+          placeholder='请输入搜索关键词'
           value={this.state.value}
           onChange={(value) => this.onChange(value)}
-          onActionClick={() => this.props.searchItem(this.state.value)}
+          onActionClick={() => console.log("开始搜索...key:", this.state.value)}
         />
-        {!hasInput && showRecordList && <SearchRecord />}
-        {hasInput && <SearchResult />}
+        <SearchRecord />
+        <SearchList
+          list
+          page
+          initData={initSearchData}
+          loadMore={loadSearchMore}
+        />
       </View>
     )
   }
 }
-export default Index
+const mapStateToProps = (state) => {
+  const { recordList, isEdit } = state.search
+  return {
+    recordList,
+    isEdit
+  }
+};
 
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(searchActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

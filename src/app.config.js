@@ -3,9 +3,9 @@ export default defineAppConfig({
     // 'pages/one/index',
     // 'pages/mine/index',
     // 'pages/home/index',
+    'pages/search/index',
     'pages/experience/index',
     'pages/favorite/index',
-    // 'pages/search/index',
   ],
   tabBar: {
     list: [
@@ -26,6 +26,12 @@ export default defineAppConfig({
         selectedIconPath: 'assets/home_select.png',
         pagePath: 'pages/favorite/index',
         text: '收藏',
+      },
+      {
+        iconPath: 'assets/home.png',
+        selectedIconPath: 'assets/home_select.png',
+        pagePath: 'pages/search/index',
+        text: '搜索',
       },
       // ,
       // {

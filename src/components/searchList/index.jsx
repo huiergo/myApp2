@@ -17,7 +17,7 @@ class Topic extends Component {
   loading = false
 
   render() {
-    const { tabType, list, page, initData, loadMore } = this.props
+    const { list, page, initData, loadMore } = this.props
 
     const dataLen = list.length
     const itemSize = 100
@@ -30,20 +30,10 @@ class Topic extends Component {
         itemSize={itemSize}
         width='100%'
         onScrollToLower={() => {
-          loadMore({ tabType, page: page + 1 })
-          // if (!this.loading) {
-          //   this.loading = true
-          //   loadMore({ type, page: page + 1 })
-          //   this.loading = false
-          // }
+          loadMore({ page: page + 1 })
         }}
         onScrollToUpper={() => {
-          initData({ tabType, page: 1 })
-          // if (!this.loading) {
-          //   this.loading = true
-          //   initData({ type, page })
-          //   this.loading = false
-          // }
+          initData({ page: 1 })
         }}
       >
         {Row}
