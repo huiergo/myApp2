@@ -27,3 +27,7 @@ export function deleteFromStorage(key) {
   setStorage(key, []);
   return [];
 }
+
+export function gotoSearchPage(url) {
+  return Taro.navigateTo({ url });
+}

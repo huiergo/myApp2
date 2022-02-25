@@ -1,40 +1,84 @@
-import { Component } from 'react'
-import Taro from '@tarojs/taro'
-import { View } from '@tarojs/components'
-import { connect } from 'react-redux'
-import { tabShow } from "../../actions/common"
-import QuestionItem from '../../components/questionItem'
-import InterviewItem from '../../components/interviewItem'
+import React, { Component } from "react";
+import Taro from '@tarojs/taro';
 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { View, Image, Button } from '@tarojs/components';
+import { AtTabs, AtTabsPane } from 'taro-ui'
+import Topic from '../../components/topic'
 
-@connect((store) => ({ ...store, tabList: store.home.list }), (dispatch) => ({
-  tabShow(params) {
-    dispatch(tabShow(params))
-  }
-}))
+import { gotoSearchPage } from '../../utils/index'
+import * as experienceActions from "../../actions/experience.action"
 
 class Experience extends Component {
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps)
+  constructor() {
+    super(...arguments)
+
   }
-
-  componentWillUnmount() { }
-
-  componentDidShow() {
-    tabShow('experience')
+  change(v) {
+    this.props.changeTab(v)
+    console.log("change......====", v)
   }
-
-  componentDidHide() { }
 
   render() {
+    const {
+      currentIdx,
+      tabList,
+      chineseTabList,
+      exprState,
+      initData,
+      loadMore
+    } = this.props
+
     return (
-      <View className='experience-page'>
-        <QuestionItem />
-        <InterviewItem />
+      <View className='index'>
+        <View onClick={() => gotoSearchPage()}>静态搜索框</View>
+        <View onClick={() => initData({ tabType: 'recommend', page: 1 })}>上拉</View>
+        <View onClick={() => loadMore({ tabType: 'recommend', page: 2 })}>下拉</View>
+
+        <AtTabs
+          scroll
+          current={currentIdx}
+          tabList={chineseTabList}
+          onClick={this.change.bind(this)}
+        >
+          {
+            chineseTabList.map((item, idx) => {
+              return (
+                <AtTabsPane key={idx} current={currentIdx} index={idx} >
+                  index-{item.title} - {idx}
+                  <Topic
+                    tabType={tabList[idx]}
+                    list={exprState[tabList[idx]].list}
+                    page={exprState[tabList[idx]].page}
+                    initData={initData}
+                    loadMore={loadMore}
+                  />
+                </AtTabsPane>
+              )
+            })
+          }
+        </AtTabs>
+
       </View>
     )
   }
 }
-export default Experience
 
+const mapStateToProps = (state) => {
+  let { currentIdx } = state.experience
+  let tabList = Object.keys(state.experience).filter(i => i !== 'currentIdx')
+  let chineseTabList = tabList.map(k => state.experience[k].des).filter(i => i).map(j => ({ title: j }))
 
+  return {
+    tabList,
+    chineseTabList,
+    currentIdx,
+    exprState: state.experience
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(experienceActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Experience);

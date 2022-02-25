@@ -10,9 +10,7 @@ import { saveMineData } from '../actions/mine.action';
  */
 function* handleGetToken() {
   let { code } = yield Taro.login();
-
   let result = yield postJSON(apis.login, { code });
-  console.log('请求登录接口结果4444====', result);
   if (result && result.data && result.data.data) {
     let { token, refreshToken } = result.data.data;
     yield put(
@@ -29,9 +27,7 @@ function* handleGetToken() {
  */
 function* handleRefreshToken() {
   const state = yield select();
-  console.log('总数据====', state);
   let result = yield postJSON(apis.refreshToken, { refreshToken: state.mine.refreshToken });
-  console.log('44====', result);
   if (result && result.data && result.data.data) {
     let { token, refreshToken } = result.data.data;
     yield put(

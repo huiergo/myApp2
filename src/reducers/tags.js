@@ -78,13 +78,10 @@ const tagState = {
 };
 
 export default function tags(preState = tagState, action) {
-  console.log('触发 tags reducers');
   switch (action.type) {
     case 'reset':
-      console.log('reset 000...', ...tagState);
       return null;
     case 'updateSort':
-      console.log('updateTags tags action触发了444');
       return {
         ...preState,
         sortList: action.type == 'sort' ? action.list : preState.sortList,

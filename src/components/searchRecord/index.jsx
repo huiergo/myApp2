@@ -36,20 +36,15 @@ class Index extends Component {
     this.props.initRecord(this.props.recordList)
   }
   componentWillReceiveProps(nextProps) {
-    console.log("[[componentWillReceiveProps")
-    console.log(this.props, nextProps)
   }
 
   componentWillUnmount() {
-    console.log("[[componentWillUnmount")
   }
 
   componentDidShow() {
-    console.log("[[componentDidShow")
   }
 
   componentDidHide() {
-    console.log("[[componentDidHide")
 
   }
 

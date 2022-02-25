@@ -4,9 +4,12 @@ import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
 import { View, Image, Button } from '@tarojs/components'
 import { connect } from 'react-redux'
 import Question from '../../components/question'
+
 import { changeMenu } from "../../actions/menu"
 import { tabShow } from "../../actions/common"
 import { resetTags } from "../../actions/tags"
+
+
 import Filter from '../../components/filter'
 import Tags from '../../components/tags'
 import './index.scss'
@@ -102,7 +105,6 @@ class Index extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { isOpen } = this.state
     const { sortList, cataList } = this.props
     return (

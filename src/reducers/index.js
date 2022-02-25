@@ -4,6 +4,8 @@ import search from './search';
 import common from './common';
 import tags from './tags';
 import mine from './mine.reducer';
+import one from './one.reducer';
+import experience from './experience.reducer';
 
 export default combineReducers({
   home,
@@ -11,4 +13,6 @@ export default combineReducers({
   common,
   tags,
   mine,
+  one,
+  experience,
 });

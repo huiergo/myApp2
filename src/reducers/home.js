@@ -17,7 +17,6 @@ const menuState = {
 };
 
 export default function home(preState = menuState, action) {
-  console.log('[reducer home action----]', action);
   switch (action.type) {
     case 'changeMenu':
       return {

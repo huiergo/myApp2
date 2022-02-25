@@ -12,11 +12,7 @@ store.runSaga(rootSaga);
 class App extends Component {
   componentDidMount() {}
 
-  componentDidShow() {
-    // componentDidMount() {
-    console.log('App挂载了', Taro.getCurrentInstance().router.path);
-    // }
-  }
+  componentDidShow() {}
 
   componentDidHide() {}
 

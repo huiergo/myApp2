@@ -36,7 +36,6 @@ class Index extends Component {
     super(props)
   }
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps)
   }
 
   componentWillUnmount() { }

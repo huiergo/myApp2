@@ -1,4 +1,3 @@
-// getToken
 import { createAction } from 'redux-actions';
 
 /**
