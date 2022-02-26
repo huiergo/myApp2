@@ -67,7 +67,9 @@ class Experience extends Component {
 
 const mapStateToProps = (state) => {
   let { currentIdx } = state.experience
+  // 其实是筛选了下 ：结果是 ['recommand','lastest']
   let tabList = Object.keys(state.experience).filter(i => i !== 'currentIdx')
+  //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
   let chineseTabList = tabList.map(k => state.experience[k].des).filter(i => i).map(j => ({ title: j }))
 
   return {

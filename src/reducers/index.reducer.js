@@ -4,6 +4,7 @@ import experience from './experience.reducer';
 import search from './search.reducer';
 import first from './first.reducer';
 import tag from './tag.reducer';
+import favorite from './favorite.reducer';
 
 export default combineReducers({
   search,
@@ -11,4 +12,5 @@ export default combineReducers({
   experience,
   first,
   tag,
+  favorite,
 });

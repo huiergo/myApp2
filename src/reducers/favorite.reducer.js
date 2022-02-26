@@ -1,62 +1,62 @@
 import { handleActions as createReducer } from 'redux-actions';
-import { changeTab, saveInitData, saveLoadMore } from '../actions/experience.action';
+import { changeTab, saveInitData, saveLoadMore } from '../actions/favorite.action';
 
 const initialState = {
-  recommend: {
-    des: '推荐',
+  favorite_question: {
+    des: '收藏 题目',
     list: [
       {
         difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
@@ -65,47 +65,47 @@ const initialState = {
     page: 1,
     pageSize: 20,
   },
-  latest: {
-    des: '最新',
+  favorite_experience: {
+    des: '收藏 面经',
     list: [
       {
         difficulty: 1,
-        title: '最新1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '最新2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '最新1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '最新2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '最新1-Question的优势是什么？',
+        title: '收藏 题目1-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
       },
       {
         difficulty: 1,
-        title: '最新2-Question的优势是什么？',
+        title: '收藏 题目2-Question的优势是什么？',
         likeNum: 666,
         pvNum: 99,
         isLike: true,
