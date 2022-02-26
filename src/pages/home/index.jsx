@@ -110,7 +110,7 @@ class Index extends Component {
     return (
       <View className='index-page'>
         {/* 渐变背景 */}
-        <Image className='index-page-bg' src={require('../../assets/jianbian.jpeg')} />
+        {/* <Image className='index-page-bg' src={require('../../assets/jianbian.jpeg')} /> */}
         <AtSearchBar
           onFocus={() => { Taro.navigateTo({ url: '/pages/search/index' }) }}
           disabled

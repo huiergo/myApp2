@@ -2,19 +2,19 @@ export default defineAppConfig({
   pages: [
     // 'pages/one/index',
     // 'pages/mine/index',
-    // 'pages/home/index',
+    'pages/home/index',
     'pages/search/index',
     'pages/experience/index',
     'pages/favorite/index',
   ],
   tabBar: {
     list: [
-      // {
-      //   iconPath: 'assets/home.png',
-      //   selectedIconPath: 'assets/home_select.png',
-      //   pagePath: 'pages/home/index',
-      //   text: '首页',
-      // },
+      {
+        iconPath: 'assets/home.png',
+        selectedIconPath: 'assets/home_select.png',
+        pagePath: 'pages/home/index',
+        text: '首页',
+      },
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
@@ -27,12 +27,12 @@ export default defineAppConfig({
         pagePath: 'pages/favorite/index',
         text: '收藏',
       },
-      {
-        iconPath: 'assets/home.png',
-        selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/search/index',
-        text: '搜索',
-      },
+      // {
+      //   iconPath: 'assets/home.png',
+      //   selectedIconPath: 'assets/home_select.png',
+      //   pagePath: 'pages/search/index',
+      //   text: '搜索',
+      // },
       // ,
       // {
       //   iconPath: 'assets/home.png',

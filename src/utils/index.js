@@ -28,6 +28,6 @@ export function deleteFromStorage(key) {
   return [];
 }
 
-export function gotoSearchPage(url) {
+export function gotoPage({ url }) {
   return Taro.navigateTo({ url });
 }

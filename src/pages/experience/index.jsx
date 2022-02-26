@@ -7,7 +7,7 @@ import { View, Image, Button } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
 
-import { gotoSearchPage } from '../../utils/index'
+import { gotoPage } from '../../utils/index'
 import * as experienceActions from "../../actions/experience.action"
 
 class Experience extends Component {
@@ -32,7 +32,7 @@ class Experience extends Component {
 
     return (
       <View className='index'>
-        <View onClick={() => gotoSearchPage()}>静态搜索框</View>
+        <View onClick={() => gotoPage({ url: './search/index' })}>静态搜索框</View>
         <View onClick={() => initData({ tabType: 'recommend', page: 1 })}>上拉</View>
         <View onClick={() => loadMore({ tabType: 'recommend', page: 2 })}>下拉</View>
 
