@@ -1,29 +1,25 @@
 import React, { Component } from 'react'
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components'
 import { AtTag } from 'taro-ui'
 
 class CustomTags extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      list: props.list
-    }
   }
 
   componentDidMount() {
-    console.log("[componentDidMount]", this.state.list)
+    console.log("[componentDidMount]", this.props.list)
   }
 
   onClick(index) {
-    this.props.updateTagList({ type:this.props.type, index })
+    this.props.updateTagList({ type: this.props.type, index })
   }
   render() {
+    const { list } = this.props
     return (
       <View className='container'>
         {
-          this.state.list.map((item, index) => {
+          list.map((item, index) => {
             return (
               <AtTag
                 key={index}
@@ -45,14 +41,3 @@ class CustomTags extends Component {
 }
 
 export default CustomTags
-// const mapStateToProps = (state) => {
- 
-//   return {
-  
-//   }
-// };
-// const mapDispatchToProps = (dispatch) => ({
-//   ...bindActionCreators(experienceActions, dispatch),
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Experience);

@@ -2,7 +2,7 @@ export default defineAppConfig({
   pages: [
     // 'pages/one/index',
     // 'pages/mine/index',
-    'pages/home/index',
+    'pages/first/index',
     'pages/search/index',
     'pages/experience/index',
     'pages/favorite/index',
@@ -12,7 +12,7 @@ export default defineAppConfig({
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/home/index',
+        pagePath: 'pages/first/index',
         text: '首页',
       },
       {

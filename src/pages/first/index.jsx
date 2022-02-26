@@ -78,6 +78,7 @@ class First extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log("first page state.tag====", state.tag)
   return {
     showModal: state.first,
     sortList: state.tag.sortList,
