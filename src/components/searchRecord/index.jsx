@@ -24,7 +24,7 @@ class SearchRecord extends Component {
         </View>)}
         {recordList.map((item, index) => (
           <View key={index}>
-            <Text onClick={() => unShiftRecord({ item, index })}>{item}</Text>
+            <Text onClick={() => unShiftRecord({ item })}>{item}</Text>
             {isEdit ? <Button onClick={() => deleteRecordByIndex(index)}>删除</Button> : null}
           </View>
         ))}

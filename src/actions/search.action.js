@@ -19,6 +19,11 @@ export const deleteRecordByIndex = createAction('delete record by index');
 export const editTrigger = createAction('edit trigger');
 
 /**
+ * hasInput : 有输入的时候展示列表页，无输入展示历史记录
+ */
+export const inputTrigger = createAction('input trigger');
+
+/**
  *  搜索结果列表-初始化请求
  */
 export const initSearchData = createAction('init search data');

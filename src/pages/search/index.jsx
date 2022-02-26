@@ -20,10 +20,12 @@ class Search extends Component {
     this.setState({
       value: value
     })
+
+    this.props.inputTrigger(value)
   }
 
   render() {
-    const { initSearchData, loadSearchMore } = this.props
+    const { list, page, initSearchData, loadSearchMore, unShiftRecord, editTrigger, hasInput } = this.props
     return (
       <View className='index'>
         搜索框
@@ -31,24 +33,34 @@ class Search extends Component {
           placeholder='请输入搜索关键词'
           value={this.state.value}
           onChange={(value) => this.onChange(value)}
-          onActionClick={() => console.log("开始搜索...key:", this.state.value)}
+          onFocus={() => editTrigger(false)}
+          onActionClick={() => {
+            // 搜索关键词请求
+            initSearchData({ keyword: this.state.value, page: 1 })
+            // 
+            unShiftRecord({ item: this.state.value })
+          }}
         />
-        <SearchRecord />
-        <SearchList
-          list
-          page
+        {!hasInput && <SearchRecord />}
+        {hasInput && <SearchList
+          list={list}
+          page={page}
           initData={initSearchData}
           loadMore={loadSearchMore}
-        />
+        />}
       </View>
     )
   }
 }
 const mapStateToProps = (state) => {
-  const { recordList, isEdit } = state.search
+  const { list, isEdit, page, hasInput } = state.search
+  console.log("[search ...]", state.search)
+
   return {
-    recordList,
-    isEdit
+    list,
+    page,
+    isEdit,
+    hasInput
   }
 };
 

@@ -6,11 +6,15 @@ import {
   unShiftRecord,
   saveInitSearchData,
   saveLoadSearchMore,
+  inputTrigger,
 } from '../actions/search.action';
 
 const initialState = {
   recordList: ['吃饭', '睡觉', '打豆豆'],
   isEdit: false,
+  page: 1,
+  list: [], //搜索结果列表
+  hasInput: false,
 };
 const handleUnShiftRecord = (state, action) => {
   // todo: 需要remove, 然后unshift
@@ -65,8 +69,17 @@ const handleSaveLoadSearchMore = (state, action) => {
   const { list, page } = action.payload;
   return {
     ...state,
-    list,
+    list: state.list.concat(list),
     page,
+  };
+};
+
+const handleInputTrigger = (state, action) => {
+  const value = action.payload;
+  console.log('[handleInputTrigger-----]', value);
+  return {
+    ...state,
+    hasInput: value ? true : false,
   };
 };
 
@@ -78,6 +91,7 @@ export default createReducer(
     [editTrigger]: handleEditTrigger,
     [saveInitSearchData]: handleSaveInitSearchData,
     [saveLoadSearchMore]: handleSaveLoadSearchMore,
+    [inputTrigger]: handleInputTrigger,
   },
   initialState,
 );

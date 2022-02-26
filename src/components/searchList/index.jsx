@@ -13,7 +13,7 @@ const Row = React.memo(({ id, index, style, data }) => {
   );
 })
 
-class Topic extends Component {
+class SearchList extends Component {
   loading = false
 
   render() {
@@ -41,4 +41,4 @@ class Topic extends Component {
     );
   }
 }
-export default Topic
+export default SearchList
