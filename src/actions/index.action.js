@@ -1,13 +1,3 @@
-// changeMenu(cata) {
-//     dispatch(changeMenu(cata))
-//   },
-//   tabShow(params) {
-//     dispatch(tabShow(params))
-//   },
-//   resetTags() {
-//     dispatch(resetTags())
-//   }
-
 import { createAction } from 'redux-actions';
 
 /**

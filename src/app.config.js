@@ -1,6 +1,5 @@
 export default defineAppConfig({
   pages: [
-    // 'pages/one/index',
     // 'pages/mine/index',
     'pages/first/index',
     'pages/search/index',
