@@ -31,19 +31,9 @@ class Topic extends Component {
         width='100%'
         onScrollToLower={() => {
           loadMore({ tabType, page: page + 1 })
-          // if (!this.loading) {
-          //   this.loading = true
-          //   loadMore({ type, page: page + 1 })
-          //   this.loading = false
-          // }
         }}
         onScrollToUpper={() => {
           initData({ tabType, page: 1 })
-          // if (!this.loading) {
-          //   this.loading = true
-          //   initData({ type, page })
-          //   this.loading = false
-          // }
         }}
       >
         {Row}

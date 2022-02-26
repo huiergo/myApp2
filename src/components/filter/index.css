@@ -1,9 +1,0 @@
-.layout-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.layout-header__title{
-    padding-right: 0!important
-}

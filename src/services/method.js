@@ -1,5 +1,4 @@
 import Taro from '@tarojs/taro';
-// import '@tarojs/async-await';
 
 export function getJSON(url, data) {
   Taro.showLoading();
