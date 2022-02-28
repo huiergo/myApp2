@@ -69,11 +69,18 @@ class SubDetail extends Component {
   constructor() {
     super(...arguments)
   }
-
+  // 上一页下一页点击事件
   pageClick(id) {
     console.log("请求接口", id)
   }
-
+  // 赞 事件
+  handleZan() {
+    // this.props.currentId
+  }
+  // 收藏 事件
+  handleFavorite() {
+    // this.props.currentId
+  }
   render() {
     const { lastId, nextId } = this.props
     return (
@@ -94,8 +101,8 @@ class SubDetail extends Component {
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
-          <Image className='zan-btn' src={require('../../assets/zan.png')} />
-          <Image className='favorite-btn' src={require('../../assets/favorite-icon.png')} />
+          <Image className='zan-btn' src={require('../../assets/zan.png')} onClick={this.handleZan} />
+          <Image className='favorite-btn' src={require('../../assets/favorite-icon.png')} onClick={this.handleFavorite} />
         </View>
 
 
