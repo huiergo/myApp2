@@ -1,5 +1,6 @@
 export default defineAppConfig({
   pages: [
+    'pages/sub_detail_question/index',
     'pages/mine/index',
     'pages/sub_aboutUs/index',
     'pages/sub_history/index',
