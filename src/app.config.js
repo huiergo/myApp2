@@ -1,8 +1,9 @@
 export default defineAppConfig({
   pages: [
+    'pages/mine/index',
+    'pages/sub_aboutUs/index',
     'pages/sub_history/index',
     'pages/sub_zan/index',
-    'pages/mine/index',
     'pages/experience/index',
     'pages/first/index',
     'pages/search/index',

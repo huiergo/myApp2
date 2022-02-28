@@ -8,6 +8,8 @@ import { AtList, AtListItem, AtGrid } from "taro-ui"
 
 import * as mineActions from "../../actions/mine.action";
 import * as loginActions from "../../actions/login.action"
+import { gotoPage } from '../../utils/index'
+
 // * 1、获取用户数据
 // pageshow时候: 刷新页面（点赞数和签到数）
 // * 3、flag: 判断签到模块的展示
@@ -40,6 +42,9 @@ class Mine extends Component {
 
   handleListClick({ type }) {
     console.log("[handleListClick] item index----", type)
+    if (type === 'aboutUs') {
+      gotoPage({ url: '../sub_aboutUs/index' })
+    }
   }
 
   handleClockInClick(flag) {
@@ -87,7 +92,7 @@ class Mine extends Component {
 
         <AtList>
           <AtListItem title='推荐分享' onClick={() => this.handleListClick({ type: 'recommend' })} />
-          <AtListItem title='意见反馈' arrow='right' onClick={() => this.handleListClick({ type: 'feedback' })} />
+          <Button open-type="feedback" >意见反馈</Button>
           <AtListItem title='关于我们' extraText='详细信息' onClick={() => this.handleListClick({ type: 'aboutUs' })} />
         </AtList>
       </View>
