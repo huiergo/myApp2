@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, Button } from '@tarojs/components'
 import { AtTag } from 'taro-ui'
+import './index.scss'
 
 class CustomTags extends Component {
   constructor(props) {
@@ -15,22 +16,25 @@ class CustomTags extends Component {
     this.props.updateTagList({ type: this.props.type, index })
   }
   render() {
-    const { list } = this.props
+    const { list, circle } = this.props
     return (
       <View className='container'>
         {
           list.map((item, index) => {
             return (
               <AtTag
+                className='tag-custom'
                 key={index}
                 name='tag-1'
                 type='primary'
-                circle={false}
+                circle={circle}
                 active={item.active}
                 onClick={() => { this.onClick(index) }}
               >
-                {item.canSort ? item.specialStatus : ''}
                 {item.name}
+                {item.canSort ? (item.specialStatus === 0 ? <Image className='filter-sort-arrow' src={require('../../assets/up_arrow_icon.png')} />
+                  : <Image className='filter-sort-arrow' src={require('../../assets/down_arrow_icon.png')} />) : ''}
+
               </AtTag>
             )
           })

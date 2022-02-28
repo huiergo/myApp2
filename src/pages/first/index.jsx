@@ -17,6 +17,8 @@ import CustomTags from '../../components/customTags'
 
 import Topic from '../../components/topic'
 
+import './index.scss'
+
 
 
 class First extends Component {
@@ -75,45 +77,55 @@ class First extends Component {
 
     return (
       <View className='index'>
-        假的搜索框
-        <View onClick={() => gotoPage({ url: '../search/index' })}>
-          <AtSearchBar
-            placeholder='请输入搜索关键词'
-            disabled
-          />
+        <View className='top-part'>
+          <View className='index__search-bar' onClick={() => gotoPage({ url: '../search/index' })}>
+            <AtSearchBar
+              placeholder='请输入搜索关键词'
+              disabled
+            />
+          </View>
+          <View className='index__clock-in'>去打卡</View>
         </View>
 
-        <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View>
+
+
+        {/* <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View> */}
         <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
-          题目排序
-          <CustomTags type='sortList' list={sortList} updateTagList={updateTagList} />
-          选择阶段
-          <CustomTags type='cataList' list={cataList} updateTagList={updateTagList} />
+          <View className='custom__tag-title'> 题目排序 </View>
+          <CustomTags type='sortList' circle={false} list={sortList} updateTagList={updateTagList} />
+          <View className='custom__tag-title'> 选择阶段</View>
+          <CustomTags type='cataList' circle={true} list={cataList} updateTagList={updateTagList} />
         </CustomModel>
 
-        <AtTabs
-          scroll
-          current={currentIdx}
-          tabList={chineseTabList}
-          onClick={this.change.bind(this)}
-        >
-          {
-            chineseTabList.map((item, idx) => {
-              return (
-                <AtTabsPane key={idx} current={currentIdx} index={idx} >
-                  index-{item.title} - {idx}
-                  <Topic
-                    tabType={tabList[idx]}
-                    list={exprState[tabList[idx]].list}
-                    page={exprState[tabList[idx]].page}
-                    initData={initData}
-                    loadMore={loadMore}
-                  />
-                </AtTabsPane>
-              )
-            })
-          }
-        </AtTabs>
+        <View className='index-tab-wrap'>
+          <AtTabs
+            className='index-tab'
+            scroll
+            current={currentIdx}
+            tabList={chineseTabList}
+            onClick={this.change.bind(this)}
+          >
+
+            {
+              chineseTabList.map((item, idx) => {
+                return (
+                  <AtTabsPane key={idx} current={currentIdx} index={idx} >
+                    index-{item.title} - {idx}
+                    <Topic
+                      tabType={tabList[idx]}
+                      list={exprState[tabList[idx]].list}
+                      page={exprState[tabList[idx]].page}
+                      initData={initData}
+                      loadMore={loadMore}
+                    />
+                  </AtTabsPane>
+                )
+              })
+            }
+          </AtTabs>
+          <Image className='test-filter-btn' src={require('../../assets/filter_icon.png')} onClick={() => this.setState({ isOpened: true })} />
+        </View>
+
       </View>
     )
   }

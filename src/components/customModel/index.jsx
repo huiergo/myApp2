@@ -61,7 +61,7 @@ export default class AtFloatLayout extends React.Component {
       React.createElement(View, { className: 'at-float-layout__container layout' },
         title ? (React.createElement(View, { className: 'layout-header' },
           React.createElement(Text, { className: 'layout-header__title', onClick: this.reset }, title),
-          React.createElement(Text, { className: 'layout-header__title', onClick: this.close }, closeText))) : null,
+          React.createElement(Text, { className: 'layout-header__title layout-header__title-complete', onClick: this.close }, closeText))) : null,
         React.createElement(View, { className: 'layout-body' },
           React.createElement(ScrollView, {
             scrollY: scrollY, scrollX: scrollX, scrollTop: scrollTop, scrollLeft: scrollLeft, upperThreshold: upperThreshold, lowerThreshold: lowerThreshold, scrollWithAnimation: scrollWithAnimation,
