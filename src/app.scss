@@ -1,1 +1,7 @@
 @import '~taro-ui/dist/style/index.scss';
+
+.at-tabs__header {
+  text-align: left !important;
+  padding-left: 32px;
+  padding-right: 32px;
+}

@@ -4,8 +4,8 @@ import Taro from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
-import { AtTabs, AtTabsPane } from 'taro-ui'
-import Topic from '../../components/topic'
+import { AtSearchBar, AtTabs, AtTabsPane } from 'taro-ui'
+import Topic2 from '../../components/topic2'
 
 import { gotoPage } from '../../utils/index'
 import * as experienceActions from "../../actions/experience.action"
@@ -32,10 +32,15 @@ class Experience extends Component {
 
     return (
       <View className='index'>
-        <View onClick={() => gotoPage({ url: '../search/index' })}>静态搜索框</View>
+        {/* <View onClick={() => gotoPage({ url: '../search/index' })}>静态搜索框</View>
         <View onClick={() => initData({ tabType: 'recommend', page: 1 })}>上拉</View>
-        <View onClick={() => loadMore({ tabType: 'recommend', page: 2 })}>下拉</View>
-
+        <View onClick={() => loadMore({ tabType: 'recommend', page: 2 })}>下拉</View> */}
+        <View className='index__search-bar' onClick={() => gotoPage({ url: '../search/index' })}>
+          <AtSearchBar
+            placeholder='请输入搜索关键词'
+            disabled
+          />
+        </View>
         <AtTabs
           scroll
           current={currentIdx}
@@ -47,7 +52,7 @@ class Experience extends Component {
               return (
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
                   index-{item.title} - {idx}
-                  <Topic
+                  <Topic2
                     tabType={tabList[idx]}
                     list={exprState[tabList[idx]].list}
                     page={exprState[tabList[idx]].page}

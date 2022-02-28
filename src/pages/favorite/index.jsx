@@ -32,8 +32,8 @@ class Favorite extends Component {
 
     return (
       <View className='index'>
-        <View onClick={() => initData({ tabType: 'recommend', page: 1 })}>上拉</View>
-        <View onClick={() => loadMore({ tabType: 'recommend', page: 2 })}>下拉</View>
+        {/* <View onClick={() => initData({ tabType: 'recommend', page: 1 })}>上拉</View>
+        <View onClick={() => loadMore({ tabType: 'recommend', page: 2 })}>下拉</View> */}
 
         <AtTabs
           scroll

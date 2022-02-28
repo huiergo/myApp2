@@ -3,7 +3,7 @@ import { changeTab, saveInitData, saveLoadMore } from '../actions/favorite.actio
 
 const initialState = {
   favorite_question: {
-    des: '收藏 题目',
+    des: '题目',
     list: [
       {
         difficulty: 1,
@@ -66,7 +66,7 @@ const initialState = {
     pageSize: 20,
   },
   favorite_experience: {
-    des: '收藏 面经',
+    des: '面经',
     list: [
       {
         difficulty: 1,
