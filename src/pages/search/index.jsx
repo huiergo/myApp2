@@ -40,7 +40,7 @@ class Search extends Component {
             unShiftRecord({ item: this.state.value })
           }}
         />
-        {!hasInput && <SearchRecord />}
+        {!hasInput && <SearchRecord onChange={(value) => this.onChange(value)} />}
         {hasInput && <SearchList
           list={list}
           page={page}

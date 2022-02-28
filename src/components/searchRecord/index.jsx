@@ -36,7 +36,12 @@ class SearchRecord extends Component {
 
         {recordList.map((item, index) => (
           <AtTag className='tag-search' key={index} type='primary' circle>
-            <Text onClick={() => unShiftRecord({ item })}>{item}</Text>
+            <Text
+              onClick={() => {
+                this.props.onChange(item)
+                unShiftRecord({ item })
+              }}
+            >{item}</Text>
             {isEdit ?
               <Image
                 className='edit-item-delete-icon'
