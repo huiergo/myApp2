@@ -1,0 +1,47 @@
+.search-record {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.search-record-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  height: 40px;
+}
+
+.trash-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.edit-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #979797;
+  font-size: 26px;
+}
+
+.edit-split {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.edit-item-delete-icon {
+  width: 24px;
+  height: 24px;
+  margin-left: 20px;
+}
+
+.tag-search {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

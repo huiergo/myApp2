@@ -28,7 +28,6 @@ class Search extends Component {
     const { list, page, initSearchData, loadSearchMore, unShiftRecord, editTrigger, hasInput } = this.props
     return (
       <View className='index'>
-        搜索框
         <AtSearchBar
           placeholder='请输入搜索关键词'
           value={this.state.value}
