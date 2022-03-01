@@ -34,8 +34,6 @@ export const saveInitData = createAction('first save init data');
  */
 export const saveLoadMore = createAction('first save load more');
 
-// category,
-// saveCategory,
 /**
  * 请求分类列表
  */
@@ -44,3 +42,4 @@ export const category = createAction('first cateList');
  * 同步数据-分类
  */
 export const saveCategory = createAction('first save cateList');
+//

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro from '@tarojs/taro';
+import Taro, { eventCenter } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -26,6 +26,9 @@ class First extends Component {
   }
   change(v) {
     this.props.changeTab(v)
+    // 触发事件，传入多个参数
+    eventCenter.trigger('eventChange', v)
+
     console.log("change......====", v)
   }
   getExtralParams() {
@@ -53,6 +56,8 @@ class First extends Component {
   }
   complete() {
     let params = this.getExtralParams()
+    // todo: 1.需要定位到相应的tab  2. 需要同步状态 3.需要请求数据
+
     this.props.submitFilterParams(params)
     this.props.triggerModel(false)
     this.setState({
@@ -108,6 +113,8 @@ class First extends Component {
                   <AtTabsPane key={idx} current={currentIdx} index={idx} >
                     index-{item.title} - {idx}
                     <Topic
+                      current={currentIdx}
+                      index={idx}
                       tabType={tabList[idx]}
                       list={exprState[tabList[idx]].list}
                       page={exprState[tabList[idx]].page}

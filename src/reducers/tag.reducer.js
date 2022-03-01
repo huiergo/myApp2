@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions';
-import { updateTagList, resetTagList } from '../actions/tag.action';
+import { updateTagList, resetTagList, saveCategoryToTag } from '../actions/tag.action';
 
 const initialState = {
   sortList: [
@@ -155,10 +155,34 @@ const handleResetTagList = (state, action) => {
     ...resetState,
   };
 };
+
+const buildCateData = (list) => {
+  let result = list.map((item) => {
+    return {
+      name: item.name,
+      active: false,
+      canSort: false,
+      specialStatus: 0,
+    };
+  });
+  resetState.cataList = result;
+  return result;
+};
+
+const handleSaveCategoryToTag = (state, action) => {
+  const { cateList } = action.payload;
+  return {
+    ...state,
+    cataList: buildCateData(cateList),
+  };
+};
+
 export default createReducer(
   {
     [updateTagList]: handleUpdateTagList,
     [resetTagList]: handleResetTagList,
+    // 分类
+    [saveCategoryToTag]: handleSaveCategoryToTag,
   },
   initialState,
 );

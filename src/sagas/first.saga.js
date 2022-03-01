@@ -10,6 +10,7 @@ import {
   category,
   saveCategory,
 } from '../actions/first.action';
+import { saveCategoryToTag } from '../actions/tag.action';
 
 /**
  * 获取”初始化“列表，并同步到store
@@ -131,6 +132,7 @@ function* handleCategory() {
   if (result && result.data && result.data.data) {
     let cateList = result.data.data;
     yield put(saveCategory({ cateList }));
+    yield put(saveCategoryToTag({ cateList }));
   }
 }
 
