@@ -71,14 +71,16 @@ class SubDetail extends Component {
   }
   // 上一页下一页点击事件
   pageClick(id) {
-    console.log("请求接口", id)
+    console.log("上一页下一页id", id)
   }
   // 赞 事件
   handleZan() {
+    console.log("点赞id----", this.props.currentId)
     // this.props.currentId
   }
   // 收藏 事件
   handleFavorite() {
+    console.log("收藏 id----", this.props.currentId)
     // this.props.currentId
   }
   render() {

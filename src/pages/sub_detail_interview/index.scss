@@ -1,0 +1,41 @@
+.detail-split {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.detail-interview {
+  padding-left: 32px;
+  padding-right: 32px;
+  color: #121826;
+}
+
+.detail-interview__title {
+  font-size: 38px;
+}
+
+.detail-interview__des {
+  font-size: 22px;
+  color: #c3c3c5;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.detail-interview__user {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 26px;
+  margin-bottom: 52px;
+}
+
+.detail-interview__user-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 46px;
+  margin-right: 12px;
+}
