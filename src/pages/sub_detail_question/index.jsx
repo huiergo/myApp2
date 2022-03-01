@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Taro from '@tarojs/taro';
 import { View, Image, Button, Text } from '@tarojs/components';
 import CustomPagination from "../../components/customPagination";
+import { redirectToPage } from "../../utils";
 
 import './index.scss'
 
@@ -36,7 +37,10 @@ let item = {
   likeNum: 666,
   pvNum: 99,
   isLike: true,
-  stage: 'vue'
+  stage: 'vue',
+  currentId: 5,
+  nextId: 6,
+  lastId: 4
 }
 
 const IconText = ({ title, des }) => {
@@ -69,22 +73,29 @@ class SubDetail extends Component {
   constructor() {
     super(...arguments)
   }
+  // onLoad
+  // onLoad(options) {
+  //   console.log("[SubDetail questionn------]", options)
+  //   const { id } = options
+  // }
+
   // 上一页下一页点击事件
   pageClick(id) {
     console.log("上一页下一页id", id)
+    // redirectToPage({ url: `./index?id=${id}` })
   }
   // 赞 事件
   handleZan() {
-    console.log("点赞id----", this.props.currentId)
+    console.log("点赞id----", item.currentId)
     // this.props.currentId
   }
   // 收藏 事件
   handleFavorite() {
-    console.log("收藏 id----", this.props.currentId)
+    console.log("收藏 id----", item.currentId)
     // this.props.currentId
   }
   render() {
-    const { lastId, nextId } = this.props
+    const { lastId, nextId } = item
     return (
       <View className='index'>
         <IconText title='题目：' des='Vue的最大的优势是什么？' />
@@ -109,7 +120,7 @@ class SubDetail extends Component {
 
 
         {/* 上一题下一题 */}
-        <CustomPagination lastId={1} nextId={0} pageClick={this.pageClick} />
+        <CustomPagination lastId={1} nextId={5} pageClick={this.pageClick} />
       </View>
     )
   }

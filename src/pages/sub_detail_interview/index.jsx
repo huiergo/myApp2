@@ -37,6 +37,22 @@ class SubDetail extends Component {
   constructor() {
     super(...arguments)
   }
+  // onLoad
+  onLoad(options) {
+    console.log("[SubDetail interview------]", options)
+    const { } = options
+  }
+
+  // 赞 事件
+  handleZan() {
+    console.log("点赞id----", this.props.currentId)
+    // this.props.currentId
+  }
+  // 收藏 事件
+  handleFavorite() {
+    console.log("收藏 id----", this.props.currentId)
+    // this.props.currentId
+  }
 
   render() {
     const { date, pvNum, zanNum, author, avatar } = item
@@ -55,6 +71,12 @@ class SubDetail extends Component {
           {author}
         </View>
         <View className='detail-content' dangerouslySetInnerHTML={{ __html: html }}></View>
+
+        {/* 点赞和收藏按钮 */}
+        <View className='zan-favorite-btns'>
+          <Image className='zan-btn' src={require('../../assets/zan.png')} onClick={this.handleZan} />
+          <Image className='favorite-btn' src={require('../../assets/favorite-icon.png')} onClick={this.handleFavorite} />
+        </View>
 
       </View>
     )

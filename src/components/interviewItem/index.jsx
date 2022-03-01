@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, Image, Textarea } from '@tarojs/components'
 import './index.scss'
+import { gotoPage } from '../../utils'
 
 let item = {
+  id: 'interview123',
   avatar: 'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
   difficulty: 1,
   title: 'interview组件的优势是什么？',
@@ -33,7 +35,7 @@ class Index extends Component {
 
   render() {
     return (
-      <View className='interview-item'>
+      <View className='interview-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_interview/index?id=${item.id}` })}>
         <View className='interview-item__top'>
           <Image className='interview-item__top-avatar' src={item.avatar} />
           <View className='interview-item__top-content'>

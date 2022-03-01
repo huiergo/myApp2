@@ -1,7 +1,8 @@
 const baseUrl = 'https://mock.boxuegu.com/mock/1508';
 const apiObject = {
   // ========  get 请求 ========
-  //  首页-分类 （待补充）
+  //  首页-获取分类
+  getCategory: `${baseUrl}/wxmini/question/type`,
 
   //   首页-是否已经打卡
   getFlag: `${baseUrl}/wxmini/hasClockIn`,

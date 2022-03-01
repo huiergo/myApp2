@@ -1,13 +1,13 @@
 export default defineAppConfig({
   pages: [
+    'pages/first/index',
+    'pages/mine/index',
     'pages/sub_detail_interview/index',
     'pages/sub_detail_question/index',
-    'pages/mine/index',
     'pages/sub_aboutUs/index',
     'pages/sub_history/index',
     'pages/sub_zan/index',
     'pages/experience/index',
-    'pages/first/index',
     'pages/search/index',
     'pages/favorite/index',
   ],

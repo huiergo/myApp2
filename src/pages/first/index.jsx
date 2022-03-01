@@ -8,18 +8,11 @@ import { AtTabs, AtTabsPane } from 'taro-ui'
 import { AtSearchBar } from 'taro-ui'
 import * as tagActions from "../../actions/tag.action"
 import * as firstActions from "../../actions/first.action"
-
-
 import { gotoPage } from "../../utils/index"
-
 import CustomModel from '../../components/customModel'
 import CustomTags from '../../components/customTags'
-
 import Topic from '../../components/topic'
-
 import './index.scss'
-
-
 
 class First extends Component {
   constructor(props) {
@@ -27,6 +20,9 @@ class First extends Component {
     this.state = {
       isOpened: false
     }
+  }
+  componentDidMount() {
+    this.props.category()
   }
   change(v) {
     this.props.changeTab(v)

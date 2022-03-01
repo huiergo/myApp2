@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import './index.scss'
-
+import { gotoPage } from '../../utils'
 
 const handleTag = (tag) => {
   switch (tag) {
@@ -47,7 +47,7 @@ class Index extends Component {
   render() {
     const { item } = this.props
     return (
-      <View className='question-item'>
+      <View className='question-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_question/index?id=${item.likeNum}` })}>
         <View className='question-item__top'>
           <View className={`question-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}

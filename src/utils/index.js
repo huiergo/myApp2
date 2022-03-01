@@ -31,3 +31,7 @@ export function deleteFromStorage(key) {
 export function gotoPage({ url }) {
   return Taro.navigateTo({ url });
 }
+
+export function redirectToPage({ url }) {
+  return Taro.redirectTo({ url });
+}

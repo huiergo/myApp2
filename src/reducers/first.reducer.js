@@ -6,6 +6,7 @@ import {
   changeTab,
   saveInitData,
   saveLoadMore,
+  saveCategory,
 } from '../actions/first.action';
 
 const initialState = {
@@ -124,398 +125,6 @@ const initialState = {
     page: 1,
     pageSize: 20,
   },
-  test1: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test2: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test3: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test4: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test5: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test6: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test7: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  test8: {
-    des: '测试',
-    list: [
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '测试2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
 };
 
 const handleSubmitFilterParams = (state, action) => {
@@ -567,6 +176,51 @@ const handleSaveLoadMore = (state, action) => {
     },
   };
 };
+// [
+//   {
+//     "id": 350000197511154900,
+//     "name": "韩艳"
+//   {
+//     "id": 460000201203274700,
+//     "name": "李霞"
+//   }
+// ]
+// ===============
+// recommend: {
+//   des: '推荐',
+//   list: [],
+//   page: 1,
+//   pageSize: 20,
+// },
+// latest: {
+//   des: '最新',
+//   list: [],
+//   page: 1,
+//   pageSize: 20,
+// },
+const buildCateData = (list) => {
+  let obj = {};
+  list.map((item) => {
+    obj[item.id] = {
+      des: item.name,
+      list: [],
+      page: 1,
+      pageSize: 20,
+    };
+  });
+  console.log('[buildCateData result-----]', obj);
+  return obj;
+};
+
+const handelSaveCategory = (state, action) => {
+  const { cateList } = action.payload;
+  console.log('[handelSaveCategory-----]', cateList);
+  return {
+    ...state,
+    ...buildCateData(cateList),
+  };
+};
+
 export default createReducer(
   {
     [submitFilterParams]: handleSubmitFilterParams,
@@ -575,6 +229,8 @@ export default createReducer(
     [changeTab]: handleChangeTab,
     [saveInitData]: handleSaveInitData, // 因为有刷新
     [saveLoadMore]: handleSaveLoadMore,
+    // 分类
+    [saveCategory]: handelSaveCategory,
   },
   initialState,
 );
