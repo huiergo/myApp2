@@ -13,118 +13,6 @@ const initialState = {
   extraParams: {},
   // 以下是tab列表相关，将来会抽离
   currentIdx: 0,
-  recommend: {
-    des: '推荐',
-    list: [
-      {
-        difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '推荐2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
-  latest: {
-    des: '最新',
-    list: [
-      {
-        difficulty: 1,
-        title: '最新1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '最新2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '最新1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '最新2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '最新1-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '最新2-Question的优势是什么？',
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ],
-    page: 1,
-    pageSize: 20,
-  },
 };
 
 const handleSubmitFilterParams = (state, action) => {
@@ -176,28 +64,7 @@ const handleSaveLoadMore = (state, action) => {
     },
   };
 };
-// [
-//   {
-//     "id": 350000197511154900,
-//     "name": "韩艳"
-//   {
-//     "id": 460000201203274700,
-//     "name": "李霞"
-//   }
-// ]
-// ===============
-// recommend: {
-//   des: '推荐',
-//   list: [],
-//   page: 1,
-//   pageSize: 20,
-// },
-// latest: {
-//   des: '最新',
-//   list: [],
-//   page: 1,
-//   pageSize: 20,
-// },
+
 const buildCateData = (list) => {
   let obj = {};
   list.map((item) => {

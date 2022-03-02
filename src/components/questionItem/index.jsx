@@ -47,20 +47,20 @@ class Index extends Component {
   render() {
     const { item } = this.props
     return (
-      <View className='question-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_question/index?id=${item.likeNum}` })}>
+      <View className='question-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_question/index?id=${item.likeCount}` })}>
         <View className='question-item__top'>
           <View className={`question-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}
           </View>
-          <Text className='question-item__title'>{item.title}</Text>
+          <Text className='question-item__title'>{item.stem}</Text>
         </View>
         <View className='question-item__bottom'>
           <View className='question-item__like-num'>
             {item.isLike ? <Image className='question-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
-            {"  " + item.likeNum}
+            {"  " + item.likeCount}
           </View>
           <Split />
-          <View className='question-item__pv-num'>浏览 {item.pvNum}</View>
+          <View className='question-item__pv-num'>浏览 {item.views}</View>
           <Split />
           <Image className='question-item__share-icon' src={require('../../assets/share.png')} />
         </View>

@@ -34,8 +34,8 @@ const handleTag = (tag) => {
 let item = {
   difficulty: 1,
   title: '收藏 题目1-Question的优势是什么？',
-  likeNum: 666,
-  pvNum: 99,
+  likeCount: 666,
+  views: 99,
   isLike: true,
   stage: 'vue',
   currentId: 5,

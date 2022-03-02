@@ -18,51 +18,9 @@ import { saveCategoryToTag } from '../actions/tag.action';
 function* handleInitData({ payload }) {
   const { tabType, page } = payload;
   let result = yield getJSON(apis.getRecommendList, { page });
+  console.log('初始化数据-----', result);
   if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + tabType,
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 2,
-        title: '初始化Question的优势是什么？' + tabType,
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 0,
-        title: '初始化Question的优势是什么？' + tabType,
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + tabType,
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + tabType,
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + tabType,
-        likeNum: 666,
-        pvNum: 99,
-        isLike: true,
-      },
-    ];
+    let list = result.data.data.rows;
     yield put(saveInitData({ tabType, list, page }));
   }
 }
@@ -79,43 +37,43 @@ function* handleLoadMore({ payload }) {
     {
       difficulty: 1,
       title: '加载更多Question的优势是什么？' + tabType,
-      likeNum: 666,
-      pvNum: 99,
+      likeCount: 666,
+      views: 99,
       isLike: true,
     },
     {
       difficulty: 2,
       title: '加载更多Question的优势是什么？' + tabType,
-      likeNum: 666,
-      pvNum: 99,
+      likeCount: 666,
+      views: 99,
       isLike: true,
     },
     {
       difficulty: 0,
       title: '加载更多Question的优势是什么？' + tabType,
-      likeNum: 666,
-      pvNum: 99,
+      likeCount: 666,
+      views: 99,
       isLike: true,
     },
     {
       difficulty: 1,
       title: '加载更多Question的优势是什么？',
-      likeNum: 666,
-      pvNum: 99,
+      likeCount: 666,
+      views: 99,
       isLike: true,
     },
     {
       difficulty: 1,
       title: '加载更多Question的优势是什么？' + tabType,
-      likeNum: 666,
-      pvNum: 99,
+      likeCount: 666,
+      views: 99,
       isLike: true,
     },
     {
       difficulty: 1,
       title: '加载更多Question的优势是什么？' + tabType,
-      likeNum: 666,
-      pvNum: 99,
+      likeCount: 666,
+      views: 99,
       isLike: true,
     },
   ];

@@ -11,8 +11,8 @@ let item = {
   date: '2020-02-02',
   content: '巴拉了解到付款冷冻机房加大加肥禄口街道复健科多了几分两道算法离开家巴拉了解到付款冷冻机房加大加肥禄口街道复健科多了几分两道算法离开家巴拉了解到付款冷冻机房加大加肥禄口街道复健科多了几分两道算法离开家',
   // bgImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F1114%2F121420113514%2F201214113514-1-1200.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648004792&t=c24765b5804b709ed032c43bc69697c7',
-  likeNum: 666,
-  pvNum: 99,
+  likeCount: 666,
+  views: 99,
   isLike: true
 }
 
@@ -57,10 +57,10 @@ class Index extends Component {
         <View className='interview-item__bottom'>
           <View className='interview-item__like-num'>
             {item.isLike ? <Image className='interview-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
-            {"  " + item.likeNum}
+            {"  " + item.likeCount}
           </View>
           <Split />
-          <View className='interview-item__pv-num'>浏览 {item.pvNum}</View>
+          <View className='interview-item__pv-num'>浏览 {item.views}</View>
           <Split />
           <Image className='interview-item__share-icon' src={require('../../assets/share.png')} />
         </View>

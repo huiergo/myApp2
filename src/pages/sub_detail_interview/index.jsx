@@ -25,7 +25,7 @@ const html = `<p><b>面试公司：</b>广州欣芝妍化妆品有限公司<br><
 </p><p>`
 
 let item = {
-  pvNum: 367,
+  views: 367,
   zanNum: 10,
   avatar: 'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
   title: 'interview组件的优势是什么？',
@@ -55,14 +55,14 @@ class SubDetail extends Component {
   }
 
   render() {
-    const { date, pvNum, zanNum, author, avatar } = item
+    const { date, views, zanNum, author, avatar } = item
     return (
       <View className='detail-interview'>
         <View className='detail-interview__title'>腾讯前端三面挂</View>
         <View className='detail-interview__des'>
           {date}
           <Split />
-          {pvNum} 浏览量
+          {views} 浏览量
           <Split />
           {zanNum} 赞
         </View>
