@@ -130,6 +130,7 @@ class First extends Component {
                       list={exprState[tabList[idx]].list}
                       page={exprState[tabList[idx]].page}
                       pageTotal={exprState[tabList[idx]].pageTotal}
+                      questionBankType={10}
                       initData={initData}
                       loadMore={loadMore}
                     />

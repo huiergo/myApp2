@@ -34,7 +34,7 @@ class Topic extends Component {
   initByTabChange(currentIndex) {
     if (this.init && (this.props.index === currentIndex)) {
       this.init = false
-      this.props.initData({ type: this.props.type, page: 1 })
+      this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType })
     }
   }
 
@@ -44,7 +44,7 @@ class Topic extends Component {
   }
 
   render() {
-    const { type, list, page, pageTotal, initData, loadMore } = this.props
+    const { type, list, page, pageTotal, initData, loadMore, questionBankType } = this.props
     console.log("page, pageTotal=======", page, pageTotal,)
     const dataLen = list.length
     const itemSize = 100
@@ -57,12 +57,12 @@ class Topic extends Component {
         itemSize={itemSize}
         width='100%'
         onScrollToLower={() => {
-          if (page + 1 <= pageTotal) {
-            loadMore({ type, page: page + 1, pageTotal })
+          if ((page + 1) <= pageTotal) {
+            loadMore({ type, page: page + 1, questionBankType })
           }
         }}
         onScrollToUpper={() => {
-          initData({ type, page: 1 })
+          initData({ type, page: 1, questionBankType })
         }}
       >
         {Row}

@@ -16,8 +16,8 @@ import { saveCategoryToTag } from '../actions/tag.action';
  * 获取”初始化“列表，并同步到store
  */
 function* handleInitData({ payload }) {
-  const { type, page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
+  const { type, page, questionBankType } = payload;
+  let result = yield getJSON(apis.getQuestionList, { page, type, questionBankType });
   console.log('初始化数据-----', result);
   if (result && result.data && result.data.data) {
     let pageTotal = result.data.data.pageTotal;
@@ -30,11 +30,14 @@ function* handleInitData({ payload }) {
  * 获取”更多“列表，并同步到store
  */
 function* handleLoadMore({ payload }) {
-  const { type, page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
+  const { type, page, questionBankType } = payload;
+  let result = yield getJSON(apis.getQuestionList, { page, type, questionBankType });
+  console.log;
   if (result && result.data && result.data.data) {
+    let pageTotal = result.data.data.pageTotal;
     let list = result.data.data.rows;
-    yield put(saveLoadMore({ type, list, page }));
+    console.log('[handleLoadMore--------]', list);
+    yield put(saveLoadMore({ type, list, page, pageTotal }));
   }
 }
 
