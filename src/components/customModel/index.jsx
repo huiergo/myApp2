@@ -29,9 +29,10 @@ export default class AtFloatLayout extends React.Component {
       }, this.handleClose);
     };
     this.reset = () => {
-      this.setState({
-        _isOpened: false
-      }, this.handleReset);
+      this.handleReset()
+      // this.setState({
+      //   _isOpened: false
+      // }, this.handleReset);
     };
     this.handleTouchMove = (e) => {
       e.stopPropagation();

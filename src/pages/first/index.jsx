@@ -35,6 +35,7 @@ class First extends Component {
     const { sortList, cataList } = this.props
     let keyword = '';
     let sort = '';
+    let selectIndex = 0
     sortList.map((item, index) => {
       if (item.active) {
         sort = index.toString() + item.specialStatus.toString()
@@ -42,12 +43,15 @@ class First extends Component {
     })
     cataList.map((item, index) => {
       if (item.active) {
+        selectIndex = index
         keyword = item.name
       }
     })
+
     return {
       keyword,
-      sort
+      sort,
+      selectIndex
     }
 
   }
@@ -56,9 +60,16 @@ class First extends Component {
   }
   complete() {
     let params = this.getExtralParams()
-    // todo: 1.需要定位到相应的tab  2. 需要同步状态 3.需要请求数据
+    let { key, sort, selectIndex } = params
+    // todo: 1.需要定位到相应的tab   3.需要请求数据
+    if (selectIndex > -1) {
+      this.change(selectIndex)
+    }
+    // 2. 需要同步状态
+    this.props.submitFilterParams({ key, sort })
+    // 3.需要请求数据
 
-    this.props.submitFilterParams(params)
+
     this.props.triggerModel(false)
     this.setState({
       isOpened: false

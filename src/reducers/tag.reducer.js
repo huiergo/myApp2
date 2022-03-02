@@ -1,126 +1,52 @@
 import { handleActions as createReducer } from 'redux-actions';
 import { updateTagList, resetTagList, saveCategoryToTag } from '../actions/tag.action';
 
-const initialState = {
-  sortList: [
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '默认',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: true,
-      name: '难易',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: true,
-      name: '浏览量',
-      active: false,
-    },
-  ],
-  cataList: [
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '美国',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: true,
-      name: '中国',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '巴西',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '日本',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '英国',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '法国',
-      active: false,
-    },
-  ],
+const isObject = (val) => {
+  return typeof val === 'object' && val !== null;
 };
 
-const resetState = {
-  sortList: [
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '默认',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: true,
-      name: '难易',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: true,
-      name: '浏览量',
-      active: false,
-    },
-  ],
-  cataList: [
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '美国',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: true,
-      name: '中国',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '巴西',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '日本',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '英国',
-      active: false,
-    },
-    {
-      specialStatus: 0,
-      canSort: false,
-      name: '法国',
-      active: false,
-    },
-  ],
+const deepClone = (obj, hash = new WeakMap()) => {
+  if (!isObject(obj)) return obj;
+  if (hash.has(obj)) {
+    return hash.get(obj);
+  }
+  let target = Array.isArray(obj) ? [] : {};
+  hash.set(obj, target);
+  Reflect.ownKeys(obj).forEach((item) => {
+    if (isObject(obj[item])) {
+      target[item] = deepClone(obj[item], hash);
+    } else {
+      target[item] = obj[item];
+    }
+  });
+
+  return target;
+};
+
+let init_sortList = [
+  {
+    specialStatus: 0,
+    canSort: false,
+    name: '默认',
+    active: false,
+  },
+  {
+    specialStatus: 0,
+    canSort: true,
+    name: '难易',
+    active: false,
+  },
+  {
+    specialStatus: 0,
+    canSort: true,
+    name: '浏览量',
+    active: false,
+  },
+];
+let init_cataList = [];
+let initialState = {
+  sortList: deepClone(init_sortList), //init_sortList.slice(0),
+  cataList: deepClone(init_cataList),
 };
 
 const getNewTagList = ({ state, type, index }) => {
@@ -152,7 +78,9 @@ const handleUpdateTagList = (state, action) => {
 
 const handleResetTagList = (state, action) => {
   return {
-    ...resetState,
+    ...state,
+    sortList: deepClone(init_sortList),
+    cataList: deepClone(init_cataList),
   };
 };
 
@@ -165,7 +93,7 @@ const buildCateData = (list) => {
       specialStatus: 0,
     };
   });
-  resetState.cataList = result;
+  init_cataList = deepClone(result);
   return result;
 };
 
@@ -173,7 +101,7 @@ const handleSaveCategoryToTag = (state, action) => {
   const { cateList } = action.payload;
   return {
     ...state,
-    cataList: buildCateData(cateList),
+    cataList: JSON.parse(JSON.stringify(buildCateData(cateList))),
   };
 };
 
