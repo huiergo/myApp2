@@ -13,7 +13,7 @@ let item = {
   // bgImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F1114%2F121420113514%2F201214113514-1-1200.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648004792&t=c24765b5804b709ed032c43bc69697c7',
   likeCount: 666,
   views: 99,
-  isLike: true
+  likeFlag: true
 }
 
 const Split = () => {
@@ -56,7 +56,7 @@ class Index extends Component {
 
         <View className='interview-item__bottom'>
           <View className='interview-item__like-num'>
-            {item.isLike ? <Image className='interview-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
+            {item.likeFlag ? <Image className='interview-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
             {"  " + item.likeCount}
           </View>
           <Split />

@@ -36,7 +36,7 @@ let item = {
   title: '收藏 题目1-Question的优势是什么？',
   likeCount: 666,
   views: 99,
-  isLike: true,
+  likeFlag: true,
   stage: 'vue',
   currentId: 5,
   nextId: 6,

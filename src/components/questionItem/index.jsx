@@ -52,11 +52,11 @@ class Index extends Component {
           <View className={`question-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}
           </View>
-          <Text className='question-item__title'>{item.stem}</Text>
+          <View className='question-item__title'>{item.stem}</View>
         </View>
         <View className='question-item__bottom'>
           <View className='question-item__like-num'>
-            {item.isLike ? <Image className='question-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
+            {item.likeFlag ? <Image className='question-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
             {"  " + item.likeCount}
           </View>
           <Split />
