@@ -125,11 +125,11 @@ const handleChangeTab = (state, action) => {
 };
 
 const handleSaveInitData = (state, action) => {
-  const { tabType, list, page } = action.payload;
+  const { type, list, page } = action.payload;
   return {
     ...state,
-    [tabType]: {
-      ...state[tabType],
+    [type]: {
+      ...state[type],
       list,
       page,
     },
@@ -137,13 +137,13 @@ const handleSaveInitData = (state, action) => {
 };
 
 const handleSaveLoadMore = (state, action) => {
-  const { tabType, list, page } = action.payload;
+  const { type, list, page } = action.payload;
   console.log('去你大爷的。。。。');
   return {
     ...state,
-    [tabType]: {
-      ...state[tabType],
-      list: state[tabType].list.concat(list),
+    [type]: {
+      ...state[type],
+      list: state[type].list.concat(list),
       page,
     },
   };

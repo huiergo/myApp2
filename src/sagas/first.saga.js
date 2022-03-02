@@ -16,12 +16,13 @@ import { saveCategoryToTag } from '../actions/tag.action';
  * 获取”初始化“列表，并同步到store
  */
 function* handleInitData({ payload }) {
-  const { tabType, page } = payload;
+  const { type, page } = payload;
   let result = yield getJSON(apis.getRecommendList, { page });
   console.log('初始化数据-----', result);
   if (result && result.data && result.data.data) {
+    let pageTotal = result.data.data.pageTotal;
     let list = result.data.data.rows;
-    yield put(saveInitData({ tabType, list, page }));
+    yield put(saveInitData({ type, list, page, pageTotal }));
   }
 }
 
@@ -29,57 +30,12 @@ function* handleInitData({ payload }) {
  * 获取”更多“列表，并同步到store
  */
 function* handleLoadMore({ payload }) {
-  console.log('first handleLoadMore=====', payload);
-  const { tabType, page } = payload;
-  console.log('before结果是不是没有=====', tabType, page);
-
-  let list = [
-    {
-      difficulty: 1,
-      title: '加载更多Question的优势是什么？' + tabType,
-      likeCount: 666,
-      views: 99,
-      likeFlag: true,
-    },
-    {
-      difficulty: 2,
-      title: '加载更多Question的优势是什么？' + tabType,
-      likeCount: 666,
-      views: 99,
-      likeFlag: true,
-    },
-    {
-      difficulty: 0,
-      title: '加载更多Question的优势是什么？' + tabType,
-      likeCount: 666,
-      views: 99,
-      likeFlag: true,
-    },
-    {
-      difficulty: 1,
-      title: '加载更多Question的优势是什么？',
-      likeCount: 666,
-      views: 99,
-      likeFlag: true,
-    },
-    {
-      difficulty: 1,
-      title: '加载更多Question的优势是什么？' + tabType,
-      likeCount: 666,
-      views: 99,
-      likeFlag: true,
-    },
-    {
-      difficulty: 1,
-      title: '加载更多Question的优势是什么？' + tabType,
-      likeCount: 666,
-      views: 99,
-      likeFlag: true,
-    },
-  ];
-  console.log('put first save loadmore=====', tabType, list, page);
-  yield put(saveLoadMore({ tabType, list, page }));
-  // }
+  const { type, page } = payload;
+  let result = yield getJSON(apis.getRecommendList, { page });
+  if (result && result.data && result.data.data) {
+    let list = result.data.data.rows;
+    yield put(saveLoadMore({ type, list, page }));
+  }
 }
 
 /**

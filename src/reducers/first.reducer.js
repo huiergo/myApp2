@@ -39,28 +39,30 @@ const handleChangeTab = (state, action) => {
 };
 
 const handleSaveInitData = (state, action) => {
-  const { tabType, list, page } = action.payload;
+  const { type, list, page, pageTotal } = action.payload;
   return {
     ...state,
-    [tabType]: {
-      ...state[tabType],
+    [type]: {
+      ...state[type],
       list,
       page,
+      pageTotal,
     },
   };
 };
 
 const handleSaveLoadMore = (state, action) => {
   console.log(2222, action);
-  const { tabType, list, page } = action.payload;
+  const { type, list, page, pageTotal } = action.payload;
 
   console.log('11111  first  action====', action);
   return {
     ...state,
-    [tabType]: {
-      ...state[tabType],
-      list: state[tabType].list.concat(list),
+    [type]: {
+      ...state[type],
+      list: state[type].list.concat(list),
       page,
+      pageTotal,
     },
   };
 };

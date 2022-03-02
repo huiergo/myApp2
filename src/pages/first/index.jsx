@@ -126,9 +126,10 @@ class First extends Component {
                     <Topic
                       current={currentIdx}
                       index={idx}
-                      tabType={tabList[idx]}
+                      type={tabList[idx]}
                       list={exprState[tabList[idx]].list}
                       page={exprState[tabList[idx]].page}
+                      pageTotal={exprState[tabList[idx]].pageTotal}
                       initData={initData}
                       loadMore={loadMore}
                     />
