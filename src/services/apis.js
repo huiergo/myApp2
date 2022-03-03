@@ -41,6 +41,9 @@ const apiObject = {
   //   首页-打卡 入参：无
   clockIn: `${baseUrl}/wxmini/clockin`,
 
+  // 查询收藏、点赞、浏览的试题/面经列表
+  getOptList: `${baseUrl}/wxmini/question/opt/list`,
+
   //   收藏、点赞、浏览试题 或者面经  入参： id，type(0面试题1面经) optType 1点赞2收藏3浏览
   opt: `${baseUrl}/wxmini/question/opt`,
 

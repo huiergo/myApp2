@@ -53,6 +53,22 @@ class Mine extends Component {
       this.props.clockIn()
     }
   }
+  handleGridClick({ gridType }) {
+    console.log("[handleGridClick item, index======= ]", props)
+    switch (gridType) {
+      case 'myHistory':
+        gotoPage({ url: '../sub_history/index?gridType=' + gridType })
+        break;
+      case 'myFavorite':
+        gotoPage({ url: '../sub_history/index?gridType=' + gridType })
+        break;
+      case 'myZan':
+        gotoPage({ url: '../sub_history/index?gridType=' + gridType })
+        break;
+      default:
+        break
+    }
+  }
 
   render() {
 
@@ -76,18 +92,22 @@ class Mine extends Component {
             [
               {
                 image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
-                value: '历史记录11'
+                value: '历史记录11',
+                gridType: 'myHistory'
               },
               {
                 image: 'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
-                value: '我的收藏'
+                value: '我的收藏',
+                gridType: 'myFavorite'
               },
               {
                 image: 'https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png',
-                value: '我的点赞'
+                value: '我的点赞',
+                gridType: 'myZan'
               }
             ]
           }
+          onClick={this.handleGridClick}
         />
 
         <AtList>

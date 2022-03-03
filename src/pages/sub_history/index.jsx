@@ -13,8 +13,16 @@ import * as sub_historyActions from "../../actions/sub_history.action"
 class Sub extends Component {
   constructor() {
     super(...arguments)
-
   }
+
+  // // onLoad
+  async onLoad(options) {
+    const { gridType } = options
+    console.log("[subhistory------]", gridType)
+    // await this.initSubQuestionDetail(id)
+  }
+
+
   change(v) {
     this.props.changeTab(v)
     console.log("change......====", v)

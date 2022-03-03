@@ -25,6 +25,11 @@ class Topic extends Component {
       console.log("[topic2 eventChange_experience  currentIndex]", currentIndex, this.props.index)
       this.initByTabChange(currentIndex)
     })
+
+    //收藏 用的是qustionItem ,  eventChange_favorite
+    eventCenter.on('eventChange_favorite_interview', (currentIndex) => {
+      this.initByTabChange(currentIndex)
+    })
   }
 
   initByTabChange(currentIndex = 0) {
@@ -33,13 +38,14 @@ class Topic extends Component {
       this.init = false
       // type, page: page + 1, current, index 
       console.log("topic 2  initdata")
-      this.props.initData({ type: this.props.type, page: 1, current: currentIndex })
+      this.props.initData({ type: this.props.type, page: 1, current: currentIndex, questionBankType: this.props.questionBankType })
     }
   }
 
   componentWillUnmount() {
     // 卸载
     eventCenter.off('eventChange_experience')
+    eventCenter.off('eventChange_favorite_interview')
   }
 
   render() {

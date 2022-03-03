@@ -4,113 +4,13 @@ import { changeTab, saveInitData, saveLoadMore } from '../actions/favorite.actio
 const initialState = {
   favorite_question: {
     des: '题目',
-    list: [
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ],
+    list: [],
     page: 1,
     pageSize: 20,
   },
   favorite_experience: {
     des: '面经',
-    list: [
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '收藏 题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ],
+    list: [],
     page: 1,
     pageSize: 20,
   },
@@ -125,19 +25,20 @@ const handleChangeTab = (state, action) => {
 };
 
 const handleSaveInitData = (state, action) => {
-  const { type, list, page } = action.payload;
+  const { type, list, page, pageTotal } = action.payload;
   return {
     ...state,
     [type]: {
       ...state[type],
       list,
       page,
+      pageTotal,
     },
   };
 };
 
 const handleSaveLoadMore = (state, action) => {
-  const { type, list, page } = action.payload;
+  const { type, list, page, pageTotal } = action.payload;
   console.log('去你大爷的。。。。');
   return {
     ...state,
@@ -145,6 +46,7 @@ const handleSaveLoadMore = (state, action) => {
       ...state[type],
       list: state[type].list.concat(list),
       page,
+      pageTotal,
     },
   };
 };

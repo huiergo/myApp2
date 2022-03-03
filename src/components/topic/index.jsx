@@ -29,6 +29,10 @@ class Topic extends Component {
       console.log("[topic eventChange  currentIndex]", currentIndex, this.props.index)
       this.initByTabChange(currentIndex)
     })
+    //收藏 用的是qustionItem ,  eventChange_favorite
+    eventCenter.on('eventChange_favorite_question', (currentIndex) => {
+      this.initByTabChange(currentIndex)
+    })
   }
 
   initByTabChange(currentIndex) {
@@ -41,11 +45,12 @@ class Topic extends Component {
   componentWillUnmount() {
     // 卸载
     eventCenter.off('eventChange')
+    eventCenter.off('eventChange_favorite_question')
   }
 
   render() {
     const { type, list, page, pageTotal, initData, loadMore, questionBankType } = this.props
-
+    console.log("topic type-----", type)
     const dataLen = list.length
     const itemSize = 100
     return (

@@ -59,6 +59,7 @@ class Experience extends Component {
                     pageTotal={exprState[tabList[idx]].pageTotal}
                     initData={initData}
                     loadMore={loadMore}
+                    questionBankType={9}
                   />
                 </AtTabsPane>
               )
