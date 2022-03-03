@@ -52,7 +52,7 @@ class SubDetail extends Component {
   }
 
   async initSubInterviewDetail(id) {
-    let result = await getJSON(apis.getQuestionDetail, { id });
+    let result = await getJSON(apis.getQuestionDetail + id);
     if (result && result.data && result.data.data) {
       this.setState({
         item: result.data.data
@@ -99,11 +99,11 @@ class SubDetail extends Component {
 
   render() {
     let { item } = this.state
-    const { createdAt, views, likeCount, creatorName, creatorAvatar, collectFlag, likeFlag } = item
+    const { stem, createdAt, views, likeCount, creatorName, creatorAvatar, collectFlag, likeFlag } = item
 
     return (
       <View className='detail-interview'>
-        <View className='detail-interview__title'>腾讯前端三面挂</View>
+        <View className='detail-interview__title'>{stem}</View>
         <View className='detail-interview__des'>
           {createdAt}
           <Split />

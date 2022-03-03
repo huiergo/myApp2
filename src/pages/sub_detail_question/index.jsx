@@ -61,7 +61,7 @@ class SubDetail extends Component {
   }
 
   async initSubQuestionDetail(id) {
-    let result = await getJSON(apis.getQuestionDetail, { id });
+    let result = await getJSON(apis.getQuestionDetail + id);
     if (result && result.data && result.data.data) {
       this.setState({
         item: result.data.data

@@ -11,7 +11,7 @@ const apiObject = {
   getQuestionList: `${baseUrl}/wxmini/question/list`,
 
   //   查询试题/面经详情信息  入参： id
-  getQuestionDetail: `${baseUrl}/wxmini/question/:id`,
+  getQuestionDetail: `${baseUrl}/wxmini/question/`,
 
   //   查询面经推荐列表  入参：无
   getRecommendList: `${baseUrl}/wxmini/question/recommends`,
