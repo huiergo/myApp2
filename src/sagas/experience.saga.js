@@ -8,54 +8,15 @@ import { initData, loadMore, saveInitData, saveLoadMore } from '../actions/exper
  * 获取”初始化“列表，并同步到store
  */
 function* handleInitData({ payload }) {
-  const { type, page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
+  const { type, page, current, index } = payload;
+  console.log(' current, index ==========', current, index);
+  let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
+  // questionBankType:9 面经
+  let result = yield getJSON(api, { page, questionBankType: 9 });
   if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveInitData({ type, list, page }));
+    let pageTotal = result.data.data.pageTotal;
+    let list = result.data.data.rows;
+    yield put(saveInitData({ type, list, page, pageTotal }));
   }
 }
 
@@ -63,55 +24,15 @@ function* handleInitData({ payload }) {
  * 获取”更多“列表，并同步到store
  */
 function* handleLoadMore({ payload }) {
-  const { type, page } = payload;
-
-  let result = yield getJSON(apis.getRecommendList, { page });
+  const { type, page, current, index } = payload;
+  let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
+  // questionBankType:9 面经
+  let result = yield getJSON(api, { page, questionBankType: 9 });
   if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveLoadMore({ type, list, page }));
+    let pageTotal = result.data.data.pageTotal;
+    let list = result.data.data.rows;
+    console.log('[handleLoadMore--------]', list);
+    yield put(saveLoadMore({ type, list, page, pageTotal }));
   }
 }
 export default function* experienceSaga() {

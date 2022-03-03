@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro from '@tarojs/taro';
+import Taro, { eventCenter } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -17,6 +17,7 @@ class Experience extends Component {
   }
   change(v) {
     this.props.changeTab(v)
+    eventCenter.trigger('eventChange_experience', v)
     console.log("change......====", v)
   }
 
@@ -32,9 +33,6 @@ class Experience extends Component {
 
     return (
       <View className='index'>
-        {/* <View onClick={() => gotoPage({ url: '../search/index' })}>静态搜索框</View>
-        <View onClick={() => initData({ type: 'recommend', page: 1 })}>上拉</View>
-        <View onClick={() => loadMore({ type: 'recommend', page: 2 })}>下拉</View> */}
         <View className='index__search-bar' onClick={() => gotoPage({ url: '../search/index' })}>
           <AtSearchBar
             placeholder='请输入搜索关键词'
@@ -51,11 +49,14 @@ class Experience extends Component {
             chineseTabList.map((item, idx) => {
               return (
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
-                  index-{item.title} - {idx}
+                  {/* index-{item.title} - {idx} */}
                   <Topic2
+                    current={currentIdx}
+                    index={idx}
                     type={tabList[idx]}
                     list={exprState[tabList[idx]].list}
                     page={exprState[tabList[idx]].page}
+                    pageTotal={exprState[tabList[idx]].pageTotal}
                     initData={initData}
                     loadMore={loadMore}
                   />

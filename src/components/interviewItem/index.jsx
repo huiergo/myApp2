@@ -3,19 +3,6 @@ import { View, Text, Image, Textarea } from '@tarojs/components'
 import './index.scss'
 import { gotoPage } from '../../utils'
 
-let item = {
-  id: 'interview123',
-  avatar: 'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  difficulty: 1,
-  title: 'interview组件的优势是什么？',
-  date: '2020-02-02',
-  content: '巴拉了解到付款冷冻机房加大加肥禄口街道复健科多了几分两道算法离开家巴拉了解到付款冷冻机房加大加肥禄口街道复健科多了几分两道算法离开家巴拉了解到付款冷冻机房加大加肥禄口街道复健科多了几分两道算法离开家',
-  // bgImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F1114%2F121420113514%2F201214113514-1-1200.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648004792&t=c24765b5804b709ed032c43bc69697c7',
-  likeCount: 666,
-  views: 99,
-  likeFlag: true
-}
-
 const Split = () => {
   return <View className='split'>
   </View>
@@ -34,13 +21,14 @@ class Index extends Component {
   componentDidHide() { }
 
   render() {
+    let { item } = this.props
     return (
       <View className='interview-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_interview/index?id=${item.id}` })}>
         <View className='interview-item__top'>
           <Image className='interview-item__top-avatar' src={item.avatar} />
           <View className='interview-item__top-content'>
-            <View className='interview-item__top-content-title'>面经 | {item.title}</View>
-            <View className='interview-item__top-content-des'>油炸小饭团 | {item.date}</View>
+            <View className='interview-item__top-content-title'>面经 | {item.stem}</View>
+            <View className='interview-item__top-content-des'>{item.contributorName} | {item.createdAt}</View>
           </View>
         </View>
 

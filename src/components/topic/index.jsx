@@ -45,7 +45,7 @@ class Topic extends Component {
 
   render() {
     const { type, list, page, pageTotal, initData, loadMore, questionBankType } = this.props
-    console.log("page, pageTotal=======", page, pageTotal,)
+
     const dataLen = list.length
     const itemSize = 100
     return (
