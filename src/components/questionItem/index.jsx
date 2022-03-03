@@ -46,8 +46,9 @@ class Index extends Component {
 
   render() {
     const { item } = this.props
+    console.log("[questionItem item ========]", item)
     return (
-      <View className='question-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_question/index?id=${item.likeCount}` })}>
+      <View className='question-item' onClick={() => gotoPage({ url: `../../pages/sub_detail_question/index?id=${item.id}` })}>
         <View className='question-item__top'>
           <View className={`question-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}

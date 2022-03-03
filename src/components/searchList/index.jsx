@@ -17,7 +17,7 @@ class SearchList extends Component {
   loading = false
 
   render() {
-    const { list, page, initData, loadMore } = this.props
+    const { list, page, initData, loadMore, pageTotal, questionBankType, keyword } = this.props
 
     const dataLen = list.length
     const itemSize = 100
@@ -30,10 +30,14 @@ class SearchList extends Component {
         itemSize={itemSize}
         width='100%'
         onScrollToLower={() => {
-          loadMore({ page: page + 1 })
+          console.log("[search onScrollToLower.....]", page, pageTotal)
+          if ((page + 1) <= pageTotal) {
+            loadMore({ page: page + 1, keyword, questionBankType })
+          }
+
         }}
         onScrollToUpper={() => {
-          initData({ page: 1 })
+          initData({ page: 1, keyword, questionBankType })
         }}
       >
         {Row}

@@ -57,20 +57,22 @@ const handleEditTrigger = (state, action) => {
 };
 
 const handleSaveInitSearchData = (state, action) => {
-  const { list, page } = action.payload;
+  const { list, page, pageTotal } = action.payload;
   return {
     ...state,
     list,
     page,
+    pageTotal,
   };
 };
 
 const handleSaveLoadSearchMore = (state, action) => {
-  const { list, page } = action.payload;
+  const { list, page, pageTotal } = action.payload;
   return {
     ...state,
     list: state.list.concat(list),
     page,
+    pageTotal,
   };
 };
 

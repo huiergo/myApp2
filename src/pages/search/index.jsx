@@ -25,7 +25,7 @@ class Search extends Component {
   }
 
   render() {
-    const { list, page, initSearchData, loadSearchMore, unShiftRecord, editTrigger, hasInput } = this.props
+    const { list, page, initSearchData, loadSearchMore, unShiftRecord, editTrigger, hasInput, pageTotal } = this.props
     return (
       <View className='index'>
         <AtSearchBar
@@ -35,13 +35,17 @@ class Search extends Component {
           onFocus={() => editTrigger(false)}
           onActionClick={() => {
             // 搜索关键词请求
-            initSearchData({ keyword: this.state.value, page: 1 })
+            // todo: 本页的 questionBankType  需要换成tabShow动态的
+            initSearchData({ keyword: this.state.value, page: 1, questionBankType: 9 })
             // 
             unShiftRecord({ item: this.state.value })
           }}
         />
         {!hasInput && <SearchRecord onChange={(value) => this.onChange(value)} />}
         {hasInput && <SearchList
+          questionBankType={9}
+          keyword={this.state.value}
+          pageTotal={pageTotal}
           list={list}
           page={page}
           initData={initSearchData}
@@ -52,14 +56,15 @@ class Search extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { list, isEdit, page, hasInput } = state.search
+  const { list, isEdit, page, hasInput, pageTotal } = state.search
   console.log("[search ...]", state.search)
 
   return {
     list,
     page,
     isEdit,
-    hasInput
+    hasInput,
+    pageTotal
   }
 };
 

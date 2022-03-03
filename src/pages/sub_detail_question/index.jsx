@@ -3,6 +3,9 @@ import Taro from '@tarojs/taro';
 import { View, Image, Button, Text } from '@tarojs/components';
 import CustomPagination from "../../components/customPagination";
 import { redirectToPage } from "../../utils";
+import apis from '../../services/apis';
+
+import { getJSON } from "../../services/method";
 
 import './index.scss'
 
@@ -31,17 +34,33 @@ const handleTag = (tag) => {
   }
 }
 
-let item = {
-  difficulty: 1,
-  title: '收藏 题目1-Question的优势是什么？',
-  likeCount: 666,
-  views: 99,
-  likeFlag: true,
-  stage: 'vue',
-  currentId: 5,
-  nextId: 6,
-  lastId: 4
-}
+// let item = {
+//   difficulty: 1,
+//   title: '收藏 题目1-Question的优势是什么？',
+//   likeCount: 666,
+//   views: 99,
+//   likeFlag: true,
+//   stage: 'vue',
+//   currentId: 5,
+//   nextId: 6,
+//   lastId: 4
+// }
+
+// let item1 = {
+//   content: "周华元会原需书县便山式声。济开记们在应林北取太果广身。术毛民少使铁水即增料业位办细。色红这员方市何关万北根过史维难北几。有再土备建值半月可发型子元。"
+// createdAt: "2007-12-08"
+// difficulty: 3
+// id: 310000197711147400
+// likeCount: 605
+// likeFlag: 0
+// planSceneName: "核心提炼"
+// questionNo: "41"
+// questionType: 4
+// stem: "条格议大水米联头因技但严行史务圆"
+// stemAttachmentId: "cid://nmy.hn/guhb"
+// subjectName: "关保件到王"
+// views: 597
+// }
 
 const IconText = ({ title, des }) => {
   return (<View className='icon-text'>
@@ -72,33 +91,73 @@ const html = `<p><b>面试公司：</b>广州欣芝妍化妆品有限公司<br><
 class SubDetail extends Component {
   constructor() {
     super(...arguments)
+    this.state = {
+      item: {}
+    }
   }
   // onLoad
-  // onLoad(options) {
-  //   console.log("[SubDetail questionn------]", options)
-  //   const { id } = options
+  async onLoad(options) {
+    const { id } = options
+    console.log("[SubDetail questionn------]", id)
+    await this.initSubDetail(id)
+  }
+
+  async initSubDetail(id) {
+    let result = await getJSON(apis.getQuestionDetail, { id });
+    if (result && result.data && result.data.data) {
+      this.setState({
+        item: result.data.data
+      })
+    }
+  }
+
+  // // 上一页下一页点击事件
+  // pageClick(id) {
+  //   console.log("上一页下一页id", id)
+  //   // redirectToPage({ url: `./index?id=${id}` })
   // }
 
-  // 上一页下一页点击事件
-  pageClick(id) {
-    console.log("上一页下一页id", id)
-    // redirectToPage({ url: `./index?id=${id}` })
-  }
   // 赞 事件
-  handleZan() {
-    console.log("点赞id----", item.currentId)
-    // this.props.currentId
+  async handleZan(flag) {
+    console.log("点赞id----", this.state.item.id)
+    // todo: 这里type先写死
+    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 1 })
+    result && this.setState({
+      item: {
+        ...this.state.item,
+        likeFlag: !flag
+      }
+    })
   }
   // 收藏 事件
-  handleFavorite() {
-    console.log("收藏 id----", item.currentId)
-    // this.props.currentId
+  handleFavorite(flag) {
+    console.log("收藏 id----", this.state.item.id)
+    // todo: 这里type先写死
+    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 2 })
+    result && this.setState({
+      item: {
+        ...this.state.item,
+        collectFlag: !flag
+      }
+    })
+  }
+  /**
+   * type:     0面试题1面经
+   * optType:  1点赞2收藏3浏览
+   */
+  async unitOptRequest({ action, id, type = 1, optType }) {
+    let api = action == 'opt' ? apis.opt : apis.unOpt
+    let result = await getJSON(api, { id, type, optType });
+    if (result && result.data && result.data.data) {
+      return true
+    }
   }
   render() {
-    const { lastId, nextId } = item
+    let { item } = this.state
+    let { collectFlag, likeFlag } = item
     return (
       <View className='index'>
-        <IconText title='题目：' des='Vue的最大的优势是什么？' />
+        <IconText title='题目：' des={item.stem} />
         <View className='detail-item__tag-wrapper'>
           <View className={`detail-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}
@@ -110,17 +169,18 @@ class SubDetail extends Component {
 
         <HorizonLine />
         <IconText title='答案：' />
-        <View className='detail-content' dangerouslySetInnerHTML={{ __html: html }}></View>
+        {/* <View className='detail-content' dangerouslySetInnerHTML={{ __html: html }}></View> */}
+        <View className='detail-content'>{item.answer}</View>
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
-          <Image className='zan-btn' src={require('../../assets/zan.png')} onClick={this.handleZan} />
-          <Image className='favorite-btn' src={require('../../assets/favorite-icon.png')} onClick={this.handleFavorite} />
+          <Image className='zan-btn' src={likeFlag ? require('../../assets/zan.png') : require('../../assets/delete.png')} onClick={() => this.handleZan(likeFlag)} />
+          <Image className='favorite-btn' src={collectFlag ? require('../../assets/favorite-icon.png') : require('../../assets/delete.png')} onClick={() => this.handleFavorite(collectFlag)} />
         </View>
 
 
         {/* 上一题下一题 */}
-        <CustomPagination lastId={1} nextId={5} pageClick={this.pageClick} />
+        {/* <CustomPagination lastId={1} nextId={5} pageClick={this.pageClick} /> */}
       </View>
     )
   }

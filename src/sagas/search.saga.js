@@ -13,54 +13,13 @@ import {
  * 获取”初始化“搜索列表，并同步到store
  */
 function* handleInitSearchData({ payload }) {
-  const { page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
+  const { keyword, page, questionBankType } = payload;
+  let result = yield getJSON(apis.getQuestionList, { keyword, page, questionBankType, type: 0 });
+
   if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '初始化Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '初始化Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '初始化Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveInitSearchData({ list, page }));
+    let pageTotal = result.data.data.pageTotal;
+    let list = result.data.data.rows;
+    yield put(saveInitSearchData({ list, page, pageTotal }));
   }
 }
 
@@ -68,55 +27,14 @@ function* handleInitSearchData({ payload }) {
  * 获取”更多“搜索列表，并同步到store
  */
 function* handleLoadSearchMore({ payload }) {
-  const { page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
-  if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '加载更多Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '加载更多Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '加载更多Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Search的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveLoadSearchMore({ list, page }));
-  }
+  const { keyword, page, questionBankType } = payload;
+  console.log('[handleLoadSearchMore  payload-----]', payload);
+
+  let result = yield getJSON(apis.getQuestionList, { keyword, page, questionBankType, type: 0 });
+  console.log('[handleLoadSearchMore  result-----]', result);
+  let pageTotal = result.data.data.pageTotal;
+  let list = result.data.data.rows;
+  yield put(saveLoadSearchMore({ type: 0, list, page, pageTotal }));
 }
 
 export default function* searchSaga() {

@@ -41,17 +41,11 @@ const apiObject = {
   //   首页-打卡 入参：无
   clockIn: `${baseUrl}/wxmini/clockin`,
 
-  //   收藏试题或者面经  入参： id，type(0面试题1面经)
-  collection: `${baseUrl}/wxmini/question/collection`,
+  //   收藏、点赞、浏览试题 或者面经  入参： id，type(0面试题1面经) optType 1点赞2收藏3浏览
+  opt: `${baseUrl}/wxmini/question/opt`,
 
-  //   取消收藏试题或者面经  入参： id，type(0面试题1面经)
-  unCollection: `${baseUrl}/wxmini/question/uncollection`,
-
-  //   点赞试题/面经  入参： id，type(0面试题1面经)
-  likeQuestion: `${baseUrl}/wxmini/question/like`,
-
-  //   取消点赞试题/面经  入参： id，type(0面试题1面经)
-  unLikeQuestion: `${baseUrl}/wxmini/question/unlike`,
+  //   取消收藏、点赞、浏览试题 或者面经  入参： id，type(0面试题1面经) optType 1点赞2收藏3浏览
+  unOpt: `${baseUrl}/wxmini/question/unOpt`,
 
   // ========  delete 请求 ========
   //   删除试题/面经搜索记录(单条或者全部） 入参： id，type(为空或者0，删除单条，1删除全部)
