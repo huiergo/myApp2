@@ -30,6 +30,12 @@ class Topic extends Component {
     eventCenter.on('eventChange_favorite_interview', (currentIndex) => {
       this.initByTabChange(currentIndex)
     })
+
+    // 我的收藏，浏览，点赞 子页面 监听 ： 
+    eventCenter.on('eventChange_sub_history_interview', (currentIndex) => {
+      this.initByTabChange(currentIndex)
+    })
+
   }
 
   initByTabChange(currentIndex = 0) {
@@ -38,7 +44,7 @@ class Topic extends Component {
       this.init = false
       // type, page: page + 1, current, index 
       console.log("topic 2  initdata")
-      this.props.initData({ type: this.props.type, page: 1, current: currentIndex, questionBankType: this.props.questionBankType })
+      this.props.initData({ type: this.props.type, page: 1, current: currentIndex, questionBankType: this.props.questionBankType, optType: this.props.optType })
     }
   }
 
@@ -46,10 +52,11 @@ class Topic extends Component {
     // 卸载
     eventCenter.off('eventChange_experience')
     eventCenter.off('eventChange_favorite_interview')
+    eventCenter.off('eventChange_sub_history_interview')
   }
 
   render() {
-    const { type, list, page, pageTotal, initData, loadMore, current, index } = this.props
+    const { type, list, page, pageTotal, initData, loadMore, current, index, optType } = this.props
 
     const dataLen = list.length
     const itemSize = 140
@@ -63,11 +70,11 @@ class Topic extends Component {
         width='100%'
         onScrollToLower={() => {
           if ((page + 1) <= pageTotal) {
-            loadMore({ type, page: page + 1, current, index })
+            loadMore({ type, page: page + 1, current, index, optType })
           }
         }}
         onScrollToUpper={() => {
-          initData({ type, page: 1, current, index })
+          initData({ type, page: 1, current, index, optType })
         }}
       >
         {Row}

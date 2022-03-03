@@ -18,14 +18,14 @@ function* handleLoadUserInfo() {
   let result = yield getJSON(apis.getUserInfo);
   if (result && result.data && result.data.data) {
     console.log(111);
-    let userInfo = {
-      avatar:
-        'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      name: '油炸小饭团1',
-      zanNum: 32,
-      clockInNum: 12,
-    };
-    yield put(saveMineData({ userInfo: userInfo }));
+    // let userInfo = {
+    //   avatar:
+    //     'https://img2.baidu.com/it/u=1028277752,678118340&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+    //   name: '油炸小饭团1',
+    //   zanNum: 32,
+    //   clockInNum: 12,
+    // };
+    yield put(saveMineData({ userInfo: result.data.data }));
   }
 }
 
@@ -47,7 +47,7 @@ function* handleClockIn() {
   let result = yield postJSON(apis.clockIn);
   console.log('44====', result);
   if (result && result.data && result.data.data) {
-    let flag = true || result.data.data;
+    let flag = result.data.data;
     yield put(saveMineData({ flag }));
   }
 }

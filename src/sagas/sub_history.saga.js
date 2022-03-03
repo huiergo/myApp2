@@ -7,55 +7,15 @@ import { initData, loadMore, saveInitData, saveLoadMore } from '../actions/sub_h
 /**
  * 获取”初始化“列表，并同步到store
  */
+
 function* handleInitData({ payload }) {
-  const { type, page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
+  // todo: 需要传递 optType 1点赞2收藏3浏览
+  const { type, page, questionBankType, optType } = payload;
+  let result = yield getJSON(apis.getOptList, { page, type, questionBankType, optType });
   if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveInitData({ type, list, page }));
+    let pageTotal = result.data.data.pageTotal;
+    let list = result.data.data.rows;
+    yield put(saveInitData({ type, list, page, pageTotal }));
   }
 }
 
@@ -63,57 +23,15 @@ function* handleInitData({ payload }) {
  * 获取”更多“列表，并同步到store
  */
 function* handleLoadMore({ payload }) {
-  const { type, page } = payload;
-
-  let result = yield getJSON(apis.getRecommendList, { page });
+  const { type, page, questionBankType, optType } = payload;
+  let result = yield getJSON(apis.getOptList, { page, type, questionBankType, optType });
   if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveLoadMore({ type, list, page }));
+    let pageTotal = result.data.data.pageTotal;
+    let list = result.data.data.rows;
+    yield put(saveLoadMore({ type, list, page, pageTotal }));
   }
 }
+
 export default function* () {
   yield takeEvery(initData, handleInitData);
   yield takeEvery(loadMore, handleLoadMore);

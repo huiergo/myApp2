@@ -1,30 +1,44 @@
 import React, { Component } from "react";
-import Taro from '@tarojs/taro';
-
+import Taro, { eventCenter } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
-
+import Topic2 from '../../components/topic2'
 import { gotoPage } from '../../utils/index'
 import * as sub_historyActions from "../../actions/sub_history.action"
 
 class Sub extends Component {
   constructor() {
     super(...arguments)
+    this.state = {
+      optType: ''
+    }
   }
 
   // // onLoad
   async onLoad(options) {
     const { gridType } = options
-    console.log("[subhistory------]", gridType)
-    // await this.initSubQuestionDetail(id)
+    this.setState({
+      optType: gridType
+    })
+    // await this.initSubDetail({
+    //   optType: gridType,
+    //   page: 1,
+    //   questionBankType: 9  // 9面经10小程序面试题
+    // })
   }
-
-
   change(v) {
     this.props.changeTab(v)
+    if (v === 0) {
+      // 0 题目
+      eventCenter.trigger('eventChange_sub_history_question', v)
+    } else {
+      // 1 面经
+      eventCenter.trigger('eventChange_sub_history_interview', v)
+
+    }
     console.log("change......====", v)
   }
 
@@ -40,9 +54,6 @@ class Sub extends Component {
 
     return (
       <View className='index'>
-        {/* <View onClick={() => initData({ type: 'recommend', page: 1 })}>上拉</View>
-        <View onClick={() => loadMore({ type: 'recommend', page: 2 })}>下拉</View> */}
-
         <AtTabs
           scroll
           current={currentIdx}
@@ -53,14 +64,33 @@ class Sub extends Component {
             chineseTabList.map((item, idx) => {
               return (
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
-                  index-{item.title} - {idx}
-                  <Topic
-                    type={tabList[idx]}
-                    list={exprState[tabList[idx]].list}
-                    page={exprState[tabList[idx]].page}
-                    initData={initData}
-                    loadMore={loadMore}
-                  />
+
+                  {idx === 0 ?
+                    <Topic
+                      optType={this.state.optType}
+                      current={currentIdx}
+                      index={idx}
+                      type={tabList[idx]}
+                      list={exprState[tabList[idx]].list}
+                      page={exprState[tabList[idx]].page}
+                      pageTotal={exprState[tabList[idx]].pageTotal}
+                      initData={initData}
+                      loadMore={loadMore}
+                      questionBankType={10}
+                    /> : <Topic2
+                      optType={this.state.optType}
+                      current={currentIdx}
+                      index={idx}
+                      type={tabList[idx]}
+                      list={exprState[tabList[idx]].list}
+                      page={exprState[tabList[idx]].page}
+                      pageTotal={exprState[tabList[idx]].pageTotal}
+                      initData={initData}
+                      loadMore={loadMore}
+                      questionBankType={9}
+                    />
+                  }
+
                 </AtTabsPane>
               )
             })

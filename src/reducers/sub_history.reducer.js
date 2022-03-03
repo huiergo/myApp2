@@ -2,115 +2,15 @@ import { handleActions as createReducer } from 'redux-actions';
 import { changeTab, saveInitData, saveLoadMore } from '../actions/sub_history.action';
 
 const initialState = {
-  sub_history_question: {
+  history_question: {
     des: '题目',
-    list: [
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ],
+    list: [],
     page: 1,
     pageSize: 20,
   },
-  sub_history_experience: {
+  history_experience: {
     des: '面经',
-    list: [
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目1-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: 'history  题目2-Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ],
+    list: [],
     page: 1,
     pageSize: 20,
   },
@@ -125,19 +25,20 @@ const handleChangeTab = (state, action) => {
 };
 
 const handleSaveInitData = (state, action) => {
-  const { type, list, page } = action.payload;
+  const { type, list, page, pageTotal } = action.payload;
   return {
     ...state,
     [type]: {
       ...state[type],
       list,
       page,
+      pageTotal,
     },
   };
 };
 
 const handleSaveLoadMore = (state, action) => {
-  const { type, list, page } = action.payload;
+  const { type, list, page, pageTotal } = action.payload;
   console.log('去你大爷的。。。。');
   return {
     ...state,
@@ -145,6 +46,7 @@ const handleSaveLoadMore = (state, action) => {
       ...state[type],
       list: state[type].list.concat(list),
       page,
+      pageTotal,
     },
   };
 };
