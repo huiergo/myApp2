@@ -1,13 +1,7 @@
 import { Component } from 'react';
 import { Provider } from 'react-redux';
-import Taro from '@tarojs/taro';
-import configStore from './store';
-
+import store from './store';
 import './app.scss';
-import rootSaga from './sagas/root.saga';
-
-const store = configStore();
-store.runSaga(rootSaga);
 
 class App extends Component {
   componentDidMount() {}

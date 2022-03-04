@@ -13,6 +13,7 @@ import CustomModel from '../../components/customModel'
 import CustomTags from '../../components/customTags'
 import Topic from '../../components/topic'
 import './index.scss'
+import { handleGetToken } from '../../services/method'
 
 class First extends Component {
   constructor(props) {
@@ -21,15 +22,15 @@ class First extends Component {
       isOpened: false
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.category()
+    await handleGetToken()
   }
+
   change(v) {
     this.props.changeTab(v)
     // 触发事件，传入多个参数
     eventCenter.trigger('eventChange', v)
-
-    console.log("change......====", v)
   }
   getExtralParams() {
     const { sortList, cataList } = this.props

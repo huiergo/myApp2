@@ -3,7 +3,6 @@ import { takeEvery, put, select } from 'redux-saga/effects';
 import { getJSON, postJSON } from '../services/method';
 import apis from '../services/apis';
 import { getToken, getRefreshToken } from '../actions/login.action';
-import { saveMineData } from '../actions/mine.action';
 
 /**
  * 获取token
@@ -13,12 +12,8 @@ function* handleGetToken() {
   let result = yield postJSON(apis.login, { code });
   if (result && result.data && result.data.data) {
     let { token, refreshToken } = result.data.data;
-    yield put(
-      saveMineData({
-        token,
-        refreshToken,
-      }),
-    );
+    Taro.setStorageSync('token', token);
+    Taro.setStorageSync('refreshToken', refreshToken);
   }
 }
 
@@ -28,14 +23,11 @@ function* handleGetToken() {
 function* handleRefreshToken() {
   const state = yield select();
   let result = yield postJSON(apis.refreshToken, { refreshToken: state.mine.refreshToken });
+  console.log('333refresh 执行了=====');
   if (result && result.data && result.data.data) {
     let { token, refreshToken } = result.data.data;
-    yield put(
-      saveMineData({
-        token,
-        refreshToken,
-      }),
-    );
+    Taro.setStorageSync('token', token);
+    Taro.setStorageSync('refreshToken', refreshToken);
   }
 }
 export default function* loginSaga() {

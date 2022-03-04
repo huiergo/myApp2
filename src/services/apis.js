@@ -1,4 +1,5 @@
 const baseUrl = 'https://mock.boxuegu.com/mock/1508';
+// const baseUrl = 'http://api-teach.itheima.net/';
 const apiObject = {
   // ========  get 请求 ========
   //  首页-获取分类
