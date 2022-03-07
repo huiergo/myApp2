@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro';
 import apis from '../services/apis';
 
-function fetchUrl({ method, url, data }) {
+async function fetchUrl({ method, url, data }) {
   Taro.showLoading();
   let token = Taro.getStorageSync('token');
+  console.log('token');
   return new Promise((resolve, reject) => {
     Taro.request({
       url: url,
@@ -11,7 +12,7 @@ function fetchUrl({ method, url, data }) {
       method: method,
       header: {
         'content-type': 'application/json',
-        token: token,
+        Authorization: 'Bearer ' + token,
       },
     })
       .then((res) => {
@@ -24,9 +25,11 @@ function fetchUrl({ method, url, data }) {
       });
   });
 }
+
 let errCount = 0;
 export async function getJSON(url, data) {
   let result = await fetchUrl({ method: 'GET', url, data });
+  console.log('[getJSON result ====]', result);
 
   if (result && result.data && result.data.code !== -1) {
     // 请求正常
@@ -84,13 +87,25 @@ export function deleteJSON(url, data) {
  */
 export async function handleGetToken() {
   let { code } = await Taro.login();
-  let result = await postJSON(apis.login, { code });
+  Taro.request({
+    header: {
+      'content-type': 'application/json',
+    },
+    url: apis.login,
+    data: { code },
+    method: 'POST',
+  }).then((result) => {
+    console.log('[fetchUrl result ======]', result);
+    Taro.hideLoading();
 
-  if (result && result.data && result.data.data) {
-    let { token, refreshToken } = result.data.data;
-    Taro.setStorageSync('token', token);
-    Taro.setStorageSync('refreshToken', refreshToken);
-  }
+    if (result && result.data && result.data.data) {
+      let { token, refreshToken } = result.data.data;
+      Taro.setStorageSync('token', token);
+      Taro.setStorageSync('refreshToken', refreshToken);
+    } else {
+      return Taro.showToast({ title: '获取token失败' });
+    }
+  });
 }
 
 /**

@@ -16,7 +16,9 @@ import { saveCategoryToTag } from '../actions/tag.action';
  * 获取”初始化“列表，并同步到store
  */
 function* handleInitData({ payload }) {
+  console.log('[first saga-----]', payload);
   const { type, page, questionBankType } = payload;
+
   let result = yield getJSON(apis.getQuestionList, { page, type, questionBankType });
   console.log('初始化数据-----', result);
   if (result && result.data && result.data.data) {

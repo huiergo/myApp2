@@ -23,8 +23,8 @@ class First extends Component {
     }
   }
   async componentDidMount() {
-    this.props.category()
     await handleGetToken()
+    await this.props.category()
   }
 
   change(v) {

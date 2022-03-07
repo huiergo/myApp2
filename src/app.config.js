@@ -1,7 +1,7 @@
 export default defineAppConfig({
   pages: [
-    'pages/first/index',
     'pages/mine/index',
+    'pages/first/index',
     'pages/sub_detail_interview/index',
     'pages/sub_detail_question/index',
     'pages/sub_aboutUs/index',
@@ -13,6 +13,12 @@ export default defineAppConfig({
   ],
   tabBar: {
     list: [
+      {
+        iconPath: 'assets/home.png',
+        selectedIconPath: 'assets/home_select.png',
+        pagePath: 'pages/mine/index',
+        text: '我的',
+      },
       {
         iconPath: 'assets/home.png',
         selectedIconPath: 'assets/home_select.png',
@@ -30,12 +36,6 @@ export default defineAppConfig({
         selectedIconPath: 'assets/home_select.png',
         pagePath: 'pages/favorite/index',
         text: '收藏',
-      },
-      {
-        iconPath: 'assets/home.png',
-        selectedIconPath: 'assets/home_select.png',
-        pagePath: 'pages/mine/index',
-        text: '我的',
       },
     ],
     color: '#000',

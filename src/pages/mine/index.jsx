@@ -4,11 +4,14 @@ import Taro from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components'
-import { AtList, AtListItem, AtGrid } from "taro-ui"
+import { AtList, AtListItem, AtGrid, AtCurtain } from "taro-ui"
 
 import * as mineActions from "../../actions/mine.action";
 import * as loginActions from "../../actions/login.action"
 import { gotoPage } from '../../utils/index'
+
+import ClockInModel from "../../components/clockInModel";
+
 
 // * 1、获取用户数据
 // pageshow时候: 刷新页面（点赞数和签到数）
@@ -18,6 +21,9 @@ import { gotoPage } from '../../utils/index'
 class Mine extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      isOpened: false,
+    }
   }
 
   componentDidShow() {
@@ -41,10 +47,19 @@ class Mine extends Component {
     if (!flag) {
       // 调用签到接口
       this.props.clockIn()
+      this.setState({
+        isOpened: true
+      })
     }
   }
   handleGridClick({ gridType }) {
     gotoPage({ url: '../sub_history/index?gridType=' + gridType })
+  }
+
+  onClose() {
+    this.setState({
+      isOpened: false
+    })
   }
 
   render() {
@@ -91,6 +106,14 @@ class Mine extends Component {
           <Button open-type="feedback" >意见反馈</Button>
           <AtListItem title='关于我们' extraText='详细信息' onClick={() => this.handleListClick({ type: 'aboutUs' })} />
         </AtList>
+
+        <AtCurtain
+          closeBtnPosition='top-right'
+          isOpened={this.state.isOpened}
+          onClose={this.onClose.bind(this)}
+        >
+          <ClockInModel />
+        </AtCurtain>
       </View>
     )
   }
