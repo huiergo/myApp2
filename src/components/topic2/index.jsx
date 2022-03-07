@@ -18,8 +18,7 @@ class Topic extends Component {
   init = true
 
   componentWillMount() {
-    console.log("topic 2  组件。。。。")
-    this.initByTabChange()
+    this.initByTabChange(0)
     // 监听一个事件，接受参数
     eventCenter.on('eventChange_experience', (currentIndex) => {
       console.log("[topic2 eventChange_experience  currentIndex]", currentIndex, this.props.index)

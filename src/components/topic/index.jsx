@@ -23,7 +23,7 @@ class Topic extends Component {
   init = true
 
   componentWillMount() {
-    this.initByTabChange()
+    this.initByTabChange(0)
     // 监听一个事件，接受参数
     eventCenter.on('eventChange', (currentIndex) => {
       console.log("[topic eventChange  currentIndex]", currentIndex, this.props.index)

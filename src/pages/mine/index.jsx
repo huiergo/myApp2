@@ -19,17 +19,6 @@ class Mine extends Component {
   constructor(props) {
     super(props)
   }
-  componentDidMount() {
-    this.props.getToken()
-    return
-    // Taro.getAppBaseInfo({
-    //   success: res => console.log('00000======', res)
-    // })
-    //   .then(res => console.log(res))
-    let result = Taro.getAccountInfoSync()
-    console.log('00000======', result)
-    this.initData()
-  }
 
   componentDidShow() {
     this.initData()

@@ -18,17 +18,12 @@ class Sub extends Component {
   }
 
   // // onLoad
-  async onLoad(options) {
-    const { gridType } = options
+  onLoad(options) {
     this.setState({
-      optType: gridType
+      optType: options.gridType
     })
-    // await this.initSubDetail({
-    //   optType: gridType,
-    //   page: 1,
-    //   questionBankType: 9  // 9面经10小程序面试题
-    // })
   }
+
   change(v) {
     this.props.changeTab(v)
     if (v === 0) {
@@ -67,7 +62,7 @@ class Sub extends Component {
 
                   {idx === 0 ?
                     <Topic
-                      optType={this.state.optType}
+                      optType={3 || this.state.optType}
                       current={currentIdx}
                       index={idx}
                       type={tabList[idx]}
