@@ -9,7 +9,6 @@ import QuestionItem from '../questionItem'
 import * as firstActions from "../../actions/first.action"
 
 
-
 const Row = React.memo(({ id, index, style, data }) => {
   return (
     <View id={id} className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
@@ -40,7 +39,7 @@ class Topic extends Component {
 
   }
 
-  initByTabChange(currentIndex) {
+  initByTabChange(currentIndex = 0) {
     console.log("[topic initData-----]", this.props.type, this.props.question)
     console.log('[initByTabChange-----]', this.init, this.props.index, currentIndex)
     if (this.init && (this.props.index === currentIndex)) {
@@ -64,7 +63,7 @@ class Topic extends Component {
     return (
       <VirtualList
         className='List'
-        height={300}
+        height={324}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}

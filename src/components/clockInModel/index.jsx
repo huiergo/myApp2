@@ -74,7 +74,6 @@ class ClockInModel extends Component {
           </View>
         </View>
         <View className='clockIn-btns'>
-          <Image className='clockIn-save-img' src={require('../../assets/save_img.png')} onClick={this.saveClockInToLocal} />
           <Image className='clockIn-share-img' src={require('../../assets/share_img.png')} onClick={this.shareClockInImg} />
         </View>
       </View>

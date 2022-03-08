@@ -31,17 +31,31 @@ export async function getJSON(url, data) {
   let result = await fetchUrl({ method: 'GET', url, data });
   console.log('[getJSON result ====]', result);
 
-  if (result && result.data && result.data.code !== -1) {
+  if (result && result.data && result.data.code === 10000) {
     // 请求正常
     return result;
-  } else {
+  }
+  if (result && result.data && result.data.code === -1) {
+    // 请求成功， 但是有错误信息
+    Taro.showToast({ title: result.data.message });
+  }
+  if (result && result.data && result.data.code === 401) {
     if (errCount > 1) {
+      let r1 = await handleGetToken();
+      console.log('get 401----', r1);
+      if (r1) {
+        let result1 = await fetchUrl({ method: 'GET', url, data });
+        console.log('get 401 result1----', r1);
+        return result1;
+      }
       return;
     } else {
       errCount++;
       let refreshResult = await handleRefreshToken();
+      console.log('get 111', refreshResult);
       if (refreshResult) {
-        let result1 = await fetchUrl({ method: 'POST', url, data });
+        let result1 = await fetchUrl({ method: 'GET', url, data });
+        console.log('get 222', result1);
         return result1;
       }
     }
@@ -50,36 +64,37 @@ export async function getJSON(url, data) {
 
 export async function postJSON(url, data) {
   let result = await fetchUrl({ method: 'POST', url, data });
-  if (result && result.data && result.data.code !== -1) {
+  console.log('[getJSON result ====]', result);
+
+  if (result && result.data && result.data.code === 10000) {
     // 请求正常
     return result;
-  } else {
+  }
+  if (result && result.data && result.data.code === -1) {
+    // 请求成功， 但是有错误信息
+    Taro.showToast({ title: result.data.message });
+  }
+  if (result && result.data && result.data.code === 401) {
     if (errCount > 1) {
+      let r1 = await handleGetToken();
+      console.log('post 401----', r1);
+      if (r1) {
+        let result1 = await fetchUrl({ method: 'POST', url, data });
+        console.log('post 401 result----', r1);
+        return result1;
+      }
       return;
     } else {
       errCount++;
       let refreshResult = await handleRefreshToken();
+      console.log('post 111', refreshResult);
       if (refreshResult) {
         let result1 = await fetchUrl({ method: 'POST', url, data });
+        console.log('post 222', refreshResult);
         return result1;
       }
     }
   }
-}
-
-export function deleteJSON(url, data) {
-  Taro.showLoading();
-  return Taro.request({
-    header: {
-      'content-type': 'application/json',
-    },
-    url: url,
-    data: data,
-    method: 'DELETE',
-  }).then((result) => {
-    Taro.hideLoading();
-    return result;
-  });
 }
 
 /**
@@ -100,8 +115,10 @@ export async function handleGetToken() {
 
     if (result && result.data && result.data.data) {
       let { token, refreshToken } = result.data.data;
+      console.log('存储成功-------', token, refreshToken);
       Taro.setStorageSync('token', token);
       Taro.setStorageSync('refreshToken', refreshToken);
+      return true;
     } else {
       return Taro.showToast({ title: '获取token失败' });
     }

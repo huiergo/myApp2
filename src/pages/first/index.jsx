@@ -3,9 +3,8 @@ import Taro, { eventCenter } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Image, Button } from '@tarojs/components'
-import { AtTabs, AtTabsPane } from 'taro-ui'
-import { AtSearchBar } from 'taro-ui'
+import { View, Image } from '@tarojs/components'
+import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
 import * as tagActions from "../../actions/tag.action"
 import * as firstActions from "../../actions/first.action"
 import { gotoPage } from "../../utils/index"
@@ -97,10 +96,10 @@ class First extends Component {
               disabled
             />
           </View>
-          <View className='index__clock-in'>去打卡</View>
+          <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
+
         </View>
-
-
+        <Image className='index__swiper-img' src={require('../../assets/jianbian.jpeg')} />
 
         {/* <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View> */}
         <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
@@ -123,7 +122,6 @@ class First extends Component {
               chineseTabList.map((item, idx) => {
                 return (
                   <AtTabsPane key={idx} current={currentIdx} index={idx} >
-                    index-{item.title} - {idx}
                     <Topic
                       current={currentIdx}
                       index={idx}
