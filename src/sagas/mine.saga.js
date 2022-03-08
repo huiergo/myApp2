@@ -35,7 +35,8 @@ function* handleLoadUserInfo() {
 function* handleFlag(params) {
   let result = yield getJSON(apis.getFlag, params);
   if (result && result.data && result.data.data) {
-    let flag = result.data.data;
+    let { flag } = result.data.data;
+    console.log('[请求 flag----]', result, flag);
     yield put(saveMineData({ flag }));
   }
 }

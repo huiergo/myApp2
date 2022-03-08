@@ -3,16 +3,19 @@ import Taro, { eventCenter } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
 import * as tagActions from "../../actions/tag.action"
 import * as firstActions from "../../actions/first.action"
+import * as mineActions from "../../actions/mine.action";
+
 import { gotoPage } from "../../utils/index"
 import CustomModel from '../../components/customModel'
 import CustomTags from '../../components/customTags'
 import Topic from '../../components/topic'
 import './index.scss'
 import { handleGetToken } from '../../services/method'
+
 
 class First extends Component {
   constructor(props) {
@@ -24,6 +27,10 @@ class First extends Component {
   async componentDidMount() {
     await handleGetToken()
     await this.props.category()
+    const { loadFlag, loadUserInfo } = this.props;
+    await loadFlag()
+    await loadUserInfo()
+
   }
 
   change(v) {
@@ -75,6 +82,16 @@ class First extends Component {
       isOpened: false
     })
   }
+
+  handleClockInClick(flag) {
+    if (!flag) {
+      // 调用签到接口
+      this.props.clockIn()
+      this.setState({
+        isOpened: true
+      })
+    }
+  }
   render() {
     const { cataList, sortList, updateTagList } = this.props
     const { isOpened } = this.state
@@ -84,9 +101,13 @@ class First extends Component {
       chineseTabList,
       exprState,
       initData,
-      loadMore
-    } = this.props
+      loadMore,
+      flag,
 
+    } = this.props
+    const { clockinNumbers } = this.props.userInfo
+
+    console.log("flag----", flag)
     return (
       <View className='index'>
         <View className='top-part'>
@@ -96,7 +117,16 @@ class First extends Component {
               disabled
             />
           </View>
-          <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
+          <View className='index_clock_wrap' onClick={() => this.handleClockInClick(flag)}>
+            <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
+            {flag ?
+              (<View className='clock_text-wrap'>
+                <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
+                <View className='clock_text-wrap-bottom'>连续签到</View>
+              </View>) :
+              (<View className='clock_text-wrap clock_text'>打卡</View>)
+            }
+          </View>
 
         </View>
         <Image className='index__swiper-img' src={require('../../assets/jianbian.jpeg')} />
@@ -153,7 +183,7 @@ const mapStateToProps = (state) => {
   let tabList = Object.keys(state.first).filter(i => (i !== 'currentIdx' && i !== 'extraParams'))
   //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
   let chineseTabList = tabList.map(k => state.first[k].des).filter(i => i).map(j => ({ title: j }))
-
+  let { flag, userInfo } = state.mine
   return {
     showModal: state.first,
     sortList: state.tag.sortList,
@@ -162,13 +192,15 @@ const mapStateToProps = (state) => {
     tabList,
     chineseTabList,
     currentIdx,
-    exprState: state.first
+    exprState: state.first,
+    flag,
+    userInfo
   }
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(tagActions, dispatch),
-  ...bindActionCreators(firstActions, dispatch)
-
+  ...bindActionCreators(firstActions, dispatch),
+  ...bindActionCreators(mineActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(First);
