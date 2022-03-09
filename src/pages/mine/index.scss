@@ -2,6 +2,7 @@
   height: 100vh;
   background-color: #f6f7f9;
   padding-top: 176px;
+  box-sizing: border-box;
 }
 .at-grid__flex-item {
   transform: scale(0.8) !important;
@@ -44,9 +45,10 @@
 .user-info-zan-numbers {
   color: #3266ee;
   background-color: #edf2ff;
-  border-radius: 8px;
+  border-radius: 48px;
   padding: 8px 20px;
   font-size: 22px;
+  min-width: 40px;
 }
 .user-clock-status {
   font-size: 22px;
@@ -68,18 +70,40 @@
   margin-top: 40px;
   border-radius: 8px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-item-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.grid-item-text {
+  color: #6f6f6f;
+  font-size: 24px;
+  margin-top: 18px;
 }
 
 .mine-list-wrap {
   width: 690px;
-  height: 316px;
+  height: 300px;
   background-color: #fff;
   margin: 0 auto;
   margin-top: 40px;
   border-radius: 8px;
   margin-bottom: 20px;
   padding-top: 20px;
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
 }
 
 .mine-list-item {

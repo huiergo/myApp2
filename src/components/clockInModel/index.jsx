@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Button, Image } from '@tarojs/components'
+import { View, Button, Image, Text } from '@tarojs/components'
 import Taro, { eventCenter } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -43,7 +43,8 @@ class ClockInModel extends Component {
   }
 
   render() {
-    const { avatar, nickName, clockinNumbers, clockinTotal } = this.props.userInfo
+    const { clockinNumbers = 12, clockinTotal = 24 } = this.props.userInfo
+    const { avatar, nickName } = this.props
 
     return (
       <View className='clockIn-model'>
@@ -54,21 +55,20 @@ class ClockInModel extends Component {
           {/* 中间文字信息 */}
           <View className='clockIn-content'>
             <View className='clockIn-userInfo'>
-              {/* 干饭头像  https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F13148366509%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649227705&t=39e224be0af609f9a5cac3e58b97965c */}
-              <Image className='clockIn-userInfo-avatar' src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F13148366509%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1649227705&t=39e224be0af609f9a5cac3e58b97965c' />
+              <Image className='clockIn-userInfo-avatar' src={avatar} />
               <View className='clockIn-userInfo-nick'>{nickName}</View>
             </View>
-            <View className='clockIn-userInfo-des'>我在「面试宝典」小程序中</View>
+            <View className='clockIn-userInfo-des'>我在<Text className='clock-font-black'>「面试宝典」小程序中</Text></View>
 
             <View className='clockIn-time'>
               <View className='clockIn-column column1'>
                 <View className='clockIn-column-des'>连续签到</View>
-                <View className='clockIn-column-number'>{clockinNumbers}天</View>
+                <View className='clockIn-column-number'><Text className='clock-font-big'>{clockinNumbers}</Text> 天</View>
               </View>
               <Split />
               <View className='clockIn-column column2'>
                 <View className='clockIn-column-des'>连续签到</View>
-                <View className='clockIn-column-number'>{clockinTotal}天</View>
+                <View className='clockIn-column-number'><Text className='clock-font-big'>{clockinTotal}</Text> 天</View>
               </View>
             </View>
           </View>

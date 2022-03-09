@@ -120,8 +120,8 @@ class SubDetail extends Component {
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
-          <Image className='zan-btn' src={likeFlag ? require('../../assets/zan.png') : require('../../assets/delete.png')} onClick={() => this.handleZan(likeFlag)} />
-          <Image className='favorite-btn' src={collectFlag ? require('../../assets/favorite-icon.png') : require('../../assets/delete.png')} onClick={() => this.handleFavorite(collectFlag)} />
+          <Image className='zan-btn' src={likeFlag ? require('../../assets/zan_favorite_icons/zan_select.png') : require('../../assets/zan_favorite_icons/zan.png')} onClick={() => this.handleZan(likeFlag)} />
+          <Image className='favorite-btn' src={collectFlag ? require('../../assets/zan_favorite_icons/favorite_select.png') : require('../../assets/zan_favorite_icons/favorite.png')} onClick={() => this.handleFavorite(collectFlag)} />
         </View>
 
       </View>

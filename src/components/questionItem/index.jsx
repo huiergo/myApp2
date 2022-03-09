@@ -57,13 +57,11 @@ class Index extends Component {
         </View>
         <View className='question-item__bottom'>
           <View className='question-item__like-num'>
-            {item.likeFlag ? <Image className='question-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
+            {item.likeFlag ? <Image className='question-item__zan-icon' src={require('../../assets/other_icons/zanzan.png')} /> : ' 点赞'}
             {"  " + item.likeCount}
           </View>
           <Split />
           <View className='question-item__pv-num'>浏览 {item.views}</View>
-          <Split />
-          <Image className='question-item__share-icon' src={require('../../assets/share.png')} />
         </View>
       </View>
     )

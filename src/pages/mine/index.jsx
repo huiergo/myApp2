@@ -22,7 +22,7 @@ class Mine extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isOpened: false,
+      isOpened: true,
       avatar: '',
       nickName: ''
     }
@@ -104,7 +104,7 @@ class Mine extends Component {
 
   render() {
     const { avatar, nickName, } = this.state
-    const { likeCount = 0, clockinNumbers } = this.props.userInfo
+    const { likeCount = 0, clockinNumbers = 0 } = this.props.userInfo
     const { flag } = this.props
     return (
       <View className='mine-page'>
@@ -115,55 +115,44 @@ class Mine extends Component {
               <View className='user-info-name'>
                 {nickName}
               </View>
-              <View className='user-info-zan-numbers'>
+              <Text className='user-info-zan-numbers'>
                 获赞 {likeCount}
-              </View>
+              </Text>
             </View>
 
           </View>
-          <View className='user-clock-status' onClick={() => this.handleClockInClick(flag)}>连续签到</View>
+          <View className='user-clock-status' onClick={() => this.handleClockInClick(flag)}>{flag ? `连续签到 ${clockinNumbers} 天 ✓` : '签到'}</View>
         </View>
 
 
         {/* 横向3格 */}
         <View className='grid-wrap'>
-          <AtGrid
-            hasBorder={false}
-            data={
-              [
-                {
-                  image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
-                  value: '历史记录11',
-                  gridType: 3
-                },
-                {
-                  image: 'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
-                  value: '我的收藏',
-                  gridType: 2
-                },
-                {
-                  image: 'https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png',
-                  value: '我的点赞',
-                  gridType: 1
-                }
-              ]
-            }
-            onClick={this.handleGridClick}
-          />
+          <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 3 })}>
+            <Image className='grid-item-icon' src={require('../../assets/mine_icons/my_history_icon.png')} />
+            <Text className='grid-item-text'>历史记录</Text>
+          </View>
+          <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 2 })}>
+            <Image className='grid-item-icon' src={require('../../assets/mine_icons/my_favo_icon.png')} />
+            <Text className='grid-item-text'>我的收藏</Text>
+          </View>
+          <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 1 })}>
+            <Image className='grid-item-icon' src={require('../../assets/mine_icons/my_zan_icon.png')} />
+            <Text className='grid-item-text'>我的点赞</Text>
+          </View>
         </View>
         {/* 竖向3列 */}
         <View className='mine-list-wrap'>
           <View className='mine-list-item' onClick={() => this.handleListClick({ type: 'recommend' })}>
             <Text className='mine-list-item-text'>推荐分享</Text>
-            <Image className='mine-list-item-icon' src={require('../../assets/share_img.png')} />
+            <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
           </View>
           <View className='mine-list-item'>
             <Button className='mine-list-item-text mine-list-item-btn' open-type="feedback">意见反馈</Button>
-            <Image className='mine-list-item-icon' src={require('../../assets/share_img.png')} />
+            <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
           </View>
           <View className='mine-list-item' onClick={() => this.handleListClick({ type: 'aboutUs' })}>
             <Text className='mine-list-item-text'>关于我们</Text>
-            <Image className='mine-list-item-icon' src={require('../../assets/share_img.png')} />
+            <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
           </View>
         </View>
 
@@ -172,7 +161,7 @@ class Mine extends Component {
           isOpened={this.state.isOpened}
           onClose={this.onClose.bind(this)}
         >
-          <ClockInModel />
+          <ClockInModel avatar={avatar} nickName={nickName} />
         </AtCurtain>
       </View>
     )

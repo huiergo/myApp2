@@ -44,13 +44,11 @@ class Index extends Component {
 
         <View className='interview-item__bottom'>
           <View className='interview-item__like-num'>
-            {item.likeFlag ? <Image className='interview-item__zan-icon' src={require('../../assets/zan.png')} /> : ' 点赞'}
+            {item.likeFlag ? <Image className='interview-item__zan-icon' src={require('../../assets/other_icons/zanzan.png')} /> : ' 点赞'}
             {"  " + item.likeCount}
           </View>
           <Split />
           <View className='interview-item__pv-num'>浏览 {item.views}</View>
-          <Split />
-          <Image className='interview-item__share-icon' src={require('../../assets/share.png')} />
         </View>
       </View>
     )
