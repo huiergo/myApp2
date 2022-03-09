@@ -1,4 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions';
+import Taro from '@tarojs/taro';
 import {
   clearAllRecordList,
   deleteRecordByIndex,
@@ -9,8 +10,10 @@ import {
   inputTrigger,
 } from '../actions/search.action';
 
+let storage_record = Taro.getStorageSync('storage_record_list');
+console.log('[init storage_record---]', storage_record);
 const initialState = {
-  recordList: ['吃饭', '睡觉', '打豆豆'],
+  recordList: storage_record || [],
   isEdit: false,
   page: 1,
   list: [], //搜索结果列表
@@ -24,6 +27,8 @@ const handleUnShiftRecord = (state, action) => {
     state.recordList.splice(index, 1);
   }
   state.recordList.unshift(item);
+  Taro.setStorageSync('storage_record_list', [...state.recordList]);
+
   return {
     ...state,
     recordList: [...state.recordList],
@@ -31,6 +36,8 @@ const handleUnShiftRecord = (state, action) => {
 };
 
 const handleClearAllRecordList = (state, action) => {
+  Taro.setStorageSync('storage_record_list', []);
+
   return {
     ...state,
     recordList: [],
@@ -41,6 +48,7 @@ const handleDeleteRecordByIndex = (state, action) => {
   const index = action.payload;
   // todo: 换一种方式
   state.recordList.splice(index, 1);
+  Taro.setStorageSync('storage_record_list', [...state.recordList]);
 
   return {
     ...state,

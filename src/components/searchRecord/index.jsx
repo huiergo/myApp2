@@ -24,7 +24,7 @@ class SearchRecord extends Component {
           </View>
           <View className='search-record-right'>
             {!isEdit &&
-              <Image className='trash-icon' src={require('../../assets/trash.png')} onClick={() => editTrigger(true)} />
+              <Image className='trash-icon' src={require('../../assets/other_icons/trash.png')} onClick={() => editTrigger(true)} />
             }
             {isEdit && (<View className='edit-group'>
               <Text className='edit-delete-all' onClick={() => clearAllRecordList()}>全部删除</Text>
@@ -45,7 +45,7 @@ class SearchRecord extends Component {
             {isEdit ?
               <Image
                 className='edit-item-delete-icon'
-                src={require('../../assets/delete.png')}
+                src={require('../../assets/other_icons/delete.png')}
                 onClick={() => deleteRecordByIndex(index)}
               />
               : null}

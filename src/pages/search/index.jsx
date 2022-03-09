@@ -15,6 +15,12 @@ class Search extends Component {
       value: ''
     }
   }
+  componentDidShow() {
+    console.log('xxx')
+    this.props.editTrigger(false)
+  }
+
+
 
   onChange(value) {
     this.setState({
