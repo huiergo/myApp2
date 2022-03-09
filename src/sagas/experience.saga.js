@@ -12,12 +12,10 @@ function* handleInitData({ payload }) {
   console.log(' current, index ==========', current, index);
   let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
   // questionBankType:9 面经
-  let result = yield getJSON(api, { page, questionBankType: 9 });
-  if (result && result.data && result.data.data) {
-    let pageTotal = result.data.data.pageTotal;
-    let list = result.data.data.rows;
-    yield put(saveInitData({ type, list, page, pageTotal }));
-  }
+  let result = yield getJSON({ url: api, data: { page, questionBankType: 9 } });
+
+  let { pageTotal, rows: list } = result;
+  yield put(saveInitData({ type, list, page, pageTotal }));
 }
 
 /**
@@ -27,13 +25,10 @@ function* handleLoadMore({ payload }) {
   const { type, page, current, index } = payload;
   let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
   // questionBankType:9 面经
-  let result = yield getJSON(api, { page, questionBankType: 9 });
-  if (result && result.data && result.data.data) {
-    let pageTotal = result.data.data.pageTotal;
-    let list = result.data.data.rows;
-    console.log('[handleLoadMore--------]', list);
-    yield put(saveLoadMore({ type, list, page, pageTotal }));
-  }
+  let result = yield getJSON({ url: api, data: { page, questionBankType: 9 } });
+  let { pageTotal, rows: list } = result;
+
+  yield put(saveLoadMore({ type, list, page, pageTotal }));
 }
 export default function* experienceSaga() {
   yield takeEvery(initData, handleInitData);

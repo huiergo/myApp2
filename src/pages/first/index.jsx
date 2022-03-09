@@ -27,9 +27,9 @@ class First extends Component {
   async componentDidMount() {
     await handleGetToken()
     await this.props.category()
-    const { loadFlag, loadUserInfo } = this.props;
-    await loadFlag()
-    await loadUserInfo()
+    // const { loadFlag, loadUserInfo } = this.props;
+    // await loadFlag()
+    // await loadUserInfo()
 
   }
 
@@ -105,7 +105,7 @@ class First extends Component {
       flag,
 
     } = this.props
-    const { clockinNumbers } = this.props.userInfo
+    // const { clockinNumbers } = this.props.userInfo
 
     console.log("flag----", flag)
     return (
@@ -117,7 +117,7 @@ class First extends Component {
               disabled
             />
           </View>
-          <View className='index_clock_wrap' onClick={() => this.handleClockInClick(flag)}>
+          {/* <View className='index_clock_wrap' onClick={() => this.handleClockInClick(flag)}>
             <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
             {flag ?
               (<View className='clock_text-wrap'>
@@ -126,7 +126,7 @@ class First extends Component {
               </View>) :
               (<View className='clock_text-wrap clock_text'>打卡</View>)
             }
-          </View>
+          </View> */}
 
         </View>
         <Image className='index__swiper-img' src={require('../../assets/jianbian.jpeg')} />
@@ -193,14 +193,14 @@ const mapStateToProps = (state) => {
     chineseTabList,
     currentIdx,
     exprState: state.first,
-    flag,
-    userInfo
+    // flag,
+    // userInfo
   }
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(tagActions, dispatch),
   ...bindActionCreators(firstActions, dispatch),
-  ...bindActionCreators(mineActions, dispatch),
+  // ...bindActionCreators(mineActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(First);

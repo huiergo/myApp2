@@ -11,12 +11,13 @@ import { initData, loadMore, saveInitData, saveLoadMore } from '../actions/sub_h
 function* handleInitData({ payload }) {
   // todo: 需要传递 optType 1点赞2收藏3浏览
   const { type, page, questionBankType, optType } = payload;
-  let result = yield getJSON(apis.getOptList, { page, type, questionBankType, optType });
-  if (result && result.data && result.data.data) {
-    let pageTotal = result.data.data.pageTotal;
-    let list = result.data.data.rows;
-    yield put(saveInitData({ type, list, page, pageTotal }));
-  }
+  let result = yield getJSON({
+    url: apis.getOptList,
+    data: { page, type, questionBankType, optType },
+  });
+
+  let { pageTotal, rows: list } = result;
+  yield put(saveInitData({ type, list, page, pageTotal }));
 }
 
 /**
@@ -24,12 +25,13 @@ function* handleInitData({ payload }) {
  */
 function* handleLoadMore({ payload }) {
   const { type, page, questionBankType, optType } = payload;
-  let result = yield getJSON(apis.getOptList, { page, type, questionBankType, optType });
-  if (result && result.data && result.data.data) {
-    let pageTotal = result.data.data.pageTotal;
-    let list = result.data.data.rows;
-    yield put(saveLoadMore({ type, list, page, pageTotal }));
-  }
+  let result = yield getJSON({
+    url: apis.getOptList,
+    data: { page, type, questionBankType, optType },
+  });
+  let { pageTotal, rows: list } = result;
+
+  yield put(saveLoadMore({ type, list, page, pageTotal }));
 }
 
 export default function* () {

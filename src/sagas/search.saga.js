@@ -14,13 +14,13 @@ import {
  */
 function* handleInitSearchData({ payload }) {
   const { keyword, page, questionBankType } = payload;
-  let result = yield getJSON(apis.getQuestionList, { keyword, page, questionBankType, type: 0 });
+  let result = yield getJSON({
+    url: apis.getQuestionList,
+    data: { keyword, page, questionBankType, type: 0 },
+  });
 
-  if (result && result.data && result.data.data) {
-    let pageTotal = result.data.data.pageTotal;
-    let list = result.data.data.rows;
-    yield put(saveInitSearchData({ list, page, pageTotal }));
-  }
+  let { pageTotal, rows: list } = result;
+  yield put(saveInitSearchData({ list, page, pageTotal }));
 }
 
 /**
@@ -30,10 +30,11 @@ function* handleLoadSearchMore({ payload }) {
   const { keyword, page, questionBankType } = payload;
   console.log('[handleLoadSearchMore  payload-----]', payload);
 
-  let result = yield getJSON(apis.getQuestionList, { keyword, page, questionBankType, type: 0 });
-  console.log('[handleLoadSearchMore  result-----]', result);
-  let pageTotal = result.data.data.pageTotal;
-  let list = result.data.data.rows;
+  let result = yield getJSON({
+    url: apis.getQuestionList,
+    data: { keyword, page, questionBankType, type: 0 },
+  });
+  let { pageTotal, rows: list } = result;
   yield put(saveLoadSearchMore({ type: 0, list, page, pageTotal }));
 }
 

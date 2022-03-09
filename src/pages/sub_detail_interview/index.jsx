@@ -52,7 +52,7 @@ class SubDetail extends Component {
   }
 
   async initSubInterviewDetail(id) {
-    let result = await getJSON(apis.getQuestionDetail + id);
+    let result = await getJSON({ url: apis.getQuestionDetail + id });
     if (result && result.data && result.data.data) {
       this.setState({
         item: result.data.data
@@ -91,7 +91,7 @@ class SubDetail extends Component {
    */
   async unitOptRequest({ action, id, type = 1, optType }) {
     let api = action == 'opt' ? apis.opt : apis.unOpt
-    let result = await getJSON(api, { id, type, optType });
+    let result = await getJSON({ url: api, data: { id, type, optType } });
     if (result && result.data && result.data.data) {
       return true
     }

@@ -9,54 +9,12 @@ import { initData, loadMore, saveInitData, saveLoadMore } from '../actions/sub_z
  */
 function* handleInitData({ payload }) {
   const { type, page } = payload;
-  let result = yield getJSON(apis.getRecommendList, { page });
-  if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '初始化Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveInitData({ type, list, page }));
-  }
+  let result = yield getJSON({
+    url: apis.getRecommendList,
+    data: { page },
+  });
+
+  yield put(saveInitData({ type, list: result, page }));
 }
 
 /**
@@ -65,54 +23,14 @@ function* handleInitData({ payload }) {
 function* handleLoadMore({ payload }) {
   const { type, page } = payload;
 
-  let result = yield getJSON(apis.getRecommendList, { page });
-  if (result && result.data && result.data.data) {
-    let list = [
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 2,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 0,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？',
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-      {
-        difficulty: 1,
-        title: '加载更多Question的优势是什么？' + type,
-        likeCount: 666,
-        views: 99,
-        likeFlag: true,
-      },
-    ];
-    yield put(saveLoadMore({ type, list, page }));
-  }
+  let result = yield getJSON({
+    url: apis.getRecommendList,
+    data: { page },
+  });
+  // todo 验证，临时修改
+
+  let { pageTotal, rows: list } = result;
+  yield put(saveLoadMore({ type, list, page, pageTotal }));
 }
 export default function* () {
   yield takeEvery(initData, handleInitData);

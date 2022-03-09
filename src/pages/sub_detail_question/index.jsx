@@ -61,12 +61,11 @@ class SubDetail extends Component {
   }
 
   async initSubQuestionDetail(id) {
-    let result = await getJSON(apis.getQuestionDetail + id);
-    if (result && result.data && result.data.data) {
-      this.setState({
-        item: result.data.data
-      })
-    }
+    let result = await getJSON({ url: apis.getQuestionDetail + id });
+
+    this.setState({
+      item: result
+    })
   }
 
   // 赞 事件
@@ -99,10 +98,8 @@ class SubDetail extends Component {
    */
   async unitOptRequest({ action, id, type = 1, optType }) {
     let api = action == 'opt' ? apis.opt : apis.unOpt
-    let result = await getJSON(api, { id, type, optType });
-    if (result && result.data && result.data.data) {
-      return true
-    }
+    let result = await getJSON({ url: api, data: { id, type, optType } });
+    return result
   }
   render() {
     let { item } = this.state

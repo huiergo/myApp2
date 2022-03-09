@@ -7,7 +7,6 @@ import { View, Image, Button, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtGrid, AtCurtain } from "taro-ui"
 
 import * as mineActions from "../../actions/mine.action";
-import * as loginActions from "../../actions/login.action"
 import { gotoPage } from '../../utils/index'
 
 import ClockInModel from "../../components/clockInModel";
@@ -177,7 +176,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(mineActions, dispatch),
-  ...bindActionCreators(loginActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mine);
