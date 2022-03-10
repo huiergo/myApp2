@@ -36,6 +36,9 @@ class Favorite extends Component {
       initData,
       loadMore
     } = this.props
+    let tabBarHeight = Taro.getStorageSync('at_tabs_height')
+    let viewportHeight = Taro.getStorageSync('viewport_height')
+    let scrollHeight = viewportHeight - tabBarHeight
 
     return (
       <View className='index'>
@@ -52,6 +55,7 @@ class Favorite extends Component {
                   {/* index-{item.title} - {idx} */}
                   {idx === 0 ?
                     <Topic
+                      scrollHeight={scrollHeight}
                       current={currentIdx}
                       index={idx}
                       type={tabList[idx]}
@@ -62,6 +66,7 @@ class Favorite extends Component {
                       loadMore={loadMore}
                       questionBankType={10}
                     /> : <Topic2
+                      scrollHeight={scrollHeight}
                       current={currentIdx}
                       index={idx}
                       type={tabList[idx]}

@@ -30,6 +30,10 @@ class Experience extends Component {
       initData,
       loadMore
     } = this.props
+    let tabBarHeight = Taro.getStorageSync('at_tabs_height')
+    let searchBarHeight = Taro.getStorageSync('at_search_height')
+    let viewportHeight = Taro.getStorageSync('viewport_height')
+    let scrollHeight = viewportHeight - searchBarHeight - tabBarHeight
 
     return (
       <View className='index'>
@@ -51,6 +55,7 @@ class Experience extends Component {
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
                   {/* index-{item.title} - {idx} */}
                   <Topic2
+                    scrollHeight={scrollHeight}
                     current={currentIdx}
                     index={idx}
                     type={tabList[idx]}

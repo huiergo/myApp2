@@ -59,10 +59,11 @@ class Topic extends Component {
 
     const dataLen = list.length
     const itemSize = 140
+
     return (
       <VirtualList
         className='List'
-        height={700}
+        height={this.props.scrollHeight}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}

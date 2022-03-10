@@ -11,8 +11,29 @@ import * as sub_historyActions from "../../actions/sub_history.action"
 class Sub extends Component {
   constructor() {
     super(...arguments)
+    this.state = {
+      scrollHeight: 550
+    }
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.getScrollHeight()
+    }, 1000);
+
   }
 
+  getScrollHeight() {
+    let _this = this
+    let tabBarHeight = Taro.getStorageSync('at_tabs_height')
+
+    Taro.createSelectorQuery().selectViewport().boundingClientRect(async function (res) {
+      let total = res.height
+      let scrollHeight = total - tabBarHeight
+      _this.setState({
+        scrollHeight: scrollHeight
+      })
+    }).exec()
+  }
   componentDidShow() {
     this.change(0)
   }
@@ -40,6 +61,7 @@ class Sub extends Component {
       loadMore,
       optType
     } = this.props
+    const { scrollHeight } = this.state
     return (
       <View className='index'>
         <AtTabs
@@ -55,6 +77,7 @@ class Sub extends Component {
 
                   {idx === 0 ?
                     <Topic
+                      scrollHeight={scrollHeight}
                       optType={optType}
                       current={currentIdx}
                       index={idx}
@@ -66,6 +89,7 @@ class Sub extends Component {
                       loadMore={loadMore}
                       questionBankType={10}
                     /> : <Topic2
+                      scrollHeight={scrollHeight}
                       optType={optType}
                       current={currentIdx}
                       index={idx}
