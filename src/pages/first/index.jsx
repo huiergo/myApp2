@@ -220,7 +220,7 @@ class First extends Component {
           </View>
 
         </View>
-        <Image className='index__swiper-img' src={require('../../assets/other_icons/swiper_img.png')} />
+        <Image className='index__swiper-img' src={require('../../assets/other_icons/swiper_bg.png')} />
 
         {/* <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View> */}
         <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
