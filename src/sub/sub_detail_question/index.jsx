@@ -69,7 +69,6 @@ class SubDetail extends Component {
   // 赞 事件
   async handleZan(flag) {
     console.log("点赞id----", this.state.item.id)
-    // todo: 这里type先写死
     let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
     result && this.setState({
       item: {
@@ -81,7 +80,6 @@ class SubDetail extends Component {
   // 收藏 事件
   async handleFavorite(flag) {
     console.log("收藏 id----", this.state.item.id)
-    // todo: 这里type先写死
     let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
     console.log("题目详情页： 收藏 请求 结果----", result)
     result && this.setState({
