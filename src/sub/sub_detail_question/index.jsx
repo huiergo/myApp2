@@ -70,7 +70,7 @@ class SubDetail extends Component {
   async handleZan(flag) {
     console.log("点赞id----", this.state.item.id)
     // todo: 这里type先写死
-    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
+    let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
     result && this.setState({
       item: {
         ...this.state.item,
@@ -79,17 +79,17 @@ class SubDetail extends Component {
     })
   }
   // 收藏 事件
-  handleFavorite(flag) {
+  async handleFavorite(flag) {
     console.log("收藏 id----", this.state.item.id)
     // todo: 这里type先写死
-    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
+    let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
     console.log("题目详情页： 收藏 请求 结果----", result)
-    // result && this.setState({
-    //   item: {
-    //     ...this.state.item,
-    //     collectFlag: !flag
-    //   }
-    // })
+    result && this.setState({
+      item: {
+        ...this.state.item,
+        collectFlag: !flag
+      }
+    })
   }
   /**
    * type:     0面试题1面经
@@ -105,6 +105,7 @@ class SubDetail extends Component {
   render() {
     let { item } = this.state
     let { collectFlag, likeFlag } = item
+    console.log('是否会变----', likeFlag, collectFlag)
     return (
       <View className='index'>
         <IconText title='题目：' des={item.stem} />

@@ -29,6 +29,8 @@ class SearchList extends Component {
         itemCount={dataLen}
         itemSize={itemSize}
         width='100%'
+        upperThreshold={100}
+        lowerThreshold={100}
         onScrollToLower={() => {
           console.log("[search onScrollToLower.....]", page, pageTotal)
           if ((page + 1) <= pageTotal) {

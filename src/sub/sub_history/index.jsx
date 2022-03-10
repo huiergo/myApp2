@@ -11,16 +11,10 @@ import * as sub_historyActions from "../../actions/sub_history.action"
 class Sub extends Component {
   constructor() {
     super(...arguments)
-    this.state = {
-      optType: ''
-    }
   }
 
-  // // onLoad
-  onLoad(options) {
-    this.setState({
-      optType: options.gridType
-    })
+  componentDidShow() {
+    this.change(0)
   }
 
   change(v) {
@@ -43,9 +37,9 @@ class Sub extends Component {
       chineseTabList,
       exprState,
       initData,
-      loadMore
+      loadMore,
+      optType
     } = this.props
-
     return (
       <View className='index'>
         <AtTabs
@@ -61,7 +55,7 @@ class Sub extends Component {
 
                   {idx === 0 ?
                     <Topic
-                      optType={3 || this.state.optType}
+                      optType={optType}
                       current={currentIdx}
                       index={idx}
                       type={tabList[idx]}
@@ -72,7 +66,7 @@ class Sub extends Component {
                       loadMore={loadMore}
                       questionBankType={10}
                     /> : <Topic2
-                      optType={this.state.optType}
+                      optType={optType}
                       current={currentIdx}
                       index={idx}
                       type={tabList[idx]}
@@ -97,7 +91,9 @@ class Sub extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { currentIdx } = state.sub_history
+  console.log('[state----]', state)
+  let { currentIdx, } = state.sub_history
+  let { optType } = state.mine
   // 其实是筛选了下 ：结果是 ['recommand','lastest']
   let tabList = Object.keys(state.sub_history).filter(i => i !== 'currentIdx')
   //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
@@ -107,7 +103,8 @@ const mapStateToProps = (state) => {
     tabList,
     chineseTabList,
     currentIdx,
-    exprState: state.sub_history
+    exprState: state.sub_history,
+    optType
   }
 };
 const mapDispatchToProps = (dispatch) => ({

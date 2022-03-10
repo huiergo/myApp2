@@ -10,6 +10,7 @@ import { initData, loadMore, saveInitData, saveLoadMore } from '../actions/sub_h
 
 function* handleInitData({ payload }) {
   // todo: 需要传递 optType 1点赞2收藏3浏览
+  console.log('todo: 需要传递 optType 1点赞2收藏3浏览----', payload);
   const { type, page, questionBankType, optType } = payload;
   let result = yield getJSON({
     url: apis.getOptList,

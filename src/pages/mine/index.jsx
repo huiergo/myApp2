@@ -93,7 +93,8 @@ class Mine extends Component {
     }
   }
   handleGridClick({ gridType }) {
-    gotoPage({ url: '../../sub/sub_history/index?gridType=' + gridType })
+    this.props.changeOptType(gridType)
+    gotoPage({ url: '../../sub/sub_history/index' })
   }
 
   onClose() {

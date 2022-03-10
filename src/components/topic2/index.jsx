@@ -67,6 +67,8 @@ class Topic extends Component {
         itemCount={dataLen}
         itemSize={itemSize}
         width='100%'
+        upperThreshold={100}
+        lowerThreshold={100}
         onScrollToLower={() => {
           if ((page + 1) <= pageTotal) {
             loadMore({ type, page: page + 1, current, index, optType })

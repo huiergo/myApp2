@@ -16,3 +16,8 @@ export const clockIn = createAction('clock in');
  * 同步数据
  */
 export const saveMineData = createAction('save data');
+
+/**
+ * 修改optType
+ */
+export const changeOptType = createAction('sub_history change optType');

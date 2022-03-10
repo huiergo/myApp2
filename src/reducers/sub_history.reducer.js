@@ -15,6 +15,7 @@ const initialState = {
     pageSize: 20,
   },
   currentIdx: 0,
+  optType: 0,
 };
 
 const handleChangeTab = (state, action) => {
@@ -39,7 +40,6 @@ const handleSaveInitData = (state, action) => {
 
 const handleSaveLoadMore = (state, action) => {
   const { type, list, page, pageTotal } = action.payload;
-  console.log('去你大爷的。。。。');
   return {
     ...state,
     [type]: {
@@ -50,6 +50,7 @@ const handleSaveLoadMore = (state, action) => {
     },
   };
 };
+
 export default createReducer(
   {
     [changeTab]: handleChangeTab,

@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions';
-import { saveMineData } from '../actions/mine.action';
+import { saveMineData, changeOptType } from '../actions/mine.action';
 
 const initialState = {
   userInfo: '',
@@ -13,9 +13,18 @@ const handleSaveData = (state, action) => {
     ...action.payload,
   };
 };
+
+const handleChangeOptType = (state, action) => {
+  const optType = action.payload;
+  return {
+    ...state,
+    optType,
+  };
+};
 export default createReducer(
   {
     [saveMineData]: handleSaveData,
+    [changeOptType]: handleChangeOptType,
   },
   initialState,
 );
