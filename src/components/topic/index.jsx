@@ -60,7 +60,7 @@ class Topic extends Component {
     return (
       <VirtualList
         className='List'
-        height={324}
+        height={this.props.scrollHeight}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}

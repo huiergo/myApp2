@@ -25,7 +25,8 @@ class First extends Component {
       isOpened: false,
       isCurtainOpened: false,
       avatar: '',
-      nickName: ''
+      nickName: '',
+      scrollHeight: ''
     }
   }
   async componentDidMount() {
@@ -33,6 +34,7 @@ class First extends Component {
     this.getUserInfo()
     await this.props.category()
     await this.initMineData()
+    this.getScrollHeight()
   }
 
   initMineData() {
@@ -157,9 +159,56 @@ class First extends Component {
     }
   }
 
+  getScrollHeight() {
+    let _this = this
+    let top1 = ''
+    let total = ''
+    let query = Taro.createSelectorQuery()
+    query.select('.at-tabs__body').boundingClientRect()
+    query.exec(res => {
+      top1 = res[0].top
+    })
+
+    Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
+      total = res.height
+      _this.setState({
+        scrollHeight: (total - top1 - 44)
+      })
+    }).exec()
+  }
+  // //获取滚动条可滚动高度
+  // wx.getSystemInfo({ 
+  //   success: (res) => {
+  //     let screenHeight = wx.getSystemInfoSync().windowHeight //获取屏幕高度
+  //     // 通过query 获取其余盒子的高度
+  //     let query = wx.createSelectorQuery().in(this)
+  //     query.select('.bgc').boundingClientRect()
+  //     query.select('.bgcgray').boundingClientRect()
+  //     query.select('.container').boundingClientRect()
+  //     query.select('.foot_submit_bar').boundingClientRect()
+  //      // 通过query.exec返回的数组 进行减法 同时 去除margin 和border的
+  //     query.exec(res => {
+  //       let bgcHeight = res[0].height
+  //       let bgcgrayHeight = res[1].height
+  //       let containerHeight = res[2].height
+  //       let footHeight = res[3].height
+  //       screenHeight = screenHeight - bgcHeight - bgcgrayHeight - containerHeight - footHeight - 64
+  //       console.log(screenHeight, 'screenHeight')
+  //       this.setData({
+  //         clientHeight: screenHeight
+  //       });
+  //     })
+  //     // this.setData({
+  //     //   clientHeight: res.windowHeight - 108
+  //     // });
+  //   }
+  // });
+
+
+
   render() {
     const { cataList, sortList, updateTagList } = this.props
-    const { isOpened } = this.state
+    const { isOpened, scrollHeight } = this.state
     const {
       currentIdx,
       tabList,
@@ -221,6 +270,7 @@ class First extends Component {
                 return (
                   <AtTabsPane key={idx} current={currentIdx} index={idx} >
                     <Topic
+                      scrollHeight={scrollHeight}
                       current={currentIdx}
                       index={idx}
                       type={tabList[idx]}
