@@ -37,7 +37,6 @@ function* handleLoadMore({ payload }) {
  */
 function* handleCategory() {
   let cateList = yield getJSON({ url: apis.getCategory });
-  console.log('[handleCategory result----]', cateList);
   yield put(saveCategory({ cateList }));
   yield put(saveCategoryToTag({ cateList }));
 }

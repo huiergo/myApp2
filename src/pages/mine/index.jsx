@@ -40,16 +40,18 @@ class Mine extends Component {
     // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
     Taro.getSetting({
       success: function (res) {
-        console.log("用户信息 111----", res)
         if (!res.authSetting['scope.userInfo']) {
           Taro.authorize({
             scope: 'scope.userInfo',
             success: function () {
               // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
-              console.log("用户信息222----")
               Taro.getUserInfo({
                 success: function (res1) {
-                  console.log("用户信息 333----", res1)
+                  _this.setState({
+                    nickName: res1.userInfo.nickName,
+                    // avatarUrl
+                    avatar: res1.userInfo.avatarUrl
+                  })
                 }
               })
             }
@@ -57,7 +59,6 @@ class Mine extends Component {
         } else {
           Taro.getUserInfo({
             success: function (res1) {
-              console.log("用户信息 333----", res1)
               _this.setState({
                 nickName: res1.userInfo.nickName,
                 // avatarUrl
@@ -78,7 +79,7 @@ class Mine extends Component {
   handleListClick({ type }) {
     console.log("[handleListClick] item index----", type)
     if (type === 'aboutUs') {
-      gotoPage({ url: '../sub_aboutUs/index' })
+      gotoPage({ url: '../sub/sub_aboutUs/index' })
     }
   }
 
@@ -92,7 +93,7 @@ class Mine extends Component {
     }
   }
   handleGridClick({ gridType }) {
-    gotoPage({ url: '../sub_history/index?gridType=' + gridType })
+    gotoPage({ url: '../../sub/sub_history/index?gridType=' + gridType })
   }
 
   onClose() {

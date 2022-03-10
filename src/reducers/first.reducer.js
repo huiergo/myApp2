@@ -52,10 +52,8 @@ const handleSaveInitData = (state, action) => {
 };
 
 const handleSaveLoadMore = (state, action) => {
-  console.log(2222, action);
   const { type, list, page, pageTotal } = action.payload;
 
-  console.log('11111  first  action====', action);
   return {
     ...state,
     [type]: {
@@ -77,13 +75,11 @@ const buildCateData = (list) => {
       pageSize: 20,
     };
   });
-  console.log('[buildCateData result-----]', obj);
   return obj;
 };
 
 const handelSaveCategory = (state, action) => {
   const { cateList } = action.payload;
-  console.log('[handelSaveCategory-----]', cateList);
   return {
     ...state,
     ...buildCateData(cateList),

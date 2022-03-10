@@ -26,7 +26,7 @@
 }
 
 .clockIn-share-img {
-  width: 262px;
+  width: 234px;
   height: 72px;
 }
 
@@ -110,4 +110,19 @@
 .clock-font-big {
   font-size: 36px;
   color: #3c3e42;
+}
+
+.share-btn {
+  margin-left: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  width: 234px;
+  height: 72px;
+  margin: 0 auto;
+}
+
+.share-btn::after {
+  border: none;
 }

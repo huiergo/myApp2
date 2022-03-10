@@ -40,8 +40,6 @@ class Topic extends Component {
   }
 
   initByTabChange(currentIndex = 0) {
-    console.log("[topic initData-----]", this.props.type, this.props.question)
-    console.log('[initByTabChange-----]', this.init, this.props.index, currentIndex)
     if (this.init && (this.props.index === currentIndex)) {
       this.init = false
       this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType })
@@ -57,7 +55,6 @@ class Topic extends Component {
 
   render() {
     const { type, list, page, pageTotal, initData, loadMore, questionBankType, optType } = this.props
-    console.log("topic type-----", type)
     const dataLen = list.length
     const itemSize = 100
     return (
@@ -83,17 +80,3 @@ class Topic extends Component {
   }
 }
 export default Topic
-
-
-
-// const mapStateToProps = (state) => {
-//   let { currentIdx } = state.first
-//   return {
-//     currentIdx,
-//   }
-// };
-// const mapDispatchToProps = (dispatch) => ({
-//   ...bindActionCreators(firstActions, dispatch)
-
-// });
-// export default connect(mapStateToProps, mapDispatchToProps)(Topic)

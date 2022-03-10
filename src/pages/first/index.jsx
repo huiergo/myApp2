@@ -4,7 +4,7 @@ import Taro, { eventCenter } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtSearchBar, AtCurtain } from 'taro-ui'
 import * as tagActions from "../../actions/tag.action"
 import * as firstActions from "../../actions/first.action"
 import * as mineActions from "../../actions/mine.action";
@@ -15,22 +15,30 @@ import CustomTags from '../../components/customTags'
 import Topic from '../../components/topic'
 import './index.scss'
 import { handleGetToken } from '../../services/method'
+import ClockInModel from "../../components/clockInModel";
 
 
 class First extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isOpened: false
+      isOpened: false,
+      isCurtainOpened: false,
+      avatar: '',
+      nickName: ''
     }
   }
   async componentDidMount() {
     await handleGetToken()
+    this.getUserInfo()
     await this.props.category()
-    // const { loadFlag, loadUserInfo } = this.props;
-    // await loadFlag()
-    // await loadUserInfo()
+    await this.initMineData()
+  }
 
+  initMineData() {
+    const { loadUserInfo, loadFlag } = this.props;
+    loadUserInfo();
+    loadFlag()
   }
 
   change(v) {
@@ -84,14 +92,71 @@ class First extends Component {
   }
 
   handleClockInClick(flag) {
-    if (!flag) {
-      // 调用签到接口
-      this.props.clockIn()
-      this.setState({
-        isOpened: true
-      })
+    // if (!flag) {
+    // 调用签到接口
+    this.props.clockIn()
+    this.setState({
+      isCurtainOpened: true
+    })
+    // }
+  }
+
+
+  onClose() {
+    this.setState({
+      isCurtainOpened: false
+    })
+  }
+
+
+
+  getUserInfo() {
+    let _this = this
+    // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+    Taro.getSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.userInfo']) {
+          Taro.authorize({
+            scope: 'scope.userInfo',
+            success: function () {
+              // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
+              Taro.getUserInfo({
+                success: function (res1) {
+                  _this.setState({
+                    nickName: res1.userInfo.nickName,
+                    // avatarUrl
+                    avatar: res1.userInfo.avatarUrl
+                  })
+                }
+              })
+            }
+          })
+        } else {
+          Taro.getUserInfo({
+            success: function (res1) {
+              _this.setState({
+                nickName: res1.userInfo.nickName,
+                // avatarUrl
+                avatar: res1.userInfo.avatarUrl
+              })
+            }
+          })
+        }
+      }
+    })
+  }
+
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/pages/first/index'
     }
   }
+
   render() {
     const { cataList, sortList, updateTagList } = this.props
     const { isOpened } = this.state
@@ -102,22 +167,25 @@ class First extends Component {
       exprState,
       initData,
       loadMore,
-      flag,
 
     } = this.props
     // const { clockinNumbers } = this.props.userInfo
 
-    console.log("flag----", flag)
+    const { likeCount = 0, clockinNumbers = 0 } = this.props.userInfo
+    const { flag } = this.props
+    const { avatar, nickName, } = this.state
+
+
     return (
       <View className='index'>
         <View className='top-part'>
-          <View className='index__search-bar' onClick={() => gotoPage({ url: '../search/index' })}>
+          <View className='index__search-bar' onClick={() => gotoPage({ url: '../../sub/search/index' })}>
             <AtSearchBar
               placeholder='请输入搜索关键词'
               disabled
             />
           </View>
-          {/* <View className='index_clock_wrap' onClick={() => this.handleClockInClick(flag)}>
+          <View className='index_clock_wrap' onClick={() => this.handleClockInClick(flag)}>
             <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
             {flag ?
               (<View className='clock_text-wrap'>
@@ -126,7 +194,7 @@ class First extends Component {
               </View>) :
               (<View className='clock_text-wrap clock_text'>打卡</View>)
             }
-          </View> */}
+          </View>
 
         </View>
         <Image className='index__swiper-img' src={require('../../assets/jianbian.jpeg')} />
@@ -170,7 +238,13 @@ class First extends Component {
           </AtTabs>
           <Image className='test-filter-btn' src={require('../../assets/filter_icon.png')} onClick={() => this.setState({ isOpened: true })} />
         </View>
-
+        <AtCurtain
+          closeBtnPosition='top-right'
+          isOpened={this.state.isCurtainOpened}
+          onClose={this.onClose.bind(this)}
+        >
+          <ClockInModel avatar={avatar} nickName={nickName} />
+        </AtCurtain>
       </View>
     )
   }
@@ -193,14 +267,14 @@ const mapStateToProps = (state) => {
     chineseTabList,
     currentIdx,
     exprState: state.first,
-    // flag,
-    // userInfo
+    flag,
+    userInfo
   }
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(tagActions, dispatch),
   ...bindActionCreators(firstActions, dispatch),
-  // ...bindActionCreators(mineActions, dispatch),
+  ...bindActionCreators(mineActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(First);

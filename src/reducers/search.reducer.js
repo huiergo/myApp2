@@ -11,7 +11,6 @@ import {
 } from '../actions/search.action';
 
 let storage_record = Taro.getStorageSync('storage_record_list');
-console.log('[init storage_record---]', storage_record);
 const initialState = {
   recordList: storage_record || [],
   isEdit: false,

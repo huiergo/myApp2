@@ -9,7 +9,6 @@ class CustomTags extends Component {
   }
 
   componentDidMount() {
-    console.log("[componentDidMount]", this.props.list)
   }
 
   onClick(index) {
