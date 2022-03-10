@@ -92,13 +92,13 @@ class First extends Component {
   }
 
   handleClockInClick(flag) {
-    // if (!flag) {
-    // 调用签到接口
-    this.props.clockIn()
-    this.setState({
-      isCurtainOpened: true
-    })
-    // }
+    if (!flag) {
+      // 调用签到接口
+      this.props.clockIn()
+      this.setState({
+        isCurtainOpened: true
+      })
+    }
   }
 
 
