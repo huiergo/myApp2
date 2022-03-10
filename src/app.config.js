@@ -1,15 +1,15 @@
 export default defineAppConfig({
   pages: [
     'pages/first/index',
-    'pages/sub_detail_interview/index',
-    'pages/sub_detail_question/index',
-    'pages/sub_aboutUs/index',
-    'pages/sub_history/index',
-    'pages/sub_zan/index',
     'pages/experience/index',
-    'pages/search/index',
     'pages/favorite/index',
     'pages/mine/index',
+  ],
+  subPackages: [
+    {
+      root: 'sub/',
+      pages: ['search/index'],
+    },
   ],
   tabBar: {
     list: [

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Taro from '@tarojs/taro';
 import { View, Image, Button } from '@tarojs/components';
 import apis from '../../services/apis';
-import { getJSON } from "../../services/method";
+import { getJSON, postJSON } from "../../services/method";
 
 import './index.scss'
 
@@ -91,7 +91,7 @@ class SubDetail extends Component {
    */
   async unitOptRequest({ action, id, type = 1, optType }) {
     let api = action == 'opt' ? apis.opt : apis.unOpt
-    let result = await getJSON({ url: api, data: { id, type, optType } });
+    let result = await postJSON({ url: api, data: { id, type, optType } });
     if (result && result.data && result.data.data) {
       return true
     }

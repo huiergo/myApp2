@@ -24,7 +24,7 @@ function* handleLoadUserInfo() {
  */
 function* handleFlag(params) {
   let result = yield getJSON({ url: apis.getFlag, data: params });
-  yield put(saveMineData({ flag: result }));
+  yield put(saveMineData({ flag: result.flag }));
 }
 /**
  * 打卡签到
@@ -33,7 +33,7 @@ function* handleClockIn() {
   // todo : params 应该从store中取得，不应该组件传递
   let result = yield postJSON({ url: apis.clockIn });
   console.log('44====', result);
-  yield put(saveMineData({ flag: result }));
+  yield put(saveMineData({ flagInfo: result }));
 }
 
 export default function* mineSaga() {

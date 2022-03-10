@@ -6,8 +6,6 @@ import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
-
-import { gotoPage } from '../../utils/index'
 import * as sub_zanActions from "../../actions/sub_zan.action"
 
 class Sub extends Component {

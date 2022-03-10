@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import Taro from '@tarojs/taro';
 import { View, Image, Button, Text } from '@tarojs/components';
-import CustomPagination from "../../components/customPagination";
-import { redirectToPage } from "../../utils";
 import apis from '../../services/apis';
 
-import { getJSON } from "../../services/method";
+import { getJSON, postJSON } from "../../services/method";
 
 import './index.scss'
 
@@ -72,7 +70,7 @@ class SubDetail extends Component {
   async handleZan(flag) {
     console.log("点赞id----", this.state.item.id)
     // todo: 这里type先写死
-    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 1 })
+    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
     result && this.setState({
       item: {
         ...this.state.item,
@@ -84,21 +82,24 @@ class SubDetail extends Component {
   handleFavorite(flag) {
     console.log("收藏 id----", this.state.item.id)
     // todo: 这里type先写死
-    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 2 })
-    result && this.setState({
-      item: {
-        ...this.state.item,
-        collectFlag: !flag
-      }
-    })
+    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
+    console.log("题目详情页： 收藏 请求 结果----", result)
+    // result && this.setState({
+    //   item: {
+    //     ...this.state.item,
+    //     collectFlag: !flag
+    //   }
+    // })
   }
   /**
    * type:     0面试题1面经
    * optType:  1点赞2收藏3浏览
    */
-  async unitOptRequest({ action, id, type = 1, optType }) {
+  async unitOptRequest({ action, id, type = 0, optType }) {
     let api = action == 'opt' ? apis.opt : apis.unOpt
-    let result = await getJSON({ url: api, data: { id, type, optType } });
+    let result = await postJSON({ url: api, data: { id, type, optType } });
+    console.log("题目详情页： 收藏 入参'result----", result)
+
     return result
   }
   render() {
@@ -118,8 +119,10 @@ class SubDetail extends Component {
 
         <HorizonLine />
         <IconText title='答案：' />
-        {/* <View className='detail-content' dangerouslySetInnerHTML={{ __html: html }}></View> */}
-        <View className='detail-content'>{item.answer}</View>
+        <View className='detail-content' dangerouslySetInnerHTML={{ __html: item.answer }} ></View>
+        {/* <View className='detail-content'>{item.answer}</View> */}
+
+
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>

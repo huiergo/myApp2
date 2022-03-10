@@ -21,7 +21,7 @@ class Mine extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isOpened: true,
+      isOpened: false,
       avatar: '',
       nickName: ''
     }
@@ -101,6 +101,17 @@ class Mine extends Component {
     })
   }
 
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/pages/first/index'
+    }
+  }
+
   render() {
     const { avatar, nickName, } = this.state
     const { likeCount = 0, clockinNumbers = 0 } = this.props.userInfo
@@ -142,7 +153,9 @@ class Mine extends Component {
         {/* 竖向3列 */}
         <View className='mine-list-wrap'>
           <View className='mine-list-item' onClick={() => this.handleListClick({ type: 'recommend' })}>
-            <Text className='mine-list-item-text'>推荐分享</Text>
+            <Button className='mine-list-item-text mine-list-item-btn' open-type="share">推荐分享</Button>
+
+            {/* open-type="share" */}
             <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
           </View>
           <View className='mine-list-item'>

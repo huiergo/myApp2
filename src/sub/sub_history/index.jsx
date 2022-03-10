@@ -6,7 +6,6 @@ import { View, Image, Button } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
 import Topic2 from '../../components/topic2'
-import { gotoPage } from '../../utils/index'
 import * as sub_historyActions from "../../actions/sub_history.action"
 
 class Sub extends Component {
