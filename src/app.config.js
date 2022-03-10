@@ -8,7 +8,14 @@ export default defineAppConfig({
   subPackages: [
     {
       root: 'sub/',
-      pages: ['search/index'],
+      pages: [
+        'search/index',
+        'sub_detail_interview/index',
+        'sub_detail_question/index',
+        'sub_history/index',
+        'sub_zan/index',
+        'sub_aboutUs/index',
+      ],
     },
   ],
   tabBar: {
