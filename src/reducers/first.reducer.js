@@ -67,13 +67,15 @@ const handleSaveLoadMore = (state, action) => {
 
 const buildCateData = (list) => {
   let obj = {};
-  list.map((item) => {
-    obj[item.id] = {
+  list.map((item, index) => {
+    let key = index + '_' + item.id;
+    let value = {
       des: item.name,
       list: [],
       page: 1,
       pageSize: 20,
     };
+    obj[key] = value;
   });
   return obj;
 };

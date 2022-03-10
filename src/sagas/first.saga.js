@@ -17,7 +17,11 @@ import { saveCategoryToTag } from '../actions/tag.action';
  */
 function* handleInitData({ payload }) {
   const { type, page, questionBankType } = payload;
-  let result = yield getJSON({ url: apis.getQuestionList, data: { page, type, questionBankType } });
+  let tempType = type.split('_')[1];
+  let result = yield getJSON({
+    url: apis.getQuestionList,
+    data: { page, type: tempType, questionBankType },
+  });
   let { pageTotal, rows: list } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
 }
@@ -27,7 +31,11 @@ function* handleInitData({ payload }) {
  */
 function* handleLoadMore({ payload }) {
   const { type, page, questionBankType } = payload;
-  let result = yield getJSON({ url: apis.getQuestionList, data: { page, type, questionBankType } });
+  let tempType = type.split('_')[1];
+  let result = yield getJSON({
+    url: apis.getQuestionList,
+    data: { page, type: tempType, questionBankType },
+  });
   let { pageTotal, rows: list } = result;
   yield put(saveLoadMore({ type, list, page, pageTotal }));
 }

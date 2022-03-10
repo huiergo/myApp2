@@ -19,7 +19,6 @@ const deepClone = (obj, hash = new WeakMap()) => {
       target[item] = obj[item];
     }
   });
-
   return target;
 };
 
