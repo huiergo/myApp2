@@ -220,7 +220,7 @@ class First extends Component {
           </View>
 
         </View>
-        <Image className='index__swiper-img' src={require('../../assets/other_icons/swiper_bg.png')} />
+        <Image className='index__swiper-img' src={require('../../assets/other_icons/swiper_img.png')} />
 
         {/* <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View> */}
         <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
@@ -278,7 +278,9 @@ const mapStateToProps = (state) => {
 
   let { currentIdx } = state.first
   // 其实是筛选了下 ：结果是 ['recommand','lastest']
+  console.log("state.first----", state.first)
   let tabList = Object.keys(state.first).filter(i => (i !== 'currentIdx' && i !== 'extraParams'))
+
   //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
   let chineseTabList = tabList.map(k => state.first[k].des).filter(i => i).map(j => ({ title: j }))
   let { flag, userInfo } = state.mine
