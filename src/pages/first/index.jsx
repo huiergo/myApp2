@@ -3,7 +3,7 @@ import Taro, { eventCenter } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Image, Text } from '@tarojs/components'
+import { View, Image, Text, Button } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtSearchBar, AtCurtain } from 'taro-ui'
 import * as tagActions from "../../actions/tag.action"
 import * as firstActions from "../../actions/first.action"
@@ -31,7 +31,6 @@ class First extends Component {
   }
   async componentDidMount() {
     await handleGetToken()
-    this.getUserInfo()
     await this.props.category()
     await this.initMineData()
     this.getScrollHeight()
@@ -110,42 +109,19 @@ class First extends Component {
     })
   }
 
-
-
-  getUserInfo() {
-    let _this = this
-    // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-    Taro.getSetting({
-      success: function (res) {
-        if (!res.authSetting['scope.userInfo']) {
-          Taro.authorize({
-            scope: 'scope.userInfo',
-            success: function () {
-              // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
-              Taro.getUserInfo({
-                success: function (res1) {
-                  _this.setState({
-                    nickName: res1.userInfo.nickName,
-                    // avatarUrl
-                    avatar: res1.userInfo.avatarUrl
-                  })
-                }
-              })
-            }
-          })
-        } else {
-          Taro.getUserInfo({
-            success: function (res1) {
-              _this.setState({
-                nickName: res1.userInfo.nickName,
-                // avatarUrl
-                avatar: res1.userInfo.avatarUrl
-              })
-            }
-          })
+  getUserProfile() {
+    if (!Taro.getStorageSync('nickName')) {
+      Taro.getUserProfile({
+        desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+          let { nickName, avatarUrl } = res.userInfo
+          Taro.setStorageSync('nickName', nickName)
+          Taro.setStorageSync('avatarUrl', avatarUrl)
         }
-      }
-    })
+      })
+    }
+    this.handleClockInClick(this.props.flag)
   }
 
   onShareAppMessage(res) {
@@ -194,7 +170,7 @@ class First extends Component {
 
     } = this.props
 
-    const { likeCount = 0, clockinNumbers = 0 } = this.props.userInfo
+    const { clockinNumbers = 0 } = this.props.userInfo
     const { flag } = this.props
     const { avatar, nickName, } = this.state
 
@@ -208,14 +184,16 @@ class First extends Component {
               disabled
             />
           </View>
-          <View className='index_clock_wrap' onClick={() => this.handleClockInClick(flag)}>
+          {/*  onClick={() => this.handleClockInClick(flag)} */}
+          <View className='index_clock_wrap'>
             <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
             {flag ?
               (<View className='clock_text-wrap'>
                 <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
                 <View className='clock_text-wrap-bottom'>连续签到</View>
               </View>) :
-              (<View className='clock_text-wrap clock_text'>打卡</View>)
+              // (<View className='clock_text-wrap clock_text'>打卡</View>)
+              (<Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={this.getUserProfile}>打卡</Button>)
             }
           </View>
 
