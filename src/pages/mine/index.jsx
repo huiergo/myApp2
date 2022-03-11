@@ -77,8 +77,9 @@ class Mine extends Component {
       console.log(res.target)
     }
     return {
-      title: '自定义转发标题',
-      path: '/pages/first/index'
+      title: '面试宝典',
+      path: '/pages/first/index',
+      imageUrl: '../../assets/other_icons/swiper_img.png'
     }
   }
 
