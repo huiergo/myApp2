@@ -187,13 +187,12 @@ class First extends Component {
           </View>
           {/*  onClick={() => this.handleClockInClick(flag)} */}
           <View className='index_clock_wrap'>
-            <Image className='index__clock-in-btn' src={require('../../assets/clock_img.png')} />
+            <Image className='index__clock-in-btn' src={require('../../assets/other_icons/clock_img.png')} />
             {flag ?
               (<View className='clock_text-wrap'>
                 <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
                 <View className='clock_text-wrap-bottom'>连续签到</View>
               </View>) :
-              // (<View className='clock_text-wrap clock_text'>打卡</View>)
               (<Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={this.getUserProfile}>打卡</Button>)
             }
           </View>
@@ -239,7 +238,7 @@ class First extends Component {
               })
             }
           </AtTabs>
-          <Image className='test-filter-btn' src={require('../../assets/filter_icon.png')} onClick={() => this.setState({ isOpened: true })} />
+          <Image className='test-filter-btn' src={require('../../assets/other_icons/filter_icon.png')} onClick={() => this.setState({ isOpened: true })} />
         </View>
         <AtCurtain
           closeBtnPosition='top-right'

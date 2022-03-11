@@ -17,13 +17,13 @@ class CustomPagination extends Component {
     return (
       <View className='custom-pagination'>
         <View className='last-btn' style={lastId ? '' : 'opacity:0.5'} onClick={lastId ? pageClick(lastId) : null}>
-          <Image className='last-icon' src={require('../../assets/up_arrow_icon.png')} />
+          <Image className='last-icon' src={require('../../assets/other_icons/up_arrow_icon.png')} />
           上一页
         </View>
         <Split />
         <View className='next-btn' style={nextId ? '' : 'opacity:0.5'} onClick={nextId ? pageClick(nextId) : null}>
           下一页
-          <Image className='next-icon' src={require('../../assets/down_arrow_icon.png')} />
+          <Image className='next-icon' src={require('../../assets/other_icons/down_arrow_icon.png')} />
         </View>
       </View>
     )
