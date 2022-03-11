@@ -8,6 +8,7 @@ import * as searchActions from "../../actions/search.action";
 import SearchRecord from '../../components/searchRecord'
 import SearchList from '../../components/searchList'
 
+let timer;
 class Search extends Component {
   constructor(props) {
     super(props)
@@ -28,6 +29,21 @@ class Search extends Component {
     })
 
     this.props.inputTrigger(value)
+    const debounce = (fn, delay = 300) => {
+      return function () {
+        const args = arguments;
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+          console.log('请求数据。。。。')
+          fn.apply(this, args);
+        }, delay);
+      };
+    }
+
+    let fn = debounce(this.props.initSearchData, 3000)
+    fn({ keyword: value, page: 1, questionBankType: 9 })
   }
 
   render() {
@@ -38,7 +54,10 @@ class Search extends Component {
           placeholder='请输入搜索关键词'
           value={this.state.value}
           onChange={(value) => this.onChange(value)}
-          onFocus={() => editTrigger(false)}
+          onFocus={() => {
+            editTrigger(false)
+            console.log('focus 防抖')
+          }}
           onActionClick={() => {
             // 搜索关键词请求
             // todo: 本页的 questionBankType  需要换成tabShow动态的
