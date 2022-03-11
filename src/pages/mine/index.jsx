@@ -22,54 +22,22 @@ class Mine extends Component {
     super(props)
     this.state = {
       isOpened: false,
-      avatar: '',
-      nickName: ''
+      avatarUrl: 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
+      nickName: '',
     }
   }
   componentDidMount() {
-    this.getUserInfo()
+    const storage_nickName = Taro.getStorageSync('nickName')
+    const storage_avatar = Taro.getStorageSync('avatarUrl')
+    this.setState({
+      nickName: storage_nickName,
+      avatarUrl: storage_avatar || 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132'
+    })
   }
   componentDidShow() {
     this.initData()
-
   }
 
-
-  getUserInfo() {
-    let _this = this
-    // 可以通过 Taro.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-    Taro.getSetting({
-      success: function (res) {
-        if (!res.authSetting['scope.userInfo']) {
-          Taro.authorize({
-            scope: 'scope.userInfo',
-            success: function () {
-              // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
-              Taro.getUserInfo({
-                success: function (res1) {
-                  _this.setState({
-                    nickName: res1.userInfo.nickName,
-                    // avatarUrl
-                    avatar: res1.userInfo.avatarUrl
-                  })
-                }
-              })
-            }
-          })
-        } else {
-          Taro.getUserInfo({
-            success: function (res1) {
-              _this.setState({
-                nickName: res1.userInfo.nickName,
-                // avatarUrl
-                avatar: res1.userInfo.avatarUrl
-              })
-            }
-          })
-        }
-      }
-    })
-  }
   initData() {
     const { loadUserInfo, loadFlag } = this.props;
     loadUserInfo();
@@ -114,22 +82,40 @@ class Mine extends Component {
     }
   }
 
+  getUserProfile() {
+    let _this = this
+    if (!Taro.getStorageSync('nickName')) {
+      Taro.getUserProfile({
+        desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+          let { nickName, avatarUrl } = res.userInfo
+          Taro.setStorageSync('nickName', nickName)
+          Taro.setStorageSync('avatarUrl', avatarUrl)
+
+          _this.setState({
+            nickName,
+            avatarUrl
+          })
+        }
+      })
+    }
+
+  }
   render() {
-    const { avatar, nickName, } = this.state
-    const { likeCount = 0, clockinNumbers = 0 } = this.props.userInfo
+    const { avatarUrl, nickName, } = this.state
+    const { clockinNumbers = 0 } = this.props.userInfo
     const { flag } = this.props
+
     return (
       <View className='mine-page'>
         <View className='user-info'>
           <View className='user-info-wrap'>
-            <Image className='user-info-avatar' src={avatar} />
+            <Image className='user-info-avatar' src={avatarUrl} />
             <View className='user-info-text'>
-              <View className='user-info-name'>
-                {nickName}
-              </View>
-              <Text className='user-info-zan-numbers'>
-                获赞 {likeCount}
-              </Text>
+              <Button className='user-info-name' onClick={nickName ? null : () => this.getUserProfile()}>
+                {nickName ? nickName : '登录'}
+              </Button>
             </View>
 
           </View>
@@ -175,7 +161,7 @@ class Mine extends Component {
           isOpened={this.state.isOpened}
           onClose={this.onClose.bind(this)}
         >
-          <ClockInModel avatar={avatar} nickName={nickName} />
+          <ClockInModel avatar={avatarUrl} nickName={nickName} />
         </AtCurtain>
       </View>
     )
