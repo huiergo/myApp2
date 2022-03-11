@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'HanTi'; // --自定义名字就好
+  src: url('../../assets/fonts/Han.otf'); // --下载的字体文件路径
+}
+
 .index {
   display: flex;
   flex-direction: column;
@@ -98,7 +103,7 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: -20px;
+  top: -2px;
   right: 10px;
   justify-content: center;
 }
@@ -125,4 +130,10 @@
 
 .clock_text::after {
   border: none;
+}
+
+.clock_text-wrap-top,
+.clock_text-wrap-bottom,
+.clock_text {
+  font-family: 'HanTi';
 }
