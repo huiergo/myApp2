@@ -79,9 +79,9 @@ class First extends Component {
       radioId: '',
 
       sortOptions: [
-        { name: '单选项一', id: '0', upArrow: '0' },
-        { name: '单选项二', id: '1', upArrow: '1' },
-        { name: '单选项三', id: '2', },
+        { name: '默认', id: '0', upArrow: '0' },
+        { name: '难易', id: '1', upArrow: '0' },
+        { name: '浏览量', id: '2', upArrow: '0' },
       ],
       sortId: '',
 
@@ -228,7 +228,7 @@ class First extends Component {
         { name: '难易', id: '1', upArrow: '0' },
         { name: '浏览量', id: '2', upArrow: '0' },
       ],
-      sortId: 'sort_option1',
+      sortId: '',
     })
   }
 

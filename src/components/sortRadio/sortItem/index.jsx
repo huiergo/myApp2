@@ -30,7 +30,7 @@ export default class SortItem extends Component {
   render() {
     return (
       <View onClick={() => this.handleSortFlag()}>
-        <Text >{this.props.name}内容 {this.props.isSelf ? (this.state.flag ? 'UP' : 'Down') : 'UP'}</Text>
+        <Text >{this.props.name} {this.props.isSelf ? (this.state.flag ? 'UP' : 'Down') : 'UP'}</Text>
       </View>
     )
   }
