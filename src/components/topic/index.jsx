@@ -68,7 +68,6 @@ class Topic extends Component {
         itemSize={itemSize}
         width='100%'
         bounces={false}
-        style={{ background: 'red' }}
         // upperThreshold={100}
         // lowerThreshold={100}
         overscanCount={30}
