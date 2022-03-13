@@ -277,7 +277,7 @@ class First extends Component {
           <AtTabs
             className='index-tab'
             scroll
-            swipeable={false}
+            // swipeable={false}
             current={currentIdx}
             tabList={chineseTabList}
             onClick={this.change.bind(this)}
@@ -299,7 +299,6 @@ class First extends Component {
                       questionBankType={10}
                       initData={initData}
                       loadMore={loadMore}
-
                     />
                   </AtTabsPane>
                 )

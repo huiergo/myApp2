@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions';
-import { changeTab, saveInitData, saveLoadMore } from '../actions/sub_zan.action';
+import { changeTab, saveInitData, saveLoadMore, saveLoading } from '../actions/sub_zan.action';
 
 const initialState = {
   sub_zan_question: {
@@ -132,6 +132,7 @@ const handleSaveInitData = (state, action) => {
       ...state[type],
       list,
       page,
+      loading: false,
     },
   };
 };
@@ -145,14 +146,29 @@ const handleSaveLoadMore = (state, action) => {
       ...state[type],
       list: state[type].list.concat(list),
       page,
+      loading: false,
     },
   };
 };
+
+const handleSaveLoading = (state, action) => {
+  const { type, loading } = action.payload;
+  console.log('[save loading-------]', type, loading);
+  return {
+    ...state,
+    [type]: {
+      ...state[type],
+      loading: loading,
+    },
+  };
+};
+
 export default createReducer(
   {
     [changeTab]: handleChangeTab,
     [saveInitData]: handleSaveInitData, // 因为有刷新
     [saveLoadMore]: handleSaveLoadMore,
+    [saveLoading]: handleSaveLoading,
   },
   initialState,
 );

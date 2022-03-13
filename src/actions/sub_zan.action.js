@@ -21,3 +21,8 @@ export const saveInitData = createAction('sub_zan save init data');
  * 同步数据-列表加载更多
  */
 export const saveLoadMore = createAction('sub_zan save load more');
+
+/**
+ * 同步数据-加载 loading
+ */
+export const saveLoading = createAction('sub_zan save scroll loading');

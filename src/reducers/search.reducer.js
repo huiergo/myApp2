@@ -8,6 +8,7 @@ import {
   saveInitSearchData,
   saveLoadSearchMore,
   inputTrigger,
+  saveLoading,
 } from '../actions/search.action';
 
 let storage_record = Taro.getStorageSync('storage_record_list');
@@ -70,6 +71,7 @@ const handleSaveInitSearchData = (state, action) => {
     list,
     page,
     pageTotal,
+    loading: false,
   };
 };
 
@@ -80,6 +82,7 @@ const handleSaveLoadSearchMore = (state, action) => {
     list: state.list.concat(list),
     page,
     pageTotal,
+    loading: false,
   };
 };
 
@@ -92,6 +95,14 @@ const handleInputTrigger = (state, action) => {
   };
 };
 
+const handleSaveLoading = (state, action) => {
+  const { loading } = action.payload;
+  return {
+    ...state,
+    loading,
+  };
+};
+
 export default createReducer(
   {
     [clearAllRecordList]: handleClearAllRecordList,
@@ -101,6 +112,7 @@ export default createReducer(
     [saveInitSearchData]: handleSaveInitSearchData,
     [saveLoadSearchMore]: handleSaveLoadSearchMore,
     [inputTrigger]: handleInputTrigger,
+    [saveLoading]: handleSaveLoading,
   },
   initialState,
 );

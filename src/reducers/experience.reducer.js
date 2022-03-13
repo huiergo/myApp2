@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions';
-import { changeTab, saveInitData, saveLoadMore } from '../actions/experience.action';
+import { changeTab, saveInitData, saveLoadMore, saveLoading } from '../actions/experience.action';
 
 const initialState = {
   recommend: {
@@ -33,6 +33,7 @@ const handleSaveInitData = (state, action) => {
       list,
       page,
       pageTotal,
+      loading: false,
     },
   };
 };
@@ -47,6 +48,19 @@ const handleSaveLoadMore = (state, action) => {
       list: state[type].list.concat(list),
       page,
       pageTotal,
+      loading: false,
+    },
+  };
+};
+
+const handleSaveLoading = (state, action) => {
+  const { type, loading } = action.payload;
+  console.log('[save loading-------]', type, loading);
+  return {
+    ...state,
+    [type]: {
+      ...state[type],
+      loading: loading,
     },
   };
 };
@@ -55,6 +69,7 @@ export default createReducer(
     [changeTab]: handleChangeTab,
     [saveInitData]: handleSaveInitData, // 因为有刷新
     [saveLoadMore]: handleSaveLoadMore,
+    [saveLoading]: handleSaveLoading,
   },
   initialState,
 );

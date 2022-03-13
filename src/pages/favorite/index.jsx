@@ -61,6 +61,7 @@ class Favorite extends Component {
                       type={tabList[idx]}
                       list={exprState[tabList[idx]].list}
                       page={exprState[tabList[idx]].page}
+                      loading={exprState[tabList[idx]].loading}
                       pageTotal={exprState[tabList[idx]].pageTotal}
                       initData={initData}
                       loadMore={loadMore}
@@ -73,6 +74,7 @@ class Favorite extends Component {
                       list={exprState[tabList[idx]].list}
                       page={exprState[tabList[idx]].page}
                       pageTotal={exprState[tabList[idx]].pageTotal}
+                      loading={exprState[tabList[idx]].loading}
                       initData={initData}
                       loadMore={loadMore}
                       questionBankType={9}

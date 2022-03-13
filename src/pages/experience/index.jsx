@@ -61,6 +61,7 @@ class Experience extends Component {
                     type={tabList[idx]}
                     list={exprState[tabList[idx]].list}
                     page={exprState[tabList[idx]].page}
+                    loading={exprState[tabList[idx]].loading}
                     pageTotal={exprState[tabList[idx]].pageTotal}
                     initData={initData}
                     loadMore={loadMore}

@@ -56,13 +56,13 @@ class Topic extends Component {
   render() {
     const { type, list, page, pageTotal, initData, loadMore, questionBankType, optType } = this.props
     const dataLen = list.length
-    const itemSize = 100
+    const itemSize = 80
 
     return (
       <VirtualList
         className='List'
-        // height={this.props.scrollHeight}
-        height={300}
+        height={this.props.scrollHeight}
+        // height={300}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}
@@ -76,21 +76,6 @@ class Topic extends Component {
         onScroll={({ scrollDirection, scrollOffset, detail }) => {
           console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
           console.log('scroll  top -----', detail.scrollTop)
-          // // 下拉刷新
-          // if (!this.props.loading &&
-          //   // 只有往前滚动我们才触发
-          //   scrollDirection === 'backward' &&
-          //   // 5 = (列表高度 / 单项列表高度)
-          //   // 100 = 滚动提前加载量，可根据样式情况调整
-          //   scrollOffset < 50
-          // ) {
-
-          //   if ((page + 1) <= pageTotal) {
-          //     console.log('loadmore before')
-          //     loadMore({ type, page: page + 1, questionBankType, optType })
-          //     console.log('loadmore after')
-          //   }
-          // }
 
           // 上拉加载
           if (!this.props.loading &&
@@ -98,7 +83,7 @@ class Topic extends Component {
             scrollDirection === 'forward' &&
             // 5 = (列表高度 / 单项列表高度)
             // 100 = 滚动提前加载量，可根据样式情况调整
-            scrollOffset > (dataLen * itemSize - 350)
+            scrollOffset > (dataLen * itemSize - 600)
           ) {
 
             if ((page + 1) <= pageTotal) {
@@ -108,24 +93,6 @@ class Topic extends Component {
             }
           }
         }}
-      // onScrollToLower={() => {
-      //   if (this.props.loading) {
-      //     return
-      //   } else {
-      //     if ((page + 1) <= pageTotal) {
-      //       console.log('loadmore before')
-      //       loadMore({ type, page: page + 1, questionBankType, optType })
-      //       console.log('loadmore after')
-      //     }
-      //   }
-      // }}
-      // onScrollToUpper={() => {
-      //   if (this.props.loading) {
-      //     return
-      //   } else {
-      //     initData({ type, page: 1, questionBankType, optType })
-      //   }
-      // }}
       >
         {Row}
       </VirtualList>

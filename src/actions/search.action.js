@@ -40,3 +40,8 @@ export const saveInitSearchData = createAction('save init search data');
  *  同步-搜索结果列表-加载更多
  */
 export const saveLoadSearchMore = createAction('save load search more');
+
+/**
+ * 同步数据-加载 loading
+ */
+export const saveLoading = createAction('search save scroll loading');

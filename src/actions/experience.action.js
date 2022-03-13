@@ -21,3 +21,8 @@ export const saveInitData = createAction('experience save init data');
  * 同步数据-列表加载更多
  */
 export const saveLoadMore = createAction('experience save load more');
+
+/**
+ * 同步数据-加载 loading
+ */
+export const saveLoading = createAction('experience save scroll loading');

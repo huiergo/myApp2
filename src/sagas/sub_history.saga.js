@@ -2,7 +2,13 @@ import Taro from '@tarojs/taro';
 import { getJSON, postJSON } from '../services/method';
 import apis from '../services/apis';
 import { takeEvery, put } from 'redux-saga/effects';
-import { initData, loadMore, saveInitData, saveLoadMore } from '../actions/sub_history.action';
+import {
+  initData,
+  loadMore,
+  saveInitData,
+  saveLoadMore,
+  saveLoading,
+} from '../actions/sub_history.action';
 
 /**
  * 获取”初始化“列表，并同步到store
@@ -12,6 +18,8 @@ function* handleInitData({ payload }) {
   // todo: 需要传递 optType 1点赞2收藏3浏览
   console.log('todo: 需要传递 optType 1点赞2收藏3浏览----', payload);
   const { type, page, questionBankType, optType } = payload;
+  yield put(saveLoading({ type, loading: true }));
+
   let result = yield getJSON({
     url: apis.getOptList,
     data: { page, type, questionBankType, optType },
@@ -19,6 +27,7 @@ function* handleInitData({ payload }) {
 
   let { pageTotal, rows: list } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
+  yield put(saveLoading({ type, loading: false }));
 }
 
 /**
@@ -26,6 +35,8 @@ function* handleInitData({ payload }) {
  */
 function* handleLoadMore({ payload }) {
   const { type, page, questionBankType, optType } = payload;
+  yield put(saveLoading({ type, loading: true }));
+
   let result = yield getJSON({
     url: apis.getOptList,
     data: { page, type, questionBankType, optType },
@@ -33,6 +44,7 @@ function* handleLoadMore({ payload }) {
   let { pageTotal, rows: list } = result;
 
   yield put(saveLoadMore({ type, list, page, pageTotal }));
+  yield put(saveLoading({ type, loading: false }));
 }
 
 export default function* () {

@@ -9,17 +9,40 @@ import Topic2 from '../../components/topic2'
 import * as sub_historyActions from "../../actions/sub_history.action"
 
 class Sub extends Component {
+
   constructor() {
     super(...arguments)
     this.state = {
       scrollHeight: 550
     }
   }
+
+  // componentWillMount() {
+  //   Taro.setNavigationBarTitle({
+  //     title: this.props.optType
+  //   })
+  // }
   componentDidMount() {
+    Taro.setNavigationBarTitle({
+      title: this.handleNavTitle(this.props.optType)
+    })
     setTimeout(() => {
       this.getScrollHeight()
     }, 1000);
 
+  }
+
+  handleNavTitle(optType) {
+    switch (optType) {
+      case 3:
+        return '历史记录'
+      case 2:
+        return '我的收藏'
+      case 1:
+        return '我的点赞'
+      default:
+        return '详情'
+    }
   }
 
   getScrollHeight() {
