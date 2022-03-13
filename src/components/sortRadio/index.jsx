@@ -9,7 +9,7 @@ import SortItem from './sortItem/index'
 export default class AtRadio extends Component {
 
   handleClick(option, event) {
-    this.props.onClick(option.value, event)
+    this.props.onClick(option.id, event)
   }
 
   onStatus(v) {
@@ -17,17 +17,17 @@ export default class AtRadio extends Component {
   }
 
   render() {
-    const { customStyle, className, options, value } = this.props
+    const { customStyle, className, options, id } = this.props
 
     return (
       <View className={classNames('at-radio', className)} style={customStyle}>
         {options.map(option => (
           <View
-            key={option.value}
-            className={classNames({ 'at-radio__title': true, 'at-radio__title--checked': value === option.value })}
+            key={option.id}
+            className={classNames({ 'at-radio__title': true, 'at-radio__title--checked': id === option.id })}
             onClick={this.handleClick.bind(this, option)}
           >
-            <SortItem label={option.label} isSelf={value === option.value} onStatus={this.onStatus.bind(this)} />
+            <SortItem name={option.name} isSelf={id === option.id} onStatus={this.onStatus.bind(this)} />
           </View>
         ))}
       </View>

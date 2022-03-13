@@ -29,24 +29,65 @@ class First extends Component {
       nickName: '',
       scrollHeight: 469,
       radioOptions: [
-        { label: '单选项一', value: 'option1' },
-        { label: '单选项二', value: 'option2' },
-        { label: '单选项三', value: 'option3' },
-        { label: '单', value: 'option4' },
-        { label: '单选项五', value: 'option5' },
-        { label: '单选项六', value: 'option6' }
+        {
+          "id": 18,
+          "name": "HTML5"
+        }, {
+          "id": 19,
+          "name": "CSS3"
+        }, {
+          "id": 20,
+          "name": "移动端布局"
+        }, {
+          "id": 21,
+          "name": "JavaScript"
+        }, {
+          "id": 22,
+          "name": "jQuery"
+        }, {
+          "id": 23,
+          "name": "AJAX"
+        }, {
+          "id": 24,
+          "name": "Git"
+        }, {
+          "id": 25,
+          "name": "Node"
+        }, {
+          "id": 26,
+          "name": "Vue"
+        }, {
+          "id": 28,
+          "name": "小程序"
+        }, {
+          "id": 27,
+          "name": "React"
+        }, {
+          "id": 42,
+          "name": "迁移学习"
+        }, {
+          "id": 313,
+          "name": "移动端开发"
+        }, {
+          "id": 304,
+          "name": "其它"
+        }, {
+          "id": 393,
+          "name": "早读内容[背诵]"
+        }
       ],
-      radioValue: 'option1',
+      radioId: '',
 
       sortOptions: [
-        { label: '单选项一', value: 'sort_option1', upArrow: '0' },
-        { label: '单选项二', value: 'sort_option2', upArrow: '1' },
-        { label: '单选项三', value: 'sort_option3', },
-        { label: '单', value: 'sort_option4' },
-        { label: '单选项五', value: 'sort_option5' },
-        { label: '单选项六', value: 'sort_option6' }
+        { name: '单选项一', id: '0', upArrow: '0' },
+        { name: '单选项二', id: '1', upArrow: '1' },
+        { name: '单选项三', id: '2', },
       ],
-      sortValue: 'sort_option1',
+      sortId: '',
+
+      upArrow: '',
+      selectIndex: -1
+
     }
   }
 
@@ -57,9 +98,10 @@ class First extends Component {
     this.getScrollHeight()
   }
 
-  handleRadioChange(value) {
+  handleRadioChange(id, index) {
     this.setState({
-      radioValue: value
+      radioId: id,
+      selectIndex: index
     })
   }
 
@@ -74,17 +116,18 @@ class First extends Component {
     } else {
       return 'none'
     }
-
   }
 
-  handleSortRadioChange(value) {
+  handleSortRadioChange(id) {
     this.setState({
-      sortValue: value
+      sortId: id
     })
-    console.log('父控件 拿到 sortValue----', value)
   }
+
   onStatus(v) {
-    console.log('父控件 拿到 status----', v)
+    this.setState({
+      upArrow: v == true ? '0' : '1'
+    })
   }
 
 
@@ -124,26 +167,111 @@ class First extends Component {
     }
 
   }
+  // reset() {
+  //   this.props.resetTagList()
+  // }
+
   reset() {
-    this.props.resetTagList()
+    this.setState({
+      radioOptions: [
+        {
+          "id": 18,
+          "name": "HTML5"
+        }, {
+          "id": 19,
+          "name": "CSS3"
+        }, {
+          "id": 20,
+          "name": "移动端布局"
+        }, {
+          "id": 21,
+          "name": "JavaScript"
+        }, {
+          "id": 22,
+          "name": "jQuery"
+        }, {
+          "id": 23,
+          "name": "AJAX"
+        }, {
+          "id": 24,
+          "name": "Git"
+        }, {
+          "id": 25,
+          "name": "Node"
+        }, {
+          "id": 26,
+          "name": "Vue"
+        }, {
+          "id": 28,
+          "name": "小程序"
+        }, {
+          "id": 27,
+          "name": "React"
+        }, {
+          "id": 42,
+          "name": "迁移学习"
+        }, {
+          "id": 313,
+          "name": "移动端开发"
+        }, {
+          "id": 304,
+          "name": "其它"
+        }, {
+          "id": 393,
+          "name": "早读内容[背诵]"
+        }
+      ],
+      radioId: 18,
+
+      sortOptions: [
+        { name: '默认', id: '0', upArrow: '0' },
+        { name: '难易', id: '1', upArrow: '0' },
+        { name: '浏览量', id: '2', upArrow: '0' },
+      ],
+      sortId: 'sort_option1',
+    })
   }
+
   complete() {
-    let params = this.getExtralParams()
-    let { key, sort, selectIndex } = params
-    // todo: 1.需要定位到相应的tab   3.需要请求数据
+    const { radioId, selectIndex, sortId, upArrow } = this.state
+    const params = {
+      keyword: this.state.radioOptions[selectIndex].name,
+      sort: sortId + upArrow.toString(),
+      selectIndex
+    }
+    // todo: radioId 怎么使用
     if (selectIndex > -1) {
       this.change(selectIndex)
     }
+
     // 2. 需要同步状态
-    this.props.submitFilterParams({ key, sort })
+    this.props.submitFilterParams({ key: params.keyword, sort: params.sort })
+    console.log('keywords---', params.keyword)
+    console.log('sort---', params.sort)
+
     // 3.需要请求数据
-
-
     this.props.triggerModel(false)
     this.setState({
       isOpened: false
     })
   }
+  // complete() {
+  //   let params = this.getExtralParams()
+  //   let { key, sort, selectIndex } = params
+  //   // todo: 1.需要定位到相应的tab   3.需要请求数据
+  //   if (selectIndex > -1) {
+  //     this.change(selectIndex)
+  //   }
+  //   // 2. 需要同步状态
+  //   this.props.submitFilterParams({ key, sort })
+  //   // 3.需要请求数据
+
+
+  //   this.props.triggerModel(false)
+  //   this.setState({
+  //     isOpened: false
+  //   })
+  // }
 
   handleClockInClick(flag) {
     if (!flag) {
@@ -263,11 +391,11 @@ class First extends Component {
         <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
           <View className='panel__content no-padding'>
             <View className='radio-container'>
-              <PureRadio options={this.state.radioOptions} value={this.state.radioValue} onClick={this.handleRadioChange.bind(this)} />
+              <PureRadio options={this.state.radioOptions} id={this.state.radioId} onClick={this.handleRadioChange.bind(this)} />
             </View>
 
             <View className='sort-container'>
-              <SortRadio options={this.state.sortOptions} value={this.state.sortValue} onClick={this.handleSortRadioChange.bind(this)} onStatus={this.onStatus.bind(this)} />
+              <SortRadio options={this.state.sortOptions} id={this.state.sortId} onClick={this.handleSortRadioChange.bind(this)} onStatus={this.onStatus.bind(this)} />
             </View>
           </View>
 
