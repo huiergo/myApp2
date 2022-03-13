@@ -92,10 +92,16 @@ class First extends Component {
   }
 
   async componentDidMount() {
-    await handleGetToken()
-    await this.props.category()
-    await this.initMineData()
-    this.getScrollHeight()
+    try {
+      Taro.showLoading()
+      await handleGetToken({ showLoad: false })
+      await this.props.category()
+      this.initMineData()
+      this.getScrollHeight()
+      Taro.hideLoading()
+    } catch (error) {
+      Taro.hideLoading()
+    }
   }
 
   handleRadioChange(id, index) {
@@ -129,8 +135,6 @@ class First extends Component {
       upArrow: v == true ? '0' : '1'
     })
   }
-
-
 
   initMineData() {
     const { loadUserInfo, loadFlag } = this.props;

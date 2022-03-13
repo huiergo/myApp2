@@ -19,10 +19,12 @@ function* handleInitData({ payload }) {
   let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
   // questionBankType:9 面经
   yield put(saveLoading({ type, loading: true }));
+  Taro.showLoading();
   let result = yield getJSON({ url: api, data: { page, questionBankType: 9 } });
   let { pageTotal, rows: list } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
   yield put(saveLoading({ type, loading: false }));
+  Taro.hideLoading();
 }
 
 /**
@@ -33,10 +35,12 @@ function* handleLoadMore({ payload }) {
   let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
   // questionBankType:9 面经
   yield put(saveLoading({ type, loading: true }));
+  Taro.showLoading();
   let result = yield getJSON({ url: api, data: { page, questionBankType: 9 } });
   let { pageTotal, rows: list } = result;
   yield put(saveLoadMore({ type, list, page, pageTotal }));
   yield put(saveLoading({ type, loading: false }));
+  Taro.hideLoading();
 }
 export default function* experienceSaga() {
   yield takeEvery(initData, handleInitData);

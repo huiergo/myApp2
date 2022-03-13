@@ -4,7 +4,6 @@ import apis from '../services/apis';
 let errCount = 0;
 
 export function taroRequest({ url, data, method, headers }) {
-  Taro.showLoading();
   let token = Taro.getStorageSync('token');
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -19,7 +18,6 @@ export function taroRequest({ url, data, method, headers }) {
         },
       })
         .then((result) => {
-          Taro.hideLoading();
           if (result && result.data) {
             resolve({
               statusCode: result.data.code,
@@ -30,7 +28,6 @@ export function taroRequest({ url, data, method, headers }) {
           }
         })
         .catch((err) => {
-          Taro.hideLoading();
           reject(err);
         });
     }, 1000);

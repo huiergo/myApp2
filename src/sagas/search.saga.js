@@ -16,7 +16,7 @@ import {
 function* handleInitSearchData({ payload }) {
   const { keyword, page, questionBankType } = payload;
   yield put(saveLoading({ loading: true }));
-
+  Taro.showLoading();
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { keyword, page, questionBankType, type: 0 },
@@ -25,6 +25,7 @@ function* handleInitSearchData({ payload }) {
   let { pageTotal, rows: list } = result;
   yield put(saveInitSearchData({ list, page, pageTotal }));
   yield put(saveLoading({ loading: false }));
+  Taro.hideLoading();
 }
 
 /**
@@ -34,7 +35,7 @@ function* handleLoadSearchMore({ payload }) {
   const { keyword, page, questionBankType } = payload;
   console.log('[handleLoadSearchMore  payload-----]', payload);
   yield put(saveLoading({ loading: true }));
-
+  Taro.showLoading();
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { keyword, page, questionBankType, type: 0 },
@@ -42,6 +43,7 @@ function* handleLoadSearchMore({ payload }) {
   let { pageTotal, rows: list } = result;
   yield put(saveLoadSearchMore({ type: 0, list, page, pageTotal }));
   yield put(saveLoading({ loading: false }));
+  Taro.hideLoading();
 }
 
 export default function* searchSaga() {

@@ -20,7 +20,7 @@ function* handleInitData({ payload }) {
   const { type, page, questionBankType } = payload;
   let tempType = type.split('_')[1];
   yield put(saveLoading({ type, loading: true }));
-
+  Taro.showLoading();
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { page, type: tempType, questionBankType },
@@ -28,6 +28,7 @@ function* handleInitData({ payload }) {
   let { pageTotal, rows: list } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
   yield put(saveLoading({ type, loading: false }));
+  Taro.hideLoading();
 }
 
 /**
@@ -37,6 +38,7 @@ function* handleLoadMore({ payload }) {
   const { type, page, questionBankType } = payload;
   let tempType = type.split('_')[1];
   yield put(saveLoading({ type, loading: true }));
+  Taro.showLoading();
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { page, type: tempType, questionBankType },
@@ -46,6 +48,7 @@ function* handleLoadMore({ payload }) {
   yield put(saveLoadMore({ type, list, page, pageTotal }));
 
   yield put(saveLoading({ type, loading: false }));
+  Taro.hideLoading();
   console.log('saveLoadMore after');
 }
 
