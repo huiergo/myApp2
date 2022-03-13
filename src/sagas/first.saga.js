@@ -9,6 +9,7 @@ import {
   saveLoadMore,
   category,
   saveCategory,
+  saveLoading,
 } from '../actions/first.action';
 import { saveCategoryToTag } from '../actions/tag.action';
 
@@ -18,12 +19,15 @@ import { saveCategoryToTag } from '../actions/tag.action';
 function* handleInitData({ payload }) {
   const { type, page, questionBankType } = payload;
   let tempType = type.split('_')[1];
+  yield put(saveLoading({ type, loading: true }));
+
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { page, type: tempType, questionBankType },
   });
   let { pageTotal, rows: list } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
+  yield put(saveLoading({ type, loading: false }));
 }
 
 /**
@@ -32,12 +36,17 @@ function* handleInitData({ payload }) {
 function* handleLoadMore({ payload }) {
   const { type, page, questionBankType } = payload;
   let tempType = type.split('_')[1];
+  yield put(saveLoading({ type, loading: true }));
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { page, type: tempType, questionBankType },
   });
   let { pageTotal, rows: list } = result;
+  console.log('saveLoadMore before');
   yield put(saveLoadMore({ type, list, page, pageTotal }));
+
+  yield put(saveLoading({ type, loading: false }));
+  console.log('saveLoadMore after');
 }
 
 /**

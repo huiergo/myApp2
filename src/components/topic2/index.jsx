@@ -63,13 +63,15 @@ class Topic extends Component {
     return (
       <VirtualList
         className='List'
-        height={this.props.scrollHeight}
+        // height={this.props.scrollHeight}
+        height={300}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}
         width='100%'
-        upperThreshold={100}
-        lowerThreshold={100}
+        // upperThreshold={100}
+        // lowerThreshold={100}
+        overscanCount={30}
         onScrollToLower={() => {
           if ((page + 1) <= pageTotal) {
             loadMore({ type, page: page + 1, current, index, optType })

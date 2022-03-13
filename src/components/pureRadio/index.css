@@ -1,0 +1,20 @@
+.selected{
+    background-color: red;
+}
+
+.normal{
+    background-color: yellow;
+}
+
+.at-radio__title{
+    display: inline-flex;
+    padding:8px 20px;
+    border-radius: 8px;
+    border: 1px solid lightblue;
+    margin-left: 20px;
+    margin-bottom: 20px;    
+}
+
+.at-radio__title--checked{
+    background-color: red;
+}

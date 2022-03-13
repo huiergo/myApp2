@@ -11,14 +11,14 @@ import * as firstActions from "../../actions/first.action"
 
 const Row = React.memo(({ id, index, style, data }) => {
   return (
-    <View id={id} className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
+    <View id={id} className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style='.css'>
       <QuestionItem item={data[index]} />
     </View>
   );
 })
 
 class Topic extends Component {
-  loading = false
+  // loading = false
   init = true
 
   componentWillMount() {
@@ -57,24 +57,75 @@ class Topic extends Component {
     const { type, list, page, pageTotal, initData, loadMore, questionBankType, optType } = this.props
     const dataLen = list.length
     const itemSize = 100
+
     return (
       <VirtualList
         className='List'
-        height={this.props.scrollHeight}
+        // height={this.props.scrollHeight}
+        height={300}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}
         width='100%'
-        upperThreshold={100}
-        lowerThreshold={100}
-        onScrollToLower={() => {
-          if ((page + 1) <= pageTotal) {
-            loadMore({ type, page: page + 1, questionBankType, optType })
+        bounces={false}
+        style={{ background: 'red' }}
+        // upperThreshold={100}
+        // lowerThreshold={100}
+        overscanCount={30}
+
+        onScroll={({ scrollDirection, scrollOffset, detail }) => {
+          console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
+          console.log('scroll  top -----', detail.scrollTop)
+          // // 下拉刷新
+          // if (!this.props.loading &&
+          //   // 只有往前滚动我们才触发
+          //   scrollDirection === 'backward' &&
+          //   // 5 = (列表高度 / 单项列表高度)
+          //   // 100 = 滚动提前加载量，可根据样式情况调整
+          //   scrollOffset < 50
+          // ) {
+
+          //   if ((page + 1) <= pageTotal) {
+          //     console.log('loadmore before')
+          //     loadMore({ type, page: page + 1, questionBankType, optType })
+          //     console.log('loadmore after')
+          //   }
+          // }
+
+          // 上拉加载
+          if (!this.props.loading &&
+            // 只有往前滚动我们才触发
+            scrollDirection === 'forward' &&
+            // 5 = (列表高度 / 单项列表高度)
+            // 100 = 滚动提前加载量，可根据样式情况调整
+            scrollOffset > (dataLen * itemSize - 350)
+          ) {
+
+            if ((page + 1) <= pageTotal) {
+              console.log('loadmore before')
+              loadMore({ type, page: page + 1, questionBankType, optType })
+              console.log('loadmore after')
+            }
           }
         }}
-        onScrollToUpper={() => {
-          initData({ type, page: 1, questionBankType, optType })
-        }}
+      // onScrollToLower={() => {
+      //   if (this.props.loading) {
+      //     return
+      //   } else {
+      //     if ((page + 1) <= pageTotal) {
+      //       console.log('loadmore before')
+      //       loadMore({ type, page: page + 1, questionBankType, optType })
+      //       console.log('loadmore after')
+      //     }
+      //   }
+      // }}
+      // onScrollToUpper={() => {
+      //   if (this.props.loading) {
+      //     return
+      //   } else {
+      //     initData({ type, page: 1, questionBankType, optType })
+      //   }
+      // }}
       >
         {Row}
       </VirtualList>

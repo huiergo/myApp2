@@ -7,6 +7,7 @@ import {
   saveInitData,
   saveLoadMore,
   saveCategory,
+  saveLoading,
 } from '../actions/first.action';
 
 const initialState = {
@@ -47,6 +48,7 @@ const handleSaveInitData = (state, action) => {
       list,
       page,
       pageTotal,
+      loading: false,
     },
   };
 };
@@ -61,6 +63,19 @@ const handleSaveLoadMore = (state, action) => {
       list: state[type].list.concat(list),
       page,
       pageTotal,
+      loading: false,
+    },
+  };
+};
+
+const handleSaveLoading = (state, action) => {
+  const { type, loading } = action.payload;
+  console.log('[save loading-------]', type, loading);
+  return {
+    ...state,
+    [type]: {
+      ...state[type],
+      loading: loading,
     },
   };
 };
@@ -74,6 +89,7 @@ const buildCateData = (list) => {
       list: [],
       page: 1,
       pageSize: 20,
+      loading: false,
     };
     obj[key] = value;
   });
@@ -96,6 +112,7 @@ export default createReducer(
     [changeTab]: handleChangeTab,
     [saveInitData]: handleSaveInitData, // 因为有刷新
     [saveLoadMore]: handleSaveLoadMore,
+    [saveLoading]: handleSaveLoading,
     // 分类
     [saveCategory]: handelSaveCategory,
   },

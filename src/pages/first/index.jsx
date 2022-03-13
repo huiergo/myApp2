@@ -4,7 +4,7 @@ import Taro, { eventCenter } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Text, Button } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtSearchBar, AtCurtain } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtSearchBar, AtCurtain, AtFloatLayout } from 'taro-ui'
 import * as tagActions from "../../actions/tag.action"
 import * as firstActions from "../../actions/first.action"
 import * as mineActions from "../../actions/mine.action";
@@ -16,7 +16,8 @@ import Topic from '../../components/topic'
 import './index.scss'
 import { handleGetToken } from '../../services/method'
 import ClockInModel from "../../components/clockInModel";
-
+import PureRadio from '../../components/pureRadio'
+import SortRadio from '../../components/sortRadio'
 
 class First extends Component {
   constructor(props) {
@@ -26,15 +27,67 @@ class First extends Component {
       isCurtainOpened: false,
       avatar: '',
       nickName: '',
-      scrollHeight: 469
+      scrollHeight: 469,
+      radioOptions: [
+        { label: '单选项一', value: 'option1' },
+        { label: '单选项二', value: 'option2' },
+        { label: '单选项三', value: 'option3' },
+        { label: '单', value: 'option4' },
+        { label: '单选项五', value: 'option5' },
+        { label: '单选项六', value: 'option6' }
+      ],
+      radioValue: 'option1',
+
+      sortOptions: [
+        { label: '单选项一', value: 'sort_option1', upArrow: '0' },
+        { label: '单选项二', value: 'sort_option2', upArrow: '1' },
+        { label: '单选项三', value: 'sort_option3', },
+        { label: '单', value: 'sort_option4' },
+        { label: '单选项五', value: 'sort_option5' },
+        { label: '单选项六', value: 'sort_option6' }
+      ],
+      sortValue: 'sort_option1',
     }
   }
+
   async componentDidMount() {
     await handleGetToken()
     await this.props.category()
     await this.initMineData()
     this.getScrollHeight()
   }
+
+  handleRadioChange(value) {
+    this.setState({
+      radioValue: value
+    })
+  }
+
+  handleUpArrow(upArrow) {
+    if (upArrow) {
+      if (upArrow == '1') {
+        return '0'
+      }
+      if (upArrow == '0') {
+        return '1'
+      }
+    } else {
+      return 'none'
+    }
+
+  }
+
+  handleSortRadioChange(value) {
+    this.setState({
+      sortValue: value
+    })
+    console.log('父控件 拿到 sortValue----', value)
+  }
+  onStatus(v) {
+    console.log('父控件 拿到 status----', v)
+  }
+
+
 
   initMineData() {
     const { loadUserInfo, loadFlag } = this.props;
@@ -173,8 +226,7 @@ class First extends Component {
 
     const { clockinNumbers = 0 } = this.props.userInfo
     const { flag } = this.props
-    const { avatar, nickName, } = this.state
-
+    const { avatar, nickName } = this.state
 
     return (
       <View className='index'>
@@ -201,17 +253,31 @@ class First extends Component {
         <Image className='index__swiper-img' src={require('../../assets/other_icons/swiper_img.png')} />
 
         {/* <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View> */}
-        <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
+        {/* <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
           <View className='custom__tag-title'> 题目排序 </View>
           <CustomTags type='sortList' circle={false} list={sortList} updateTagList={updateTagList} />
           <View className='custom__tag-title'> 选择阶段</View>
           <CustomTags type='cataList' circle={true} list={cataList} updateTagList={updateTagList} />
+        </CustomModel> */}
+
+        <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
+          <View className='panel__content no-padding'>
+            <View className='radio-container'>
+              <PureRadio options={this.state.radioOptions} value={this.state.radioValue} onClick={this.handleRadioChange.bind(this)} />
+            </View>
+
+            <View className='sort-container'>
+              <SortRadio options={this.state.sortOptions} value={this.state.sortValue} onClick={this.handleSortRadioChange.bind(this)} onStatus={this.onStatus.bind(this)} />
+            </View>
+          </View>
+
         </CustomModel>
 
         <View className='index-tab-wrap'>
           <AtTabs
             className='index-tab'
             scroll
+            swipeable={false}
             current={currentIdx}
             tabList={chineseTabList}
             onClick={this.change.bind(this)}
@@ -228,10 +294,12 @@ class First extends Component {
                       type={tabList[idx]}
                       list={exprState[tabList[idx]].list}
                       page={exprState[tabList[idx]].page}
+                      loading={exprState[tabList[idx]].loading}
                       pageTotal={exprState[tabList[idx]].pageTotal}
                       questionBankType={10}
                       initData={initData}
                       loadMore={loadMore}
+
                     />
                   </AtTabsPane>
                 )

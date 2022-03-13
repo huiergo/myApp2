@@ -7,31 +7,33 @@ export function taroRequest({ url, data, method, headers }) {
   Taro.showLoading();
   let token = Taro.getStorageSync('token');
   return new Promise((resolve, reject) => {
-    Taro.request({
-      url: url,
-      data: data,
-      method: method,
-      header: {
-        'content-type': 'application/json',
-        Authorization: 'Bearer ' + token,
-        ...headers,
-      },
-    })
-      .then((result) => {
-        Taro.hideLoading();
-        if (result && result.data) {
-          resolve({
-            statusCode: result.data.code,
-            message: result.data.message,
-            data: result.data.data,
-            result: result,
-          });
-        }
+    setTimeout(() => {
+      Taro.request({
+        url: url,
+        data: data,
+        method: method,
+        header: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer ' + token,
+          ...headers,
+        },
       })
-      .catch((err) => {
-        Taro.hideLoading();
-        reject(err);
-      });
+        .then((result) => {
+          Taro.hideLoading();
+          if (result && result.data) {
+            resolve({
+              statusCode: result.data.code,
+              message: result.data.message,
+              data: result.data.data,
+              result: result,
+            });
+          }
+        })
+        .catch((err) => {
+          Taro.hideLoading();
+          reject(err);
+        });
+    }, 1000);
   });
 }
 

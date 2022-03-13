@@ -35,6 +35,11 @@ export const saveInitData = createAction('first save init data');
 export const saveLoadMore = createAction('first save load more');
 
 /**
+ * 同步数据-加载 loading
+ */
+export const saveLoading = createAction('first save scroll loading');
+
+/**
  * 请求分类列表
  */
 export const category = createAction('first cateList');

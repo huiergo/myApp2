@@ -53,12 +53,20 @@ class Search extends Component {
         <AtSearchBar
           placeholder='请输入搜索关键词'
           value={this.state.value}
+          showActionButton
           onChange={(value) => this.onChange(value)}
           onFocus={() => {
             editTrigger(false)
             console.log('focus 防抖')
           }}
           onActionClick={() => {
+            // 搜索关键词请求
+            // todo: 本页的 questionBankType  需要换成tabShow动态的
+            initSearchData({ keyword: this.state.value, page: 1, questionBankType: 9 })
+            // 
+            unShiftRecord({ item: this.state.value })
+          }}
+          onConfirm={() => {
             // 搜索关键词请求
             // todo: 本页的 questionBankType  需要换成tabShow动态的
             initSearchData({ keyword: this.state.value, page: 1, questionBankType: 9 })
