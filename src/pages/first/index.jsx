@@ -143,6 +143,7 @@ class First extends Component {
   }
 
   change({ selectIndex, keyword, sort }) {
+    console.log('changge  ----', selectIndex, keyword, sort)
     this.props.changeTab(selectIndex)
     // 触发事件，传入多个参数
     eventCenter.trigger('eventChange', selectIndex, keyword, sort)
@@ -423,7 +424,7 @@ class First extends Component {
             // swipeable={false}
             current={currentIdx}
             tabList={chineseTabList}
-            onClick={this.change.bind(this)}
+            onClick={(i) => this.change({ selectIndex: i })}
           >
 
             {
