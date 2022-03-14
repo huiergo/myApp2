@@ -35,6 +35,12 @@ class Mine extends Component {
     })
   }
   componentDidShow() {
+    const storage_nickName = Taro.getStorageSync('nickName')
+    const storage_avatar = Taro.getStorageSync('avatarUrl')
+    this.setState({
+      nickName: storage_nickName,
+      avatarUrl: storage_avatar || 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132'
+    })
     this.initData()
   }
 
