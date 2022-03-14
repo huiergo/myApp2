@@ -62,6 +62,7 @@ class Favorite extends Component {
       <View className='index'>
         <AtTabs
           scroll
+          swipeable={false}
           current={currentIdx}
           tabList={chineseTabList}
           onClick={this.change.bind(this)}

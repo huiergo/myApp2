@@ -429,7 +429,7 @@ class First extends Component {
           <AtTabs
             className='index-tab'
             scroll
-            // swipeable={false}
+            swipeable={false}
             current={currentIdx}
             tabList={chineseTabList}
             onClick={(i) => this.change({ selectIndex: i })}

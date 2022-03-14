@@ -35,6 +35,7 @@ class Sub extends Component {
 
         <AtTabs
           scroll
+          swipeable={false}
           current={currentIdx}
           tabList={chineseTabList}
           onClick={this.change.bind(this)}
