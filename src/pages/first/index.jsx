@@ -76,14 +76,14 @@ class First extends Component {
           "name": "早读内容[背诵]"
         }
       ],
-      radioId: '',
+      radioId: 18,
 
       sortOptions: [
         { name: '默认', id: '0', upArrow: '0' },
         { name: '难易', id: '1', upArrow: '0' },
         { name: '浏览量', id: '2', upArrow: '0' },
       ],
-      sortId: '',
+      sortId: 0,
 
       upArrow: '',
       selectIndex: ''
@@ -226,20 +226,22 @@ class First extends Component {
           "name": "早读内容[背诵]"
         }
       ],
-      radioId: '',
+      radioId: 18,
 
       sortOptions: [
         { name: '默认', id: '0', upArrow: '0' },
         { name: '难易', id: '1', upArrow: '0' },
         { name: '浏览量', id: '2', upArrow: '0' },
       ],
-      sortId: '',
+      sortId: 0,
+      selectIndex: 0
     })
 
   }
 
   complete() {
     const { radioId, selectIndex, sortId, upArrow } = this.state
+
     const params = {
       keyword: this.state.radioOptions && this.state.radioOptions[selectIndex] && this.state.radioOptions[selectIndex].name,
       sort: sortId + upArrow.toString(),

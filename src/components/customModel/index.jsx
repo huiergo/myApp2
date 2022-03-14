@@ -28,6 +28,12 @@ export default class AtFloatLayout extends React.Component {
         _isOpened: false
       }, this.handleClose);
     };
+
+    this.pureClose = () => {
+      this.setState({
+        _isOpened: false
+      })
+    }
     this.reset = () => {
       this.handleReset()
       // this.setState({
@@ -58,7 +64,7 @@ export default class AtFloatLayout extends React.Component {
       'at-float-layout--active': _isOpened
     }, this.props.className);
     return (React.createElement(View, { className: rootClass, onTouchMove: this.handleTouchMove },
-      React.createElement(View, { onClick: this.close, className: 'at-float-layout__overlay' }),
+      React.createElement(View, { onClick: this.pureClose, className: 'at-float-layout__overlay' }),
       React.createElement(View, { className: 'at-float-layout__container layout' },
         title ? (React.createElement(View, { className: 'layout-header' },
           React.createElement(Text, { className: 'layout-header__title', onClick: this.reset }, title),
