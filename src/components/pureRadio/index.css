@@ -6,15 +6,24 @@
     background-color: yellow;
 }
 
-.at-radio__title{
+.cu-radio__title{
     display: inline-flex;
-    padding:8px 20px;
+    /* padding:8px 20px; */
     border-radius: 8px;
-    border: 1px solid lightblue;
-    margin-left: 20px;
-    margin-bottom: 20px;    
+    margin-right: 10px;
+    margin-bottom: 10px;    
+ 
+    /* width: 112px; */
+    height: 32px;
+    line-height: 32px;
+    background: #F6F7F9;
+    border-radius: 55px;
+    color: #3C3E42;
+    font-size: 28px;
+    padding: 12px 12px;
 }
 
-.at-radio__title--checked{
-    background-color: red;
+.cu-radio__title--checked{
+    color: #3266EE;
+    background-color: #EDF2FF;
 }

@@ -14,11 +14,11 @@ export default class AtRadio extends Component {
     const { customStyle, className, options, id } = this.props
 
     return (
-      <View className={classNames('at-radio', className)} style={customStyle}>
+      <View className={classNames('cu-radio', className)} style={customStyle}>
         {options.map((option, index) => (
           <View
             key={option.id}
-            className={classNames({ 'at-radio__title': true, 'at-radio__title--checked': id === option.id })}
+            className={classNames({ 'cu-radio__title': true, 'cu-radio__title--checked': id === option.id })}
             onClick={() => this.handleClick(option, index)}
           >{option.name}</View>
         ))}

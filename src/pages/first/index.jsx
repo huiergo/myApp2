@@ -86,7 +86,7 @@ class First extends Component {
       sortId: '',
 
       upArrow: '',
-      selectIndex: -1
+      selectIndex: ''
 
     }
   }
@@ -225,7 +225,7 @@ class First extends Component {
           "name": "早读内容[背诵]"
         }
       ],
-      radioId: 18,
+      radioId: '',
 
       sortOptions: [
         { name: '默认', id: '0', upArrow: '0' },
@@ -234,12 +234,13 @@ class First extends Component {
       ],
       sortId: '',
     })
+
   }
 
   complete() {
     const { radioId, selectIndex, sortId, upArrow } = this.state
     const params = {
-      keyword: this.state.radioOptions[selectIndex].name,
+      keyword: this.state.radioOptions && this.state.radioOptions[selectIndex] && this.state.radioOptions[selectIndex].name,
       sort: sortId + upArrow.toString(),
       selectIndex
     }
@@ -394,13 +395,17 @@ class First extends Component {
 
         <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
           <View className='panel__content no-padding'>
+            <View className='custom__tag-title'> 题目排序 </View>
+            <View className='sort-container'>
+              <SortRadio options={this.state.sortOptions} id={this.state.sortId} onClick={this.handleSortRadioChange.bind(this)} onStatus={this.onStatus.bind(this)} />
+            </View>
+
+            <View className='custom__tag-title'> 选择阶段</View>
             <View className='radio-container'>
               <PureRadio options={this.state.radioOptions} id={this.state.radioId} onClick={this.handleRadioChange.bind(this)} />
             </View>
 
-            <View className='sort-container'>
-              <SortRadio options={this.state.sortOptions} id={this.state.sortId} onClick={this.handleSortRadioChange.bind(this)} onStatus={this.onStatus.bind(this)} />
-            </View>
+
           </View>
 
         </CustomModel>
