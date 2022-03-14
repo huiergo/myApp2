@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import { View, Button, Text } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
+import Taro from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -13,15 +14,34 @@ class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: ''
+      value: '',
+      scrollHeight: 469,
     }
   }
   componentDidShow() {
     console.log('xxx')
     this.props.editTrigger(false)
+
+    this.getScrollHeight()
   }
 
 
+
+  getScrollHeight() {
+    let _this = this
+    let total = 0
+
+    Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
+      total = res.height
+      Taro.setStorageSync('viewport_height', total)
+
+      let searchBarHeight = Taro.getStorageSync('at_search_height')
+      console.log('total searchBarHeight-----', total, searchBarHeight)
+      _this.setState({
+        scrollHeight: (total - searchBarHeight - 44)
+      })
+    }).exec()
+  }
 
   onChange(value) {
     this.setState({
@@ -36,18 +56,22 @@ class Search extends Component {
           clearTimeout(timer);
         }
         timer = setTimeout(() => {
-          console.log('请求数据。。。。')
+          console.log('请求数据。。。。', value)
           fn.apply(this, args);
         }, delay);
       };
     }
+    let fn = debounce(this.props.initSearchData, 1000)
 
-    let fn = debounce(this.props.initSearchData, 3000)
-    fn({ keyword: value, page: 1, questionBankType: 9 })
+    if (value) {
+      console.log('input value----', value)
+      fn({ keyword: value, page: 1, questionBankType: 9 })
+    }
   }
 
   render() {
     const { list, page, initSearchData, loadSearchMore, unShiftRecord, editTrigger, hasInput, pageTotal } = this.props
+    const { scrollHeight } = this.state
     return (
       <View className='index'>
         <AtSearchBar
@@ -83,6 +107,7 @@ class Search extends Component {
           page={page}
           initData={initSearchData}
           loadMore={loadSearchMore}
+          scrollHeight={scrollHeight}
         />}
       </View>
     )

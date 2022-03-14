@@ -59,11 +59,13 @@ class SubDetail extends Component {
   }
 
   async initSubQuestionDetail(id) {
+    Taro.showLoading()
     let result = await getJSON({ url: apis.getQuestionDetail + id });
 
     this.setState({
       item: result
     })
+    Taro.hideLoading()
   }
 
   // 赞 事件
