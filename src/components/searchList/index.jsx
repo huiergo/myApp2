@@ -24,23 +24,49 @@ class SearchList extends Component {
     return (
       <VirtualList
         className='List'
-        height={300}
         itemData={list}
         itemCount={dataLen}
         itemSize={itemSize}
         width='100%'
         upperThreshold={100}
         lowerThreshold={100}
-        onScrollToLower={() => {
-          console.log("[search onScrollToLower.....]", page, pageTotal)
-          if ((page + 1) <= pageTotal) {
-            loadMore({ page: page + 1, keyword, questionBankType })
-          }
 
+        height={this.props.scrollHeight}
+        // height={300}
+        bounces={false}
+        // upperThreshold={100}
+        // lowerThreshold={100}
+        overscanCount={30}
+
+        onScroll={({ scrollDirection, scrollOffset, detail }) => {
+          console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
+          console.log('scroll  top -----', detail.scrollTop)
+
+          // 上拉加载
+          if (!this.props.loading &&
+            // 只有往前滚动我们才触发
+            scrollDirection === 'forward' &&
+            // 5 = (列表高度 / 单项列表高度)
+            // 100 = 滚动提前加载量，可根据样式情况调整
+            scrollOffset > (dataLen * itemSize - 600)
+          ) {
+
+            if ((page + 1) <= pageTotal) {
+              loadMore({ page: page + 1, keyword, questionBankType })
+            }
+          }
         }}
-        onScrollToUpper={() => {
-          initData({ page: 1, keyword, questionBankType })
-        }}
+
+      // onScrollToLower={() => {
+      //   console.log("[search onScrollToLower.....]", page, pageTotal)
+      //   if ((page + 1) <= pageTotal) {
+      //     loadMore({ page: page + 1, keyword, questionBankType })
+      //   }
+
+      // }}
+      // onScrollToUpper={() => {
+      //   initData({ page: 1, keyword, questionBankType })
+      // }}
       >
         {Row}
       </VirtualList>
