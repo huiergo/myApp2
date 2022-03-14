@@ -15,6 +15,15 @@ export default class AtFloatLayout extends React.Component {
         this.props.onClose();
       }
     };
+
+    this.handlePureClose = () => {
+      if (typeof this.props.onClose === 'function') {
+        // TODO: Fix typings
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        this.props.onPureClose();
+      }
+    };
     this.handleReset = () => {
       if (typeof this.props.onClose === 'function') {
         // TODO: Fix typings
@@ -32,7 +41,7 @@ export default class AtFloatLayout extends React.Component {
     this.pureClose = () => {
       this.setState({
         _isOpened: false
-      })
+      }, this.handlePureClose)
     }
     this.reset = () => {
       this.handleReset()

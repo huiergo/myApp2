@@ -24,7 +24,7 @@ class SearchRecord extends Component {
           </View>
           <View className='search-record-right'>
             {!isEdit &&
-              <Image className='trash-icon' src={require('../../assets/other_icons/trash.png')} onClick={() => editTrigger(true)} />
+              <Image className='trash-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/trash.png' onClick={() => editTrigger(true)} />
             }
             {isEdit && (<View className='edit-group'>
               <Text className='edit-delete-all' onClick={() => clearAllRecordList()}>全部删除</Text>

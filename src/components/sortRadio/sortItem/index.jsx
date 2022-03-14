@@ -32,7 +32,7 @@ export default class SortItem extends Component {
       <View onClick={() => this.handleSortFlag()}>
         <Text >{this.props.name} </Text>
         {
-          this.props.name == '默认' ? '' : (this.props.isSelf ? (this.state.flag ? <Image className='filter-sort-arrow' src={require('../../../assets/other_icons/up_arrow_icon.png')} /> : <Image className='filter-sort-arrow' src={require('../../../assets/other_icons/down_arrow_icon.png')} />) : <Image className='filter-sort-arrow' src={require('../../../assets/other_icons/up_arrow_icon.png')} />)
+          this.props.name == '默认' ? '' : (this.props.isSelf ? (this.state.flag ? <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' /> : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/down_arrow_icon.png' />) : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' />)
         }
       </View>
     )

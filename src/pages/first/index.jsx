@@ -269,6 +269,12 @@ class First extends Component {
       isOpened: false
     })
   }
+
+  pureClose() {
+    this.setState({
+      isOpened: false
+    })
+  }
   // complete() {
   //   let params = this.getExtralParams()
   //   let { key, sort, selectIndex } = params
@@ -327,7 +333,7 @@ class First extends Component {
     return {
       title: '面试宝典',
       path: '/pages/first/index',
-      imageUrl: '../../assets/other_icons/swiper_img.png'
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png'
     }
   }
 
@@ -402,7 +408,7 @@ class First extends Component {
           <CustomTags type='cataList' circle={true} list={cataList} updateTagList={updateTagList} />
         </CustomModel> */}
 
-        <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
+        <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()} onPureClose={() => this.pureClose()}>
           <View className='panel__content no-padding'>
             <View className='custom__tag-title'> 题目排序 </View>
             <View className='sort-container'>
@@ -452,7 +458,7 @@ class First extends Component {
               })
             }
           </AtTabs>
-          <Image className='test-filter-btn' src={require('../../assets/other_icons/filter_icon.png')} onClick={() => this.setState({ isOpened: true })} />
+          <Image className='test-filter-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/filter_icon.png' onClick={() => this.setState({ isOpened: true })} />
         </View>
         <AtCurtain
           closeBtnPosition='top-right'

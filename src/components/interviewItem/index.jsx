@@ -44,7 +44,7 @@ class Index extends Component {
 
         <View className='interview-item__bottom'>
           <View className='interview-item__like-num'>
-            {item.likeFlag ? <Image className='interview-item__zan-icon' src={require('../../assets/other_icons/zanzan.png')} /> : ' 点赞'}
+            {item.likeFlag ? <Image className='interview-item__zan-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/zanzan.png' /> : ' 点赞'}
             {"  " + item.likeCount}
           </View>
           <Split />

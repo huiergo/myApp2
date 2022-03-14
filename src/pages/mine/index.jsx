@@ -87,7 +87,7 @@ class Mine extends Component {
     return {
       title: '面试宝典',
       path: '/pages/first/index',
-      imageUrl: '../../assets/other_icons/swiper_img.png'
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png'
     }
   }
 
@@ -135,15 +135,15 @@ class Mine extends Component {
         {/* 横向3格 */}
         <View className='grid-wrap'>
           <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 3 })}>
-            <Image className='grid-item-icon' src={require('../../assets/mine_icons/my_history_icon.png')} />
+            <Image className='grid-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/mine_icons/my_history_icon.png' />
             <Text className='grid-item-text'>历史记录</Text>
           </View>
           <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 2 })}>
-            <Image className='grid-item-icon' src={require('../../assets/mine_icons/my_favo_icon.png')} />
+            <Image className='grid-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/mine_icons/my_favo_icon.png' />
             <Text className='grid-item-text'>我的收藏</Text>
           </View>
           <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 1 })}>
-            <Image className='grid-item-icon' src={require('../../assets/mine_icons/my_zan_icon.png')} />
+            <Image className='grid-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/mine_icons/my_zan_icon.png' />
             <Text className='grid-item-text'>我的点赞</Text>
           </View>
         </View>
@@ -153,15 +153,15 @@ class Mine extends Component {
             <Button className='mine-list-item-text mine-list-item-btn' open-type="share">推荐分享</Button>
 
             {/* open-type="share" */}
-            <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
+            <Image className='mine-list-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/right_arrow_icon.png' />
           </View>
           <View className='mine-list-item'>
             <Button className='mine-list-item-text mine-list-item-btn' open-type="feedback">意见反馈</Button>
-            <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
+            <Image className='mine-list-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/right_arrow_icon.png' />
           </View>
           <View className='mine-list-item' onClick={() => this.handleListClick({ type: 'aboutUs' })}>
             <Text className='mine-list-item-text'>关于我们</Text>
-            <Image className='mine-list-item-icon' src={require('../../assets/other_icons/right_arrow_icon.png')} />
+            <Image className='mine-list-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/right_arrow_icon.png' />
           </View>
         </View>
 

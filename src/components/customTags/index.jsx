@@ -31,8 +31,8 @@ class CustomTags extends Component {
                 onClick={() => { this.onClick(index) }}
               >
                 {item.name}
-                {item.canSort ? (item.specialStatus === 0 ? <Image className='filter-sort-arrow' src={require('../../assets/other_icons/up_arrow_icon.png')} />
-                  : <Image className='filter-sort-arrow' src={require('../../assets/other_icons/down_arrow_icon.png')} />) : ''}
+                {item.canSort ? (item.specialStatus === 0 ? <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' />
+                  : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/down_arrow_icon.png' />) : ''}
 
               </AtTag>
             )
