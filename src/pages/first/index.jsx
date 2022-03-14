@@ -311,6 +311,7 @@ class First extends Component {
   }
 
   getUserProfile() {
+    let _this = this
     if (!Taro.getStorageSync('nickName')) {
       Taro.getUserProfile({
         desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
@@ -319,10 +320,12 @@ class First extends Component {
           let { nickName, avatarUrl } = res.userInfo
           Taro.setStorageSync('nickName', nickName)
           Taro.setStorageSync('avatarUrl', avatarUrl)
+          _this.handleClockInClick(_this.props.flag)
         }
       })
+    } else {
+      this.handleClockInClick(this.props.flag)
     }
-    this.handleClockInClick(this.props.flag)
   }
 
   onShareAppMessage(res) {
@@ -393,7 +396,7 @@ class First extends Component {
                 <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
                 <View className='clock_text-wrap-bottom'>连续签到</View>
               </View>) :
-              (<Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={this.getUserProfile}>打卡</Button>)
+              (<Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={this.getUserProfile.bind(this)}>打卡</Button>)
             }
           </View>
 
