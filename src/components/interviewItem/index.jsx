@@ -25,10 +25,10 @@ class Index extends Component {
     return (
       <View className='interview-item' onClick={() => gotoPage({ url: `../../sub/sub_detail_interview/index?id=${item.id}` })}>
         <View className='interview-item__top'>
-          <Image className='interview-item__top-avatar' src={item.avatar} />
+          <Image className='interview-item__top-avatar' src={item.creatorAvatar} />
           <View className='interview-item__top-content'>
             <View className='interview-item__top-content-title'>面经 | {item.stem}</View>
-            <View className='interview-item__top-content-des'>{item.contributorName} | {item.createdAt}</View>
+            <View className='interview-item__top-content-des'>{item.creatorName} | {item.createdAt}</View>
           </View>
         </View>
 

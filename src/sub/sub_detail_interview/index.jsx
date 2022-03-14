@@ -54,9 +54,10 @@ class SubDetail extends Component {
   async initSubInterviewDetail(id) {
     Taro.showLoading()
     let result = await getJSON({ url: apis.getQuestionDetail + id });
-    if (result && result.data && result.data.data) {
+    console.log('面经详情----', result)
+    if (result) {
       this.setState({
-        item: result.data.data
+        item: result
       })
     }
     Taro.hideLoading()

@@ -61,8 +61,16 @@ class Mine extends Component {
     }
   }
   handleGridClick({ gridType }) {
-    this.props.changeOptType(gridType)
-    gotoPage({ url: '../../sub/sub_history/index' })
+    if (this.state.nickName) {
+      this.props.changeOptType(gridType)
+      gotoPage({ url: '../../sub/sub_history/index' })
+    } else {
+      Taro.showToast({
+        title: '请先登录',
+        icon: 'error'
+      })
+    }
+
   }
 
   onClose() {
