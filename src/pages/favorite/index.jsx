@@ -12,7 +12,25 @@ import * as favoriteActions from "../../actions/favorite.action"
 class Favorite extends Component {
   constructor() {
     super(...arguments)
-
+    this.state = {
+      hasLogin: false
+    }
+  }
+  componentDidMount() {
+    let nickName = Taro.getStorageSync('nickName')
+    if (nickName) {
+      this.setState({
+        hasLogin: true
+      })
+    } else {
+      this.setState({
+        hasLogin: false
+      })
+      Taro.showToast({
+        title: '请先登录',
+        icon: 'error'
+      })
+    }
   }
   change(v) {
     this.props.changeTab(v)

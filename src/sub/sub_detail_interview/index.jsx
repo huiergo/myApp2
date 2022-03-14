@@ -66,25 +66,46 @@ class SubDetail extends Component {
 
   // 赞 事件
   async handleZan(flag) {
-    console.log("点赞id----", this.state.item.id)
-    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 1 })
-    result && this.setState({
-      item: {
-        ...this.state.item,
-        likeFlag: !flag
-      }
-    })
+    try {
+      console.log("点赞id----", this.state.item.id)
+      Taro.showLoading()
+      let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 1 })
+      console.log('赞 事件 result----', result)
+      result && this.setState({
+        item: {
+          ...this.state.item,
+          likeFlag: !flag
+        }
+      })
+      Taro.hideLoading()
+    } catch (error) {
+      Taro.showToast({
+        title: error,
+        icon: 'error'
+      })
+    }
+
   }
   // 收藏 事件
-  handleFavorite(flag) {
-    console.log("收藏 id----", this.state.item.id)
-    let result = this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 2 })
-    result && this.setState({
-      item: {
-        ...this.state.item,
-        collectFlag: !flag
-      }
-    })
+  async handleFavorite(flag) {
+    try {
+      Taro.showLoading()
+      console.log("收藏 id----", this.state.item.id)
+      let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 2 })
+      result && this.setState({
+        item: {
+          ...this.state.item,
+          collectFlag: !flag
+        }
+      })
+      Taro.hideLoading()
+    } catch (error) {
+      Taro.showToast({
+        title: error,
+        icon: 'error'
+      })
+    }
+
   }
   /**
    * type:     0面试题1面经
