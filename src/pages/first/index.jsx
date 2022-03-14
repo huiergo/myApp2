@@ -142,10 +142,10 @@ class First extends Component {
     loadFlag()
   }
 
-  change(v) {
-    this.props.changeTab(v)
+  change({ selectIndex, keyword, sort }) {
+    this.props.changeTab(selectIndex)
     // 触发事件，传入多个参数
-    eventCenter.trigger('eventChange', v)
+    eventCenter.trigger('eventChange', selectIndex, keyword, sort)
   }
   getExtralParams() {
     const { sortList, cataList } = this.props
@@ -244,9 +244,15 @@ class First extends Component {
       sort: sortId + upArrow.toString(),
       selectIndex
     }
+    console.log('change extraParams----', params.keyword, params.sort)
+
     // todo: radioId 怎么使用
     if (selectIndex > -1) {
-      this.change(selectIndex)
+      this.change({
+        selectIndex,
+        keyword: this.state.radioOptions && this.state.radioOptions[selectIndex] && this.state.radioOptions[selectIndex].name,
+        sort: sortId + upArrow.toString(),
+      })
     }
 
     // 2. 需要同步状态
@@ -354,9 +360,9 @@ class First extends Component {
       exprState,
       initData,
       loadMore,
-
+      extraParams
     } = this.props
-
+    console.log('render extraParams-------', extraParams)
     const { clockinNumbers = 0 } = this.props.userInfo
     const { flag } = this.props
     const { avatar, nickName } = this.state
@@ -383,7 +389,7 @@ class First extends Component {
           </View>
 
         </View>
-        <Image className='index__swiper-img' src={require('../../assets/other_icons/swiper_img.png')} />
+        <Image className='index__swiper-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png' />
 
         {/* <View onClick={() => this.setState({ isOpened: true })}>筛选按钮</View> */}
         {/* <CustomModel isOpened={isOpened} title='重置' closeText='完成' onReset={() => this.reset()} onClose={() => this.complete()}>
@@ -436,6 +442,7 @@ class First extends Component {
                       questionBankType={10}
                       initData={initData}
                       loadMore={loadMore}
+                      extraParams={extraParams}
                     />
                   </AtTabsPane>
                 )
@@ -458,7 +465,8 @@ class First extends Component {
 
 const mapStateToProps = (state) => {
 
-  let { currentIdx } = state.first
+  let { currentIdx, extraParams } = state.first
+  console.log('extraParams----', state.first.extraParams)
   // 其实是筛选了下 ：结果是 ['recommand','lastest']
   console.log("state.first----", state.first)
   let tabList = Object.keys(state.first).filter(i => (i !== 'currentIdx' && i !== 'extraParams'))
@@ -474,6 +482,7 @@ const mapStateToProps = (state) => {
     tabList,
     chineseTabList,
     currentIdx,
+    extraParams,
     exprState: state.first,
     flag,
     userInfo

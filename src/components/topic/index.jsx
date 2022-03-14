@@ -24,9 +24,15 @@ class Topic extends Component {
   componentWillMount() {
     this.initByTabChange(0)
     // 监听一个事件，接受参数
-    eventCenter.on('eventChange', (currentIndex) => {
-      console.log("[topic eventChange  currentIndex]", currentIndex, this.props.index)
-      this.initByTabChange(currentIndex)
+    eventCenter.on('eventChange', (...args) => {
+      console.log('args----', args)
+      // const { selectIndex, keyword, sort } = args
+
+      let selectIndex = args[0]
+      let keyword = args[1]
+      let sort = args[2]
+      // console.log("[topic eventChange  currentIndex]", currentIndex, this.props.index)
+      this.initByTabChange(selectIndex, keyword, sort)
     })
     //收藏 用的是qustionItem ,  eventChange_favorite
     eventCenter.on('eventChange_favorite_question', (currentIndex) => {
@@ -39,10 +45,12 @@ class Topic extends Component {
 
   }
 
-  initByTabChange(currentIndex = 0) {
+  initByTabChange(currentIndex = 0, ...extraParams) {
+
+    console.log('initData extraParams----', extraParams)
     if (this.init && (this.props.index === currentIndex)) {
       this.init = false
-      this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType })
+      this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType, extraParams: extraParams })
     }
   }
 
@@ -54,7 +62,7 @@ class Topic extends Component {
   }
 
   render() {
-    const { type, list, page, pageTotal, initData, loadMore, questionBankType, optType } = this.props
+    const { type, list, page, pageTotal, initData, loadMore, questionBankType, optType, extraParams } = this.props
     const dataLen = list.length
     const itemSize = 80
 
@@ -87,7 +95,7 @@ class Topic extends Component {
 
             if ((page + 1) <= pageTotal) {
               console.log('loadmore before')
-              loadMore({ type, page: page + 1, questionBankType, optType })
+              loadMore({ type, page: page + 1, questionBankType, optType, extraParams })
               console.log('loadmore after')
             }
           }

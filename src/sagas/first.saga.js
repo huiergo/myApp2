@@ -17,15 +17,22 @@ import { saveCategoryToTag } from '../actions/tag.action';
  * 获取”初始化“列表，并同步到store
  */
 function* handleInitData({ payload }) {
-  const { type, page, questionBankType } = payload;
+  const { type, page, questionBankType, extraParams } = payload;
+  console.log('payload extraParams----', extraParams);
   let tempType = type.split('_')[1];
   yield put(saveLoading({ type, loading: true }));
   Taro.showLoading();
   let result = yield getJSON({
     url: apis.getQuestionList,
-    data: { page, type: tempType, questionBankType },
+    data: {
+      page,
+      type: tempType,
+      questionBankType,
+      keyword: extraParams && extraParams[0],
+      sort: extraParams && extraParams[1],
+    },
   });
-  let { pageTotal, rows: list } = result;
+  let { pageTotal = 0, rows: list = [] } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
   yield put(saveLoading({ type, loading: false }));
   Taro.hideLoading();
