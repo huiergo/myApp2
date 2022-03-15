@@ -45,7 +45,7 @@ class SearchRecord extends Component {
             {isEdit ?
               <Image
                 className='edit-item-delete-icon'
-                src={require('../../assets/other_icons/delete.png')}
+                src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/delete.png'
                 onClick={() => deleteRecordByIndex(index)}
               />
               : null}

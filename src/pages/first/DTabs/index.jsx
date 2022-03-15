@@ -7,16 +7,16 @@ import './index.css'
 import { get as getGlobalData } from '../../../global_data'
 
 
-// tablist 是外部传递进来的 
-let tabList = [
-  { title: '标签页1' },
-  { title: '标签页2' },
-  { title: '标签页3' },
-  { title: '标签页4' },
-  { title: '标签页5' },
-  { title: '标签页6' }
-]
-class Search extends Component {
+// // tablist 是外部传递进来的 
+// let tabList = [
+//   { title: '标签页1' },
+//   { title: '标签页2' },
+//   { title: '标签页3' },
+//   { title: '标签页4' },
+//   { title: '标签页5' },
+//   { title: '标签页6' }
+// ]
+class DTabs extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -49,6 +49,7 @@ class Search extends Component {
   }
 
   render() {
+    const { tabList } = this.props
     return (
       <AtTabs
         current={this.state.current}
@@ -67,4 +68,4 @@ class Search extends Component {
   }
 }
 
-export default Search
+export default DTabs

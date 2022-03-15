@@ -55,7 +55,7 @@ class Filter extends Component {
 
           <View className='custom__tag-title'> 测试阶段</View>
           <View className='radio-container'>
-            <DPureRadio isReset={this.state.isReset} onClick={this.handlePureRadio.bind(this)} />
+            <DPureRadio tabList={this.props.tabList} isReset={this.state.isReset} onClick={this.handlePureRadio.bind(this)} />
           </View>
 
         </View>

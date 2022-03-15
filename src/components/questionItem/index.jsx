@@ -56,7 +56,7 @@ class Index extends Component {
         </View>
         <View className='question-item__bottom'>
           <View className='question-item__like-num'>
-            {item.likeFlag ? <Image className='question-item__zan-icon' src={require('../../assets/other_icons/zanzan.png')} /> : ' 点赞'}
+            {item.likeFlag ? <Image className='question-item__zan-icon' src={require('http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/zanzan.png')} /> : ' 点赞'}
             {"  " + item.likeCount}
           </View>
           <Split />

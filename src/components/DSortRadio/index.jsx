@@ -22,6 +22,7 @@ export default class DPureRadio extends Component {
 
   componentWillReceiveProps(next) {
     console.log('next---', next)
+    // if (!next) return
     if (next.isReset) {
       let optionsList = this.state.optionsList
       optionsList.map((item, idx) => {

@@ -398,7 +398,7 @@ class First extends Component {
           </View>
           {/*  onClick={() => this.handleClockInClick(flag)} */}
           <View className='index_clock_wrap'>
-            <Image className='index__clock-in-btn' src={require('../../assets/other_icons/clock_img.png')} />
+            <Image className='index__clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
             {flag ?
               (<View className='clock_text-wrap'>
                 <View className='clock_text-wrap-top'>{clockinNumbers}天</View>

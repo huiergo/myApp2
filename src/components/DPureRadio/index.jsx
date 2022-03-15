@@ -9,6 +9,8 @@ export default class DPureRadio extends Component {
 
   constructor(props) {
     super(props)
+
+    // todo  : optionsList 替换成  this.props.tabList
     this.state = {
       optionsList: [{
         "id": 18,
@@ -34,6 +36,7 @@ export default class DPureRadio extends Component {
 
   componentWillReceiveProps(next) {
     console.log('next---', next)
+    // if (!next) return
     if (next.isReset) {
       let optionsList = this.state.optionsList
       optionsList.map((item, idx) => {

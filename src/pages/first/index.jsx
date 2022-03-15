@@ -7,13 +7,17 @@ import Filter from './Filter/index'
 import DTabs from './DTabs'
 import './index.scss'
 
+import { getJSON } from '../../services/method';
+import apis from '../../services/apis'
+
 export default class First extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       scrollHeight: '',
-      filterOpen: false
+      filterOpen: false,
+      tabList: []
     }
   }
   $instance = getCurrentInstance()
@@ -45,17 +49,35 @@ export default class First extends Component {
     })
   }
 
-  componentDidMount() {
-
+  async componentDidMount() {
+    // 请求 type类型接口
+    await this.fetchCategory()
   }
+
+
+
+  /**
+   * 获取分类
+   */
+  async fetchCategory() {
+    let tabList = await getJSON({ url: apis.getCategory }) || [];
+    console.log('分类结果---', tabList)
+    let tempList = tabList.map(i => {
+      return {
+        ...i,
+        title: i.name
+      }
+    })
+    this.setState({
+      tabList: tempList
+    })
+  }
+
   hideModel() {
     this.setState({
       filterOpen: false
     })
   }
-
-
-
 
   render() {
 
@@ -69,10 +91,10 @@ export default class First extends Component {
         {/* 占位图片 */}
         <Image className='index__swiper-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png' />
         {/* 筛选区域 */}
-        <Filter filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
+        <Filter tabList={this.state.tabList} filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
         {/* tabs联动组件 */}
         <View className='first-content-wrap'>
-          <DTabs scrollHeight={this.state.scrollHeight} />
+          <DTabs tabList={this.state.tabList} scrollHeight={this.state.scrollHeight} />
           <Image
             className='filter-btn'
             src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/filter_icon.png'
