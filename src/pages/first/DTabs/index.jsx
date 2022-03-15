@@ -3,9 +3,8 @@ import { View, Button, Text } from '@tarojs/components'
 import Taro, { eventCenter } from '@tarojs/taro';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import DTabContent from '../DTabContent/index'
-import './index.css'
 import { get as getGlobalData } from '../../../global_data'
-
+import './index.css'
 
 // // tablist 是外部传递进来的 
 // let tabList = [
@@ -52,6 +51,7 @@ class DTabs extends Component {
     const { tabList } = this.props
     return (
       <AtTabs
+        className='first-tab'
         current={this.state.current}
         scroll
         tabList={tabList}

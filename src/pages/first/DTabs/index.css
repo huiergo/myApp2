@@ -1,0 +1,24 @@
+/* 
+.first-tab .at-tabs__header {
+    // background-color: red;
+    padding-right: 88px;
+    text-align: left;
+  }
+  
+  .at-tabs__header {
+    text-align: left !important;
+  }
+   */
+
+
+ .first-tab {
+    position: relative;
+  }
+  .first-tab .at-tabs__header {
+    padding-right: 88px;
+    text-align: left;
+  }
+/*   
+  .at-tabs__header {
+    text-align: left !important;
+  } */
