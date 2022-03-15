@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { Text, View } from '@tarojs/components'
 import './index.css'
 
-export default class AtRadio extends Component {
+export default class DPureRadio extends Component {
 
   constructor(props) {
     super(props)
@@ -35,9 +35,6 @@ export default class AtRadio extends Component {
 
   handleClick(option, index) {
     let optionsList = this.state.optionsList
-    // this.setState({
-    //   'this.state.optionsList[index].selected': true
-    // })
 
     optionsList.map((item, idx) => {
       if (idx === index) {
@@ -50,12 +47,12 @@ export default class AtRadio extends Component {
     this.setState({
       optionsList: this.state.optionsList
     })
-    // this.props.onClick(index)
+    this.props.onAcceptPureSelect(option)
   }
 
   render() {
     const { customStyle, className, id } = this.props
-    console.log('optionslist----', this.state.optionsList)
+
     return (
       <View className={classNames('cu-radio', className)} style={customStyle}>
         {this.state.optionsList.map((option, index) => (
