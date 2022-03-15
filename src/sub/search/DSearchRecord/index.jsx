@@ -3,6 +3,12 @@ import { View, Button, Text, Image } from '@tarojs/components'
 import { AtSearchBar, AtTag } from 'taro-ui'
 import Taro from '@tarojs/taro';
 
+const setStorge = (key, data) => {
+  Taro.setStorage({
+    key,
+    data
+  })
+}
 
 class Search extends Component {
   constructor(props) {
@@ -10,15 +16,29 @@ class Search extends Component {
     this.props.onRef(this)
     this.state = {
       list: [],
-      isEditAll: true
+      isEditAll: false
     }
   }
+
+  componentDidMount() {
+    let tempList = Taro.getStorageSync('record_list');
+    this.setState({
+      list: tempList || [],
+      isEditAll: false
+    })
+  }
+
   componentDidShow() {
 
   }
   addValue(v) {
     console.log('----', v)
     this.onAdd(v)
+  }
+
+  seachValue(v) {
+    this.onAdd(v)
+    setStorge('record_list', [...this.state.list]);
   }
 
   // 当搜索完成时候，调用此方法
@@ -32,6 +52,7 @@ class Search extends Component {
     this.setState({
       list: [...this.state.list]
     })
+
   }
 
   // 单个删除按钮
@@ -40,6 +61,8 @@ class Search extends Component {
     this.setState({
       list: [...this.state.list]
     })
+    setStorge('record_list', [...this.state.list]);
+
   }
 
   // 删除全部
@@ -47,6 +70,8 @@ class Search extends Component {
     this.setState({
       list: []
     })
+    setStorge('record_list', []);
+
   }
 
   onEditTrigger(editFlag) {

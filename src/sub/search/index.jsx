@@ -5,6 +5,7 @@ import Taro from '@tarojs/taro';
 import DSearchBar from './DSearchBar/index'
 import DSearchRecord from './DSearchRecord/index'
 import DSearchList from './DSearchList/index'
+import NewPureRadio from '../../components/newPureRadio'
 
 let timer = null
 class Search extends Component {
@@ -24,25 +25,27 @@ class Search extends Component {
     this.child = ref
   }
 
-  click = (v) => {
-    this.child.addValue(v)
-  }
-
   onInputChange(v) {
     console.log('onInputChange----', v)
     this.setState({
       keyword: v
     })
   }
-
+  onActionClick() {
+    // 隐藏添加到storage
+    this.child.seachValue(this.state.keyword)
+    // 请求数据---内部已实现监听请求
+  }
   render() {
 
     return (
       <View className='index'>
-        <View onClick={() => this.click('aaa')}>测试</View>
-        <DSearchBar onInputChange={(v) => this.onInputChange(v)} />
-        <DSearchRecord onRef={this.onRef} />
-        <DSearchList keyword={this.state.keyword} />
+
+        <DSearchBar onInputChange={(v) => this.onInputChange(v)} onActionClick={() => this.onActionClick()} />
+        {!this.state.keyword && <DSearchRecord onRef={this.onRef} />}
+
+        {/* <NewPureRadio /> */}
+        {this.state.keyword && <DSearchList keyword={this.state.keyword} />}
       </View>
     )
   }

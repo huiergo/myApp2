@@ -42,6 +42,7 @@ class Search extends Component {
   }
 
   onActionClick() {
+    this.props.onActionClick()
     console.log('开始搜索')
   }
 

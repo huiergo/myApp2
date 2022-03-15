@@ -18,6 +18,7 @@ import { handleGetToken } from '../../services/method'
 import ClockInModel from "../../components/clockInModel";
 import PureRadio from '../../components/pureRadio'
 import SortRadio from '../../components/sortRadio'
+import NewPureRadio from '../../components/newPureRadio'
 
 class First extends Component {
   constructor(props) {
@@ -362,6 +363,10 @@ class First extends Component {
     }).exec()
   }
 
+  handlePureRadio(v) {
+    console.log('handlePureRadio----', v)
+  }
+
   render() {
     const { cataList, sortList, updateTagList } = this.props
     const { isOpened, scrollHeight } = this.state
@@ -422,7 +427,10 @@ class First extends Component {
             <View className='radio-container'>
               <PureRadio options={this.state.radioOptions} id={this.state.radioId} onClick={this.handleRadioChange.bind(this)} />
             </View>
-
+            <View className='custom__tag-title'> 测试阶段</View>
+            <View className='radio-container'>
+              <NewPureRadio onClick={this.handlePureRadio.bind(this)} />
+            </View>
 
           </View>
 
