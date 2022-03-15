@@ -2,8 +2,9 @@ import { Component } from 'react'
 import { View, Button, Text, Image } from '@tarojs/components'
 import { AtSearchBar, AtTag } from 'taro-ui'
 import Taro from '@tarojs/taro';
+import './index.css'
 
-const setStorge = (key, data) => {
+const setStorage = (key, data) => {
   Taro.setStorage({
     key,
     data
@@ -31,14 +32,15 @@ class Search extends Component {
   componentDidShow() {
 
   }
+
   addValue(v) {
     console.log('----', v)
     this.onAdd(v)
   }
 
-  seachValue(v) {
+  searchValue(v) {
     this.onAdd(v)
-    setStorge('record_list', [...this.state.list]);
+    setStorage('record_list', [...this.state.list]);
   }
 
   // 当搜索完成时候，调用此方法
@@ -61,7 +63,7 @@ class Search extends Component {
     this.setState({
       list: [...this.state.list]
     })
-    setStorge('record_list', [...this.state.list]);
+    setStorage('record_list', [...this.state.list]);
 
   }
 
@@ -70,7 +72,7 @@ class Search extends Component {
     this.setState({
       list: []
     })
-    setStorge('record_list', []);
+    setStorage('record_list', []);
 
   }
 
@@ -85,11 +87,6 @@ class Search extends Component {
     return (
 
       <View className='search-record'>
-        子组件
-        {this.state.list.map((item, index) => {
-          return (<View>{item}</View>)
-        })}
-
         <View className='search-record-top'>
           <View className='search-record-left'>
             搜索记录
@@ -123,7 +120,7 @@ class Search extends Component {
             {isEditAll ?
               <Image
                 className='edit-item-delete-icon'
-                src={require('../../../assets/other_icons/delete.png')}
+                src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/delete.png'
                 onClick={() => this.onDeleteItem(index)}
               />
               : null}

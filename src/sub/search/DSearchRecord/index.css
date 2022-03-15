@@ -1,6 +1,7 @@
 .search-record {
     padding-left: 32px;
     padding-right: 32px;
+    flex-grow: 0;
   }
   .search-record-top {
     display: flex;

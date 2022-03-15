@@ -1,0 +1,11 @@
+.search-page{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.search-content-wrap{
+    flex-grow: 1;
+    flex-shrink: 0;
+    overflow-y:scroll;
+}

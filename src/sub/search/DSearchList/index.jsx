@@ -1,66 +1,22 @@
 import { Component } from 'react'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Button, Text, ScrollView } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
 import Taro from '@tarojs/taro';
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
+// 写死，这里需要判断 当前是首页还是面经页面的tab ，然后渲染的  QuestionItem or InterviewItem
+import QuestionItem from '../../../components/questionItem'
+import './index.css'
 
 let timer = null
 class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      list: [{
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      }, {
-        stem: '列表1'
-      }, {
-        stem: '列表2'
-      }, {
-        stem: '列表3'
-      },],
+      list: [],
       page: 0,
-      pageTotal: ''
+      pageTotal: '',
+
     }
   }
 
@@ -115,26 +71,26 @@ class Search extends Component {
 
   }
 
-  async loadmore() {
-    // let {page,pageTotal}=this.state
-    if ((this.state.page + 1) <= this.state.pageTotal) {
-      let { pageTotal, rows: list } = await getJSON({
-        url: apis.getQuestionList,
-        data: { page: 1, keyword: this.props.keyword, questionBankType: 9 },
-      });
-      console.log('拼接数组----', this.state.list.concat(list))
-      this.setState({
-        pageTotal,
-        list: this.state.list.concat(list)
-      })
-    }
-  }
-
+  // async loadmore() {
+  //   // let {page,pageTotal}=this.state
+  //   if ((this.state.page + 1) <= this.state.pageTotal) {
+  //     let { pageTotal, rows: list } = await getJSON({
+  //       url: apis.getQuestionList,
+  //       data: { page: 1, keyword: this.props.keyword, questionBankType: 9 },
+  //     });
+  //     console.log('拼接数组----', this.state.list.concat(list))
+  //     this.setState({
+  //       pageTotal,
+  //       list: this.state.list.concat(list)
+  //     })
+  //   }
+  // }
   render() {
+    const { scrollHeight } = this.props
     return (
-      <View className='index'>
+      <View className='search-scroll' style={{ height: scrollHeight }}>
         {this.state.list.map((item, index) => {
-          return <View>{item.stem}</View>
+          return <QuestionItem item={item} key={index} />
         })}
       </View>
     )
