@@ -3,7 +3,7 @@ import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
 import { View, Image, Text, Button } from '@tarojs/components'
 import { AtSearchBar, AtTabs, AtTabsPane } from 'taro-ui'
 import { gotoPage } from "../../utils/index"
-
+import Filter from './Filter/index'
 import DTabs from './DTabs'
 import './index.scss'
 
@@ -12,7 +12,8 @@ export default class First extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollHeight: ''
+      scrollHeight: '',
+      filterOpen: false
     }
   }
   $instance = getCurrentInstance()
@@ -44,6 +45,18 @@ export default class First extends Component {
     })
   }
 
+  componentDidMount() {
+
+  }
+  hideModel() {
+    this.setState({
+      filterOpen: false
+    })
+  }
+
+
+
+
   render() {
 
     return (
@@ -55,10 +68,16 @@ export default class First extends Component {
         </View>
         {/* 占位图片 */}
         <Image className='index__swiper-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png' />
-
+        {/* 筛选区域 */}
+        <Filter filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
         {/* tabs联动组件 */}
         <View className='first-content-wrap'>
           <DTabs scrollHeight={this.state.scrollHeight} />
+          <Image
+            className='filter-btn'
+            src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/filter_icon.png'
+            onClick={() => this.setState({ filterOpen: true })}
+          />
         </View>
       </View>
     )

@@ -158,3 +158,17 @@
   flex-grow: 0;
   flex-shrink: 0;
 }
+
+.first-content-wrap {
+  position: relative;
+}
+
+.filter-btn {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  background-color: white;
+}

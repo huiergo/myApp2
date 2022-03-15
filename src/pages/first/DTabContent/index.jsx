@@ -130,6 +130,7 @@ class DTabContent extends Component {
 
     return (
       <ScrollView className='tab-content-scroll' style={{ height: scrollHeight }}
+        upperThreshold={50}
         scrollY
         scrollWithAnimation
         onScrollToUpper={() => {

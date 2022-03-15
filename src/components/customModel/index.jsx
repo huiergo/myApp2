@@ -16,12 +16,12 @@ export default class AtFloatLayout extends React.Component {
       }
     };
 
-    this.handlePureClose = () => {
+    this.handleHideModel = () => {
       if (typeof this.props.onClose === 'function') {
         // TODO: Fix typings
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        this.props.onPureClose();
+        this.props.onHideModel();
       }
     };
     this.handleReset = () => {
@@ -38,10 +38,10 @@ export default class AtFloatLayout extends React.Component {
       }, this.handleClose);
     };
 
-    this.pureClose = () => {
+    this.hideModel = () => {
       this.setState({
         _isOpened: false
-      }, this.handlePureClose)
+      }, this.handleHideModel)
     }
     this.reset = () => {
       this.handleReset()
@@ -73,7 +73,7 @@ export default class AtFloatLayout extends React.Component {
       'at-float-layout--active': _isOpened
     }, this.props.className);
     return (React.createElement(View, { className: rootClass, onTouchMove: this.handleTouchMove },
-      React.createElement(View, { onClick: this.pureClose, className: 'at-float-layout__overlay' }),
+      React.createElement(View, { onClick: this.hideModel, className: 'at-float-layout__overlay' }),
       React.createElement(View, { className: 'at-float-layout__container layout' },
         title ? (React.createElement(View, { className: 'layout-header' },
           React.createElement(Text, { className: 'layout-header__title', onClick: this.reset }, title),
