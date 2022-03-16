@@ -29,7 +29,7 @@ export default class DPureRadio extends Component {
       })
     }
 
-    // if (!next) return
+    //  点击重置，内部自行 更新
     if (next.isReset) {
       let optionsList = this.state.optionsList
       optionsList.map((item, idx) => {

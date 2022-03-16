@@ -1,5 +1,7 @@
 import { Component } from 'react'
 import { View, Button, Text } from '@tarojs/components'
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Taro, { eventCenter } from '@tarojs/taro';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import DTabContent from '../DTabContent/index'
@@ -34,12 +36,10 @@ class Filter extends Component {
   }
 
   complete() {
-
-    // 消息通知首页刷新
+    // // 消息通知首页刷新
     eventCenter.trigger('event_filter_complete')
   }
   render() {
-    console.log("[filter .props.tabList----]", this.props.tabList)
     return (
       <CustomModel
         isOpened={this.props.filterOpen}
@@ -67,4 +67,14 @@ class Filter extends Component {
   }
 }
 
-export default Filter
+const mapStateToProps = (state) => {
+  let { tabList } = state.first
+  return {
+    tabList
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  // ...bindActionCreators(firstActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

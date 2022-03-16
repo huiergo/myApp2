@@ -1,18 +1,22 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
 import { View, Image, Text, Button } from '@tarojs/components'
 import { AtSearchBar, AtTabs, AtTabsPane } from 'taro-ui'
+import * as firstActions from "./first.action"
+
 import { gotoPage } from "../../utils/index"
 import Filter from './Filter/index'
 import DTabs from './DTabs'
 import './index.scss'
-import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 
 import { getJSON } from '../../services/method';
 import apis from '../../services/apis'
+import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 
 
-export default class First extends Component {
+class First extends Component {
 
   constructor(props) {
     super(props)
@@ -59,10 +63,16 @@ export default class First extends Component {
       this.setState({
         filterOpen: false
       })
+
+      let { index } = getGlobalData('pure_radio_select')
+
+      this.syncUpdateActiveIndexAndTabList(index)
     })
   }
 
-
+  componentWillUnmount() {
+    eventCenter.off('event_filter_complete')
+  }
 
   /**
    * 获取分类
@@ -70,17 +80,14 @@ export default class First extends Component {
   async fetchCategory() {
     try {
       let tabList = await getJSON({ url: apis.getCategory })
-      console.log('分类结果---', tabList)
       let tempList = tabList.map(i => {
         return {
           ...i,
           title: i.name
         }
       })
-      this.setState({
-        tabList: tempList
-      })
-      console.log("tabList----", tempList)
+      console.log("fetchCategory---", tempList)
+      this.props.updateTabList(tempList)
     } catch (error) {
       console.log('分类错误---', error)
     }
@@ -92,52 +99,32 @@ export default class First extends Component {
     })
   }
 
+  // tab 点击 切换
   onChangeTab(idx) {
-    // xxx[i].selected=true
-    // this.setState({ tabList:tempTabList  })
-    let tempList = this.state.tabList.map((item, index) => {
+    this.syncUpdateActiveIndexAndTabList(idx)
+  }
+
+  syncUpdateActiveIndexAndTabList(idx) {
+    let tempList = this.props.tabList.map((item, index) => {
       if (idx === index) {
         item.selected = true
+        this.props.changeActiveIdx(idx)
       } else {
         item.selected = false
       }
       return item
-
     })
 
-    this.setState({
-      tabList: tempList
-    }, () => {
-      console.log('filteropen 111--', this.state.filterOpen)
-
+    setGlobalData('pure_radio_select', {
+      option: this.props.tabList[idx],
+      index: idx
     })
 
-    let extraParmas = getGlobalData('extraParmas') || {}
-    setGlobalData('extraParmas', {
-      ...extraParmas,
-      keyword: this.state.tabList[idx].name
-    })
-    // let extraParmas = getGlobalData('extraParmas') || {}
-    // setGlobalData('v_pure', {
-    //   ...extraParmas,
-    //   keyword: this.state.tabList[idx].name
-    // })
-    console.log('global---', getGlobalData('extraParmas'))
+    // type  0全部,不传也是全部 或者模块的类型id
+    // keyword 搜索关键词
+    // sort: 排序，默认0,可以不传，难易-10从易到难11从难道易，浏览量：20从低到高21从高到底,30推荐数据（按照权重倒序）
 
-    console.log('11111111onchange extraParmas----', getGlobalData('extraParmas'))
 
-    // let v_pure = getGlobalData('pure_radio_select')
-    // let v_sort = getGlobalData('sort_radio_select')
-    // //  可以setState 更新 
-    // console.log('v_pure------', v_pure)
-    // console.log('v_sort------', v_sort)
-    // _this.setState({
-    //   current: v_pure.index,
-    // })
-
-    // // type 类型id
-    // // keyword 搜索关键词
-    // // sort 默认0,可以不传，难易-10从易到难11从难道易，浏览量：20从低到高21从高到底,30推荐数据（按照权重倒序）
     // let sortIndex = v_sort && v_sort.index || '0'
     // let sortUpArrow = v_sort && v_sort.option && v_sort.option.upArrow || '0'
     // setGlobalData('extraParmas', {
@@ -145,11 +132,28 @@ export default class First extends Component {
     //   keyword: v_pure.option.name,
     //   sort: sortIndex + sortUpArrow
     // })
-    console.log('filteropen 222--', this.state.filterOpen)
+
+    let v_sort = getGlobalData('sort_radio_select')
+    let sortIndex = v_sort && v_sort.index || '0'
+    let sortUpArrow = v_sort && v_sort.option && v_sort.option.upArrow || '0'
+
+    // 单选的id
+    let type = this.props.tabList[idx].id
+
+    // 排序的sort
+    let sort = sortIndex + sortUpArrow
+
+    let extraParams = {
+      type,
+      sort,
+    }
+    console.log('【extraParams----】', extraParams)
+    this.props.updateExtraParams(extraParams)
+    this.props.updateTabList(tempList)
   }
 
   render() {
-
+    console.log('first this.props.tabList----', this.props.tabList)
     return (
       <View className='first-page'>
 
@@ -160,10 +164,10 @@ export default class First extends Component {
         {/* 占位图片 */}
         <Image className='index__swiper-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png' />
         {/* 筛选区域 */}
-        <Filter tabList={this.state.tabList} filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
+        <Filter filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
         {/* tabs联动组件 */}
         <View className='first-content-wrap'>
-          <DTabs tabList={this.state.tabList} scrollHeight={this.state.scrollHeight} onChangeTab={(idx) => this.onChangeTab(idx)} />
+          <DTabs tabList={this.props.tabList} activeIdx={this.props.activeIdx} scrollHeight={this.state.scrollHeight} onChangeTab={(idx) => this.onChangeTab(idx)} />
           <Image
             className='filter-btn'
             src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/filter_icon.png'
@@ -174,3 +178,17 @@ export default class First extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  console.log('first state----', state.first)
+  let { activeIdx, tabList } = state.first
+  return {
+    activeIdx,
+    tabList
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(firstActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(First);

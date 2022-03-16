@@ -1,5 +1,9 @@
 import { Component } from 'react'
 import { View, Button, Text, ScrollView } from '@tarojs/components'
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
 import Taro from '@tarojs/taro';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import { getJSON } from '../../../services/method';
@@ -9,7 +13,9 @@ import QuestionItem from '../../../components/questionItem'
 import './index.css'
 import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
 
-let extraParmas = {}
+import * as firstActions from "../first.action"
+
+
 class DTabContent extends Component {
   constructor(props) {
     super(props)
@@ -23,15 +29,10 @@ class DTabContent extends Component {
   init = true
   async componentDidMount() {
     await this.initActiveTabList(0)
-
-
   }
 
   async initActiveTabList(tabActiveIdx) {
     //  首先默认0 ，设置下全局keyword
-
-
-
     if (tabActiveIdx === this.props.index && this.init) {
       this.init = false
       await this.initData()
@@ -42,8 +43,6 @@ class DTabContent extends Component {
 
     if (next) {
       if (next.tabActiveIdx === this.props.index && this.init) {
-        extraParmas = getGlobalData('extraParmas')
-        console.log('extraParmas----', extraParmas)
         this.init = false
         await this.initData()
       }
@@ -55,10 +54,9 @@ class DTabContent extends Component {
     Taro.showLoading({
       title: '刷新。。。'
     })
-    console.log('list init extraParmas----', extraParmas)
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
-      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...extraParmas },
+      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParmas },
     });
 
     this.setState({
@@ -80,7 +78,7 @@ class DTabContent extends Component {
     if ((this.state.page + 1) <= this.state.pageTotal) {
       let { pageTotal, rows: list } = await getJSON({
         url: apis.getQuestionList,
-        data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...extraParmas },
+        data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParmas },
       });
       this.setState({
         pageTotal,
@@ -115,4 +113,15 @@ class DTabContent extends Component {
   }
 }
 
-export default DTabContent
+const mapStateToProps = (state) => {
+  let { extraParmas } = state.first
+  return {
+    extraParmas
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(firstActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DTabContent);
+
