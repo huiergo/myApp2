@@ -56,7 +56,7 @@ class DTabContent extends Component {
     })
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
-      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParmas },
+      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParams },
     });
 
     this.setState({
@@ -78,7 +78,7 @@ class DTabContent extends Component {
     if ((this.state.page + 1) <= this.state.pageTotal) {
       let { pageTotal, rows: list } = await getJSON({
         url: apis.getQuestionList,
-        data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParmas },
+        data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParams },
       });
       this.setState({
         pageTotal,
@@ -114,9 +114,10 @@ class DTabContent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { extraParmas } = state.first
+  let { extraParams } = state.first
+  console.log('999 tab content extraParams-----', extraParams)
   return {
-    extraParmas
+    extraParams
   }
 };
 const mapDispatchToProps = (dispatch) => ({
