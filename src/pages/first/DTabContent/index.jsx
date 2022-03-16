@@ -52,7 +52,7 @@ class DTabContent extends Component {
   async initData() {
     // todo: 等待传递 写死 questionBankType=9
     Taro.showLoading({
-      title: '刷新。。。'
+      title: '加载中...'
     })
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
@@ -72,7 +72,7 @@ class DTabContent extends Component {
   async loadMore() {
     // todo: 等待传递 写死 questionBankType=9
     Taro.showLoading({
-      title: '加载更多。。。'
+      title: '加载中...'
     })
 
     if ((this.state.page + 1) <= this.state.pageTotal) {
