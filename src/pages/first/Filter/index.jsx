@@ -34,10 +34,12 @@ class Filter extends Component {
   }
 
   complete() {
+
     // 消息通知首页刷新
     eventCenter.trigger('event_filter_complete')
   }
   render() {
+    console.log("[filter .props.tabList----]", this.props.tabList)
     return (
       <CustomModel
         isOpened={this.props.filterOpen}

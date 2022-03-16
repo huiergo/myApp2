@@ -3,7 +3,7 @@ import { View, Button, Text } from '@tarojs/components'
 import Taro, { eventCenter } from '@tarojs/taro';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import DTabContent from '../DTabContent/index'
-import { get as getGlobalData } from '../../../global_data'
+import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
 import './index.css'
 
 // // tablist 是外部传递进来的 
@@ -33,18 +33,40 @@ class DTabs extends Component {
       console.log('v_pure------', v_pure)
       console.log('v_sort------', v_sort)
       _this.setState({
-        current: v_pure.index
+        current: v_pure.index,
       })
+
+      // type 类型id
+      // keyword 搜索关键词
+      // sort 默认0,可以不传，难易-10从易到难11从难道易，浏览量：20从低到高21从高到底,30推荐数据（按照权重倒序）
+      let sortIndex = v_sort && v_sort.index || '0'
+      let sortUpArrow = v_sort && v_sort.option && v_sort.option.upArrow || '0'
+      setGlobalData('extraParmas', {
+        type: v_pure.option.id,
+        keyword: v_pure.option.name,
+        sort: sortIndex + sortUpArrow
+      })
+      console.log(' 222222  ----', getGlobalData('extraParmas'))
+
     })
+
+
   }
   componentWillUnmount() {
     eventCenter.off('event_filter_complete')
   }
 
   handleClick(idx) {
+    // todo :  -------???????????? 点击和 tab切换同步
     this.setState({
       current: idx
     })
+
+
+    // 2.知道当前选择的idx , 怎么同步到更新filter的idx (如果filter idx更改了，那么)
+    this.props.onChangeTab(idx)
+
+
   }
 
   render() {

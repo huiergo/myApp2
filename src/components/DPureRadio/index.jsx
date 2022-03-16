@@ -12,30 +12,23 @@ export default class DPureRadio extends Component {
 
     // todo  : optionsList 替换成  this.props.tabList
     this.state = {
-      optionsList: [{
-        "id": 18,
-        "name": "HTML5",
-        selected: true
-      }, {
-        "id": 19,
-        "name": "CSS3",
-        selected: false
-
-      }, {
-        "id": 20,
-        "name": "移动端布局"
-      }, {
-        "id": 21,
-        "name": "JavaScript"
-      }, {
-        "id": 22,
-        "name": "jQuery"
-      },]
+      optionsList: []
     }
+  }
+
+  componentDidMount() {
+    console.log('mount....', this.props.tabList)
+
   }
 
   componentWillReceiveProps(next) {
     console.log('next---', next)
+    if (next.tabList) {
+      this.setState({
+        optionsList: next.tabList
+      })
+    }
+
     // if (!next) return
     if (next.isReset) {
       let optionsList = this.state.optionsList
@@ -74,7 +67,7 @@ export default class DPureRadio extends Component {
 
   render() {
     const { customStyle, className, id } = this.props
-
+    console.log('pure radio list -----', this.state.optionsList)
     return (
       <View className={classNames('cu-radio', className)} style={customStyle}>
         {this.state.optionsList.map((option, index) => (

@@ -41,7 +41,9 @@ export async function handleGetToken() {
     let { token, refreshToken } = result;
     Taro.setStorageSync('token', token);
     Taro.setStorageSync('refreshToken', refreshToken);
+    console.log('get token end---');
   } catch (err) {
+    console.log('get token error---', err);
     return Taro.showToast({ title: '获取token失败' });
   }
 }
@@ -62,16 +64,19 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
       method,
       headers,
     });
-
+    console.log('union request result----', statusCode, message, data);
     if (statusCode === 10000) {
+      console.log('请求正常----10000', url, data);
       // 请求正常
       return data;
     }
     if (statusCode === -1) {
+      console.log('请求 异常----  -1');
       // 请求成功， 但是有错误信息
       Taro.showToast({ title: message });
     }
     if (statusCode === 401) {
+      console.log('请求 异常----  401');
       errCount++;
       console.log('errCount---', errCount);
       let valid = await Taro.checkSession();
@@ -82,7 +87,7 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
         await handleRefreshToken();
         console.log('unionJSON start---');
 
-        await unionJSON({ url, data: requestData, method, headers });
+        return await unionJSON({ url, data: requestData, method, headers });
 
         console.log('unionJSON end---');
       } else {
@@ -92,7 +97,7 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
   } catch (error) {
     console.log('unionJSON error---', error);
     await handleGetToken();
-    await unionJSON({ url, data: requestData, method, headers });
+    return await unionJSON({ url, data: requestData, method, headers });
   }
 }
 
