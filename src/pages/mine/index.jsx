@@ -57,10 +57,10 @@ class Mine extends Component {
     }
   }
 
-  handleClockInClick(flag) {
+  async handleClockInClick(flag) {
     if (!flag) {
       // 调用签到接口
-      this.props.clockIn()
+      await this.props.clockIn()
       this.setState({
         isOpened: true
       })

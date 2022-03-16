@@ -43,7 +43,7 @@ class ClockInModel extends Component {
   }
 
   render() {
-    const { clockinNumbers = 12, clockinTotal = 24 } = this.props.userInfo
+    const { clockinNumbers = 0, clockinTotal = 0 } = this.props.userInfo
     const { avatar, nickName } = this.props
 
     return (
@@ -67,7 +67,7 @@ class ClockInModel extends Component {
               </View>
               <Split />
               <View className='clockIn-column column2'>
-                <View className='clockIn-column-des'>连续签到</View>
+                <View className='clockIn-column-des'>累计签到</View>
                 <View className='clockIn-column-number'><Text className='clock-font-big'>{clockinTotal}</Text> 天</View>
               </View>
             </View>

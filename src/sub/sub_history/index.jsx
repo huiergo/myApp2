@@ -17,12 +17,8 @@ class Sub extends Component {
     }
   }
 
-  // componentWillMount() {
-  //   Taro.setNavigationBarTitle({
-  //     title: this.props.optType
-  //   })
-  // }
   componentDidMount() {
+    this.change(0)
     Taro.setNavigationBarTitle({
       title: this.handleNavTitle(this.props.optType)
     })
@@ -57,9 +53,6 @@ class Sub extends Component {
       })
     }).exec()
   }
-  componentDidShow() {
-    this.change(0)
-  }
 
   change(v) {
     this.props.changeTab(v)
@@ -69,9 +62,7 @@ class Sub extends Component {
     } else {
       // 1 面经
       eventCenter.trigger('eventChange_sub_history_interview', v)
-
     }
-    console.log("change......====", v)
   }
 
   render() {

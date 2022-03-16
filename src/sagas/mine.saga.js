@@ -16,6 +16,7 @@ import { loadUserInfo, loadFlag, clockIn, saveMineData } from '../actions/mine.a
  */
 function* handleLoadUserInfo() {
   let result = yield getJSON({ url: apis.getUserInfo });
+  console.log('1111 useInfo---', result);
   yield put(saveMineData({ userInfo: result }));
 }
 
@@ -33,7 +34,7 @@ function* handleClockIn() {
   // todo : params 应该从store中取得，不应该组件传递
   let result = yield postJSON({ url: apis.clockIn });
   console.log('44====', result);
-  yield put(saveMineData({ flagInfo: result }));
+  yield put(saveMineData({ flag: result }));
 }
 
 export default function* mineSaga() {
