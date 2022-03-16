@@ -66,25 +66,58 @@ class DSortRadio extends Component {
       })
 
     })
+
+
+    eventCenter.on('event_reset_sort', () => {
+      //  触发 sortRadio 刷新，数据取自 globalData
+
+      setGlobalData('sort_radio_select', {
+        option: {
+          name: '默认',
+          id: '0',
+          upArrow: '0'
+        },
+        index: 0
+      })
+
+      let tempList = this.state.optionsList.map((item, idx) => {
+        if (item.id === '0') {
+          item.selected = true
+          item.upArrow = '0'
+        } else {
+          item.selected = false
+          item.upArrow = '0'
+        }
+        return item
+      })
+
+      this.setState({
+        optionsList: tempList
+      })
+      console.log("sort set ===", tempList)
+      console.log('sort触发了--- event_reset_sort', getGlobalData('sort_radio_select'))
+
+    })
   }
 
 
   componentWillReceiveProps(next) {
     console.log('next---', next)
     // if (!next) return
-    if (next.isReset) {
-      let optionsList = this.state.optionsList
-      optionsList.map((item, idx) => {
-        optionsList[idx].selected = false
-      })
-      this.setState({
-        optionsList: this.state.optionsList
-      })
-    }
+    // if (next.isReset) {
+    //   let optionsList = this.state.optionsList
+    //   optionsList.map((item, idx) => {
+    //     optionsList[idx].selected = false
+    //   })
+    //   this.setState({
+    //     optionsList: this.state.optionsList
+    //   })
+    // }
   }
 
   componentWillUnmount() {
     eventCenter.off('event_update_sort_view')
+    eventCenter.off('event_reset_sort')
   }
 
 

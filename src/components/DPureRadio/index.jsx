@@ -2,6 +2,8 @@ import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
 import { Text, View } from '@tarojs/components'
+import Taro, { eventCenter } from '@tarojs/taro';
+
 import './index.css'
 import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 
@@ -19,6 +21,11 @@ export default class DPureRadio extends Component {
   componentDidMount() {
     console.log('mount....', this.props.tabList)
 
+    eventCenter.on('event_reset_pure', () => {
+      //  触发 sortRadio 刷新，数据取自 globalData
+      this.resetToHandleClick()
+      console.log('event pure 触发了======', getGlobalData('pure_radio_select'))
+    })
   }
 
   componentWillReceiveProps(next) {
@@ -29,16 +36,21 @@ export default class DPureRadio extends Component {
       })
     }
 
-    //  点击重置，内部自行 更新
-    if (next.isReset) {
-      let optionsList = this.state.optionsList
-      optionsList.map((item, idx) => {
-        optionsList[idx].selected = false
-      })
-      this.setState({
-        optionsList: this.state.optionsList
-      })
-    }
+    // //  点击重置，内部自行 更新
+    // if (next.isReset) {
+    //   let optionsList = this.state.optionsList
+    //   optionsList.map((item, idx) => {
+    //     optionsList[idx].selected = false
+    //   })
+    //   this.setState({
+    //     optionsList: this.state.optionsList
+    //   })
+    // }
+  }
+
+
+  componentWillUnmount() {
+    eventCenter.off('event_reset_pure')
   }
 
   handleClick(option, index) {
@@ -54,16 +66,40 @@ export default class DPureRadio extends Component {
     this.setState({
       optionsList: this.state.optionsList
     })
-
     // 存到全局变量里面
-    this.writeToGlobal(option, index)
-  }
-
-  writeToGlobal(option, index) {
     setGlobalData('pure_radio_select', {
       option, index
     })
   }
+
+  resetToHandleClick() {
+    let resetIndex = 0
+    let optionsList = this.state.optionsList
+
+    optionsList.map((item, idx) => {
+      console.log("pure optionsList", idx, resetIndex)
+      if (idx === resetIndex) {
+        optionsList[idx].selected = true
+        console.log("走了吗走了吗")
+      } else {
+        optionsList[idx].selected = false
+      }
+    })
+    console.log("pure optionsList====", optionsList)
+
+    this.setState({
+      optionsList: optionsList
+    })
+    console.log("pure set =======", optionsList)
+    // 存到全局变量里面
+    setGlobalData('pure_radio_select', {
+      option: optionsList[resetIndex],
+      index: resetIndex
+    })
+
+  }
+
+
 
   render() {
     const { customStyle, className, id } = this.props

@@ -8,6 +8,7 @@ import DTabContent from '../DTabContent/index'
 import CustomModel from '../../../components/customModel'
 import DPureRadio from '../../../components/DPureRadio'
 import DSortRadio from '../../../components/DSortRadio'
+import * as firstActions from '../first.action'
 
 
 import './index.css'
@@ -33,7 +34,12 @@ class Filter extends Component {
     this.setState({
       isReset: true
     })
+
+    eventCenter.trigger('event_reset_sort')
+    eventCenter.trigger('event_reset_pure')
   }
+
+
 
   complete() {
     // // 消息通知首页刷新
@@ -74,7 +80,7 @@ const mapStateToProps = (state) => {
   }
 };
 const mapDispatchToProps = (dispatch) => ({
-  // ...bindActionCreators(firstActions, dispatch),
+  ...bindActionCreators(firstActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
