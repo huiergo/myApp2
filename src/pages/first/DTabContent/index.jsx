@@ -74,6 +74,8 @@ class DTabContent extends Component {
     Taro.showLoading({
       title: '加载中...'
     })
+    let sortTemp = this.requestParams.selectType + this.requestParams.sortType
+    sortTemp = sortTemp == '00' ? '0' : sortTemp
 
     console.log("DContent extraParams", this.props.extraParams)
     let { pageTotal, rows: list } = await getJSON({
@@ -84,7 +86,7 @@ class DTabContent extends Component {
         questionBankType: 10,
         ...this.props.extraParams,
         type: this.props.type,
-        sort: this.requestParams.selectType + this.requestParams.sortType
+        sort: sortTemp
       },
     });
 
@@ -105,11 +107,20 @@ class DTabContent extends Component {
     Taro.showLoading({
       title: '加载中...'
     })
+    let sortTemp = this.requestParams.selectType + this.requestParams.sortType
+    sortTemp = sortTemp == '00' ? '0' : sortTemp
 
     if ((this.state.page + 1) <= this.state.pageTotal) {
       let { pageTotal, rows: list } = await getJSON({
         url: apis.getQuestionList,
-        data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParams },
+        data: {
+          page: this.state.page + 1,
+          keyword: this.props.keyword,
+          questionBankType: 9,
+          ...this.props.extraParams,
+          type: this.props.type,
+          sort: sortTemp
+        },
       });
       this.setState({
         pageTotal,
