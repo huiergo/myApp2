@@ -15,7 +15,6 @@ const handleChangeActiveIdx = (state, action) => {
 };
 
 const handleUpdateTabList = (state, action) => {
-  console.log('handleUpdateTabList----', action.payload);
   return {
     ...state,
     tabList: action.payload,

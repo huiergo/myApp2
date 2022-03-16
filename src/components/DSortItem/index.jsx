@@ -7,36 +7,19 @@ import './index.css'
 export default class SortItem extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      flag: true
-    }
   }
 
   handleItemFlag() {
-    let flag = this.state.flag
-    if (this.props.selected) {
-      this.setState({
-        flag: !flag
-      })
-      this.props.onStatus(!flag)
-    } else {
-      this.setState({
-        flag: flag
-      })
-      this.props.onStatus(flag)
-    }
-
+    this.props.onStatus(this.props.index)
   }
 
 
-
   render() {
-    console.log('this.state.flag-----', this.state.flag)
     return (
       <View onClick={() => this.handleItemFlag()}>
         <Text >{this.props.name} </Text>
         {
-          this.props.name == '默认' ? '' : (this.props.selected ? (this.state.flag ? <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' /> : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/down_arrow_icon.png' />) : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' />)
+          this.props.name == '默认' ? '' : (this.props.selected ? (this.props.upArrow == '0' ? <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' /> : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/down_arrow_icon.png' />) : <Image className='filter-sort-arrow' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/up_arrow_icon.png' />)
         }
       </View>
     )

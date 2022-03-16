@@ -26,26 +26,46 @@ class DTabContent extends Component {
     }
   }
 
-  init = true
-  async componentDidMount() {
-    await this.initActiveTabList(0)
+  init = false
+
+  requestParams = {
+    selectType: '0',
+    sortType: '0'
+  }
+
+  componentDidMount() {
+    this.initActiveTabList(0)
   }
 
   async initActiveTabList(tabActiveIdx) {
     //  首先默认0 ，设置下全局keyword
-    if (tabActiveIdx === this.props.index && this.init) {
-      this.init = false
+    if (tabActiveIdx === this.props.index && !this.init) {
       await this.initData()
     }
   }
 
-  async componentWillReceiveProps(next, prev) {
+  componentWillReceiveProps(next, prev) {
+    if (!next) {
+      return
+    }
+    if (next.tabActiveIdx != this.props.index) {
+      return
+    }
 
-    if (next) {
-      if (next.tabActiveIdx === this.props.index && this.init) {
-        this.init = false
-        await this.initData()
-      }
+    let globalData = getGlobalData('filter_data')
+    let itemData = globalData[this.props.index]
+
+    console.log("DTabContent", this.requestParams)
+    console.log("DTabContent", globalData)
+
+    if (!this.init) {
+      this.requestParams = itemData
+      this.initData()
+    } else if (this.requestParams.selectType == itemData.selectType && this.requestParams.sortType == itemData.sortType) {
+      console.log("DTabContent", "完全一致")
+    } else {
+      this.requestParams = itemData
+      this.initData()
     }
   }
 
@@ -54,15 +74,26 @@ class DTabContent extends Component {
     Taro.showLoading({
       title: '加载中...'
     })
+
+    console.log("DContent extraParams", this.props.extraParams)
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
-      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, ...this.props.extraParams },
+      data: {
+        page: 1,
+        keyword: this.props.keyword,
+        questionBankType: 10,
+        ...this.props.extraParams,
+        type: this.props.type,
+        sort: this.requestParams.selectType + this.requestParams.sortType
+      },
     });
 
     this.setState({
       pageTotal,
       list
     })
+
+    this.init = true
     setTimeout(() => {
       Taro.hideLoading()
     }, 300);
@@ -114,8 +145,7 @@ class DTabContent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { extraParams } = state.first
-  console.log('999 tab content extraParams-----', extraParams)
+  let { extraParams, } = state.first
   return {
     extraParams
   }

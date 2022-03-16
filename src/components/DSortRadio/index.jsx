@@ -1,24 +1,73 @@
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import Taro, { eventCenter } from '@tarojs/taro';
+
 import { Text, View } from '@tarojs/components'
 import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 import DSortItem from '../DSortItem'
 import './index.css'
 
 let upArrow = null
-export default class DPureRadio extends Component {
+class DSortRadio extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       // 
       optionsList: [
-        { name: '默认', id: '0', upArrow: '0' },
+        { name: '默认', id: '0', upArrow: '0', selected: true },
         { name: '难易', id: '1', upArrow: '0' },
-        { name: '浏览量', id: '2', upArrow: '0' },]
+        { name: '浏览量', id: '2', upArrow: '0' }
+      ],
+      upArrow: '0'
+
+
     }
   }
+
+  componentDidMount() {
+    //  消息监听： 点击筛选按钮
+    eventCenter.on('event_update_sort_view', () => {
+      //  触发 sortRadio 刷新，数据取自 globalData
+      let array = getGlobalData('filter_data')
+      // array[this.props.activeIdx] 
+      let activeObj = array[this.props.activeIdx]
+
+      console.log("this.state.optionsList-----", this.state.optionsList)
+      console.log("activeObj----", activeObj)
+
+      setGlobalData('sort_radio_select', {
+        option: {
+          name: '默认',
+          id: activeObj.selectType,
+          upArrow: activeObj.sortType
+        },
+        index: this.props.activeIdx
+      })
+
+      let tempList = this.state.optionsList.map((item, idx) => {
+        if (item.id === activeObj.selectType) {
+          item.selected = true
+          item.upArrow = activeObj.sortType
+        } else {
+          item.selected = false
+          item.upArrow = '0'
+        }
+        return item
+      })
+
+      this.setState({
+        optionsList: tempList
+      })
+
+    })
+  }
+
 
   componentWillReceiveProps(next) {
     console.log('next---', next)
@@ -33,6 +82,11 @@ export default class DPureRadio extends Component {
       })
     }
   }
+
+  componentWillUnmount() {
+    eventCenter.off('event_update_sort_view')
+  }
+
 
   handleClick(option, index) {
     let optionsList = this.state.optionsList
@@ -50,6 +104,7 @@ export default class DPureRadio extends Component {
 
     // 存到全局变量里面
     this.writeToGlobal(option, index)
+    // this.updateGlobal(option)
   }
 
   writeToGlobal(option, index) {
@@ -62,14 +117,24 @@ export default class DPureRadio extends Component {
     })
   }
 
-  onStatus(v) {
-    upArrow = v
-    console.log('sort status---', v)
+  onStatus(idx) {
+    console.log('sort status---', idx)
+
+    let tempList = this.state.optionsList.map((item, index) => {
+      console.log('item====', item)
+      if (index === idx) {
+        item.upArrow = item.upArrow == '0' ? '1' : '0'
+        upArrow = item.upArrow == '0' ? '1' : '0'
+      }
+      return item
+    })
+    this.setState({
+      optionsList: tempList
+    })
   }
 
   render() {
     const { customStyle, className, id } = this.props
-
     return (
       <View className={classNames('cu-radio', className)} style={customStyle}>
         {this.state.optionsList.map((option, index) => (
@@ -78,24 +143,23 @@ export default class DPureRadio extends Component {
             className={classNames({ 'cu-radio__title': true, 'cu-radio__title--checked': option.selected })}
             onClick={() => this.handleClick(option, index)}
           >
-            <DSortItem name={option.name} selected={option.selected} onStatus={this.onStatus.bind(this)} />
+            <DSortItem name={option.name} index={index} selected={option.selected} upArrow={option.upArrow} onStatus={this.onStatus.bind(this)} />
           </View>
         ))}
       </View>
-
-
-
-      // <View className={classNames('cu-radio', className)} style={customStyle}>
-      // {options.map(option => (
-      //   <View
-      //     key={option.id}
-      //     className={classNames({ 'cu-radio__title cu-sort-radio__title': true, 'cu-radio__title--checked  cu-sort-radio__title--checked': id === option.id })}
-      //     onClick={this.handleClick.bind(this, option)}
-      //   >
-      //     <SortItem name={option.name} isSelf={id === option.id} onStatus={this.onStatus.bind(this)} />
-      //   </View>
-      // ))}
-      // </View>
     )
   }
 }
+
+
+const mapStateToProps = (state) => {
+  let { activeIdx } = state.first
+  return {
+    activeIdx,
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  // ...bindActionCreators(firstActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DSortRadio);

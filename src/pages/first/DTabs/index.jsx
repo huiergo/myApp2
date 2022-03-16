@@ -32,7 +32,7 @@ class DTabs extends Component {
         {tabList.map((item, idx) => {
           return (
             <AtTabsPane current={activeIdx} index={idx} key={idx}>
-              <DTabContent tabActiveIdx={activeIdx} index={idx} scrollHeight={this.props.scrollHeight} />
+              <DTabContent tabActiveIdx={activeIdx} type={item.id} index={idx} scrollHeight={this.props.scrollHeight} />
             </AtTabsPane>)
         })}
       </AtTabs>

@@ -34,7 +34,6 @@ class First extends Component {
     let tabbodyTop = 0
     let _this = this
     eventCenter.once(onReadyEventId, () => {
-      console.log('onReady')
 
       // onReady 触发后才能获取小程序渲染层的节点
       let query = Taro.createSelectorQuery()
@@ -42,7 +41,6 @@ class First extends Component {
         .boundingClientRect()
         .exec(res => {
           tabbodyTop = res[0].top
-          console.log(res, 'res')
         })
 
       Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
@@ -58,17 +56,61 @@ class First extends Component {
   async componentDidMount() {
     // 请求 type类型接口
     await this.fetchCategory()
-
+    this.initGlobalData()
     eventCenter.on('event_filter_complete', () => {
+      //关闭panel
       this.setState({
         filterOpen: false
       })
 
-      let { index } = getGlobalData('pure_radio_select')
+      let index = null
+      if (getGlobalData('pure_radio_select')) {
+        index = getGlobalData('pure_radio_select').index
+      } else {
+        index = this.props.activeIdx
+      }
 
+
+      // let index = getGlobalData('pure_radio_select') && getGlobalData('pure_radio_select').index || this.props.activeIdx
       this.syncUpdateActiveIndexAndTabList(index)
+      console.log("[ 000========]", index, getGlobalData('pure_radio_select'))
+
+      //赋值
+      let optionData = getGlobalData('sort_radio_select')
+      console.log("[ 111========]", optionData)
+      this.updateGlobal(optionData.option, index)
     })
   }
+
+  initGlobalData() {
+    let tempList = this.props.tabList.map(i => {
+      return {
+        selectType: '0',
+        sortType: '0'
+      }
+    })
+    setGlobalData('filter_data', tempList)
+
+    setGlobalData('sort_radio_select', {
+      option: {
+        name: '默认', id: '0', upArrow: '0',
+      },
+      index: 0
+    }
+    )
+  }
+
+  updateGlobal(option, index) {
+    let array = getGlobalData('filter_data')
+    console.log('updateGlobal before---', array, this.props.activeIdx, option.id, option.upArrow)
+    array[index] = {
+      selectType: option.id,
+      sortType: option.upArrow
+    }
+    console.log('updateGlobal after----', array)
+    setGlobalData('filter_data', array)
+  }
+
 
   componentWillUnmount() {
     eventCenter.off('event_filter_complete')
@@ -86,10 +128,8 @@ class First extends Component {
           title: i.name
         }
       })
-      console.log("fetchCategory---", tempList)
       this.props.updateTabList(tempList)
     } catch (error) {
-      console.log('分类错误---', error)
     }
   }
 
@@ -101,6 +141,10 @@ class First extends Component {
 
   // tab 点击 切换
   onChangeTab(idx) {
+    setGlobalData('pure_radio_select', {
+      option: this.props.tabList[idx],
+      index: idx
+    })
     this.syncUpdateActiveIndexAndTabList(idx)
   }
 
@@ -114,24 +158,8 @@ class First extends Component {
       }
       return item
     })
+    this.props.updateTabList(tempList)
 
-    setGlobalData('pure_radio_select', {
-      option: this.props.tabList[idx],
-      index: idx
-    })
-
-    // type  0全部,不传也是全部 或者模块的类型id
-    // keyword 搜索关键词
-    // sort: 排序，默认0,可以不传，难易-10从易到难11从难道易，浏览量：20从低到高21从高到底,30推荐数据（按照权重倒序）
-
-
-    // let sortIndex = v_sort && v_sort.index || '0'
-    // let sortUpArrow = v_sort && v_sort.option && v_sort.option.upArrow || '0'
-    // setGlobalData('extraParmas', {
-    //   type: v_pure.option.id,
-    //   keyword: v_pure.option.name,
-    //   sort: sortIndex + sortUpArrow
-    // })
 
     let v_sort = getGlobalData('sort_radio_select')
     let sortIndex = v_sort && v_sort.index || '0'
@@ -147,13 +175,16 @@ class First extends Component {
       type,
       sort,
     }
-    console.log('【extraParams----】', extraParams)
     this.props.updateExtraParams(extraParams)
-    this.props.updateTabList(tempList)
+  }
+
+  showFilterPanel() {
+    this.setState({ filterOpen: true })
+    // 发消息通知，触发 sortRadio 刷新，数据取自 globalData
+    eventCenter.trigger('event_update_sort_view')
   }
 
   render() {
-    console.log('first this.props.tabList----', this.props.tabList)
     return (
       <View className='first-page'>
 
@@ -171,7 +202,7 @@ class First extends Component {
           <Image
             className='filter-btn'
             src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/filter_icon.png'
-            onClick={() => this.setState({ filterOpen: true })}
+            onClick={() => this.showFilterPanel()}
           />
         </View>
       </View>
@@ -180,7 +211,6 @@ class First extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('first state----', state.first)
   let { activeIdx, tabList } = state.first
   return {
     activeIdx,

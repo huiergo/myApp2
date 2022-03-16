@@ -6,7 +6,6 @@ let errCount = 0;
 export function taroRequest({ url, data, method, headers }) {
   let token = Taro.getStorageSync('token');
   return new Promise((resolve, reject) => {
-    let startTime = new Date().getTime();
     Taro.request({
       url: url,
       data: data,
@@ -18,7 +17,6 @@ export function taroRequest({ url, data, method, headers }) {
       },
     })
       .then((result) => {
-        console.log('11111111111   end---------', new Date().getTime() - startTime);
         if (result && result.data) {
           resolve({
             statusCode: result.data.code,
@@ -37,15 +35,11 @@ export function taroRequest({ url, data, method, headers }) {
 export async function handleGetToken() {
   let { code } = await Taro.login();
   try {
-    console.log('login request start ---', new Date().getTime());
-
     let result = await postJSON({ url: apis.login, data: { code } });
     let { token, refreshToken } = result;
     Taro.setStorageSync('token', token);
     Taro.setStorageSync('refreshToken', refreshToken);
-    console.log('login request end---', new Date().getTime());
   } catch (err) {
-    console.log('get token error---', err);
     return Taro.showToast({ title: '获取token失败' });
   }
 }
@@ -60,14 +54,12 @@ export async function postJSON({ url, data, headers }) {
 
 export async function unionJSON({ url, data: requestData, method, headers }) {
   try {
-    let startTime = new Date().getTime();
     let { statusCode, message, data } = await taroRequest({
       url,
       data: requestData,
       method,
       headers,
     });
-    console.log(' 3333  业务请求  结果 正常  请求时长---', url, new Date().getTime() - startTime);
 
     if (statusCode === 10000) {
       // 请求正常
@@ -78,8 +70,6 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
       Taro.showToast({ title: message });
     }
     if (statusCode === 401) {
-      console.log(' 业务请求  异常  请求时长---', url, new Date().getTime() - startTime);
-
       errCount++;
       let valid = await Taro.checkSession();
       if (valid.errMsg.indexOf('ok') > -1) {
@@ -100,13 +90,11 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
 export async function handleRefreshToken() {
   let storage_refreshToken = Taro.getStorageSync('refreshToken');
   let storage_token = Taro.getStorageSync('token');
-  let startTime = new Date().getTime();
   let data = await postJSON({
     url: apis.refreshToken,
     data: { token: storage_token },
     headers: { Authorization: 'Bearer ' + storage_refreshToken },
   });
-  console.log('refresh  request 请求时长 ---', new Date().getTime() - startTime);
   let { token, refreshToken } = data;
   Taro.setStorageSync('token', token);
   Taro.setStorageSync('refreshToken', refreshToken);

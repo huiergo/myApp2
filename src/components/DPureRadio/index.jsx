@@ -67,7 +67,6 @@ export default class DPureRadio extends Component {
 
   render() {
     const { customStyle, className, id } = this.props
-    console.log('pure radio list -----', this.state.optionsList)
     return (
       <View className={classNames('cu-radio', className)} style={customStyle}>
         {this.state.optionsList.map((option, index) => (
