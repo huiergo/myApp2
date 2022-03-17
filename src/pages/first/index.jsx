@@ -58,7 +58,7 @@ class First extends Component {
         viewPortHeight = res.height
         Taro.setStorageSync('viewport_height', viewPortHeight)
         _this.setState({
-          scrollHeight: (viewPortHeight - tabbodyTop - tabHeight)
+          scrollHeight: (viewPortHeight - tabbodyTop - tabHeight - searchBarHeight)
         })
       }).exec()
     })
