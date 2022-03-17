@@ -60,8 +60,8 @@ class First extends Component {
 
   async componentDidMount() {
     // 请求 type类型接口
+    await this.fetchUserInfo()
     await this.fetchCategory()
-    this.fetchUserInfo()
     this.initGlobalData()
     eventCenter.on('event_filter_complete', () => {
       //关闭panel

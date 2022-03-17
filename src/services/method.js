@@ -3,8 +3,11 @@ import apis from '../services/apis';
 
 let errCount = 0;
 
-export function taroRequest({ url, data, method, headers }) {
+export async function taroRequest({ url, data, method, headers }) {
   let token = Taro.getStorageSync('token');
+  if (!token) {
+    await handleGetToken();
+  }
   return new Promise((resolve, reject) => {
     Taro.request({
       url: url,
@@ -12,7 +15,7 @@ export function taroRequest({ url, data, method, headers }) {
       method: method,
       header: {
         'content-type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + Taro.getStorageSync('token'),
         ...headers,
       },
     })
