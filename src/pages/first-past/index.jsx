@@ -335,7 +335,7 @@ class First extends Component {
       console.log(res.target)
     }
     return {
-      title: '面试宝典',
+      title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',
       imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png'
     }
