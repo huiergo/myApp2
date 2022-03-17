@@ -7,6 +7,8 @@ import { View, Image, Button, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtGrid, AtCurtain } from "taro-ui"
 
 import * as mineActions from "../../actions/mine.action";
+import * as commonActions from "../../actions/common.action"
+
 import { gotoPage } from '../../utils/index'
 
 import ClockInModel from "../../components/clockInModel";
@@ -22,32 +24,20 @@ class Mine extends Component {
     super(props)
     this.state = {
       isOpened: false,
-      avatarUrl: 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
-      nickName: '',
     }
   }
-  componentDidMount() {
-    const storage_nickName = Taro.getStorageSync('nickName')
-    const storage_avatar = Taro.getStorageSync('avatarUrl')
-    this.setState({
-      nickName: storage_nickName,
-      avatarUrl: storage_avatar || 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132'
-    })
-  }
   componentDidShow() {
-    const storage_nickName = Taro.getStorageSync('nickName')
-    const storage_avatar = Taro.getStorageSync('avatarUrl')
-    this.setState({
-      nickName: storage_nickName,
-      avatarUrl: storage_avatar || 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132'
-    })
     this.initData()
   }
 
   initData() {
+    Taro.showLoading({
+      title: '加载中...',
+    });
     const { loadUserInfo, loadFlag } = this.props;
     loadUserInfo();
     loadFlag()
+    Taro.hideLoading()
   }
 
   handleListClick({ type }) {
@@ -99,43 +89,67 @@ class Mine extends Component {
 
   getUserProfile() {
     let _this = this
-    if (!Taro.getStorageSync('nickName')) {
+    if (this.props.nickName) {
       Taro.getUserProfile({
         desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: (res) => {
+          console.log('【UserProfile=======】', res)
           // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
           let { nickName, avatarUrl } = res.userInfo
-          Taro.setStorageSync('nickName', nickName)
-          Taro.setStorageSync('avatarUrl', avatarUrl)
-
-          _this.setState({
-            nickName,
-            avatarUrl
-          })
+          let user = {
+            ..._this.props.userInfo,
+            avatar: avatarUrl,
+            nickName: nickName
+          }
+          console.log('4---', user)
+          _this.props.syncUser(user)
+          let code = Taro.getStorageSync('code')
+          _this.props.submitUserInfo({ ...res, code })
         }
       })
     }
 
   }
+
+  toastToSignup() {
+    Taro.showToast({
+      title: '请先登录',
+      icon: 'error'
+    })
+  }
+
   render() {
-    const { avatarUrl, nickName, } = this.state
-    const { clockinNumbers = 0 } = this.props.userInfo
+    const { clockinNumbers = 0, avatar, nickName, } = this.props.userInfo
     const { flag } = this.props
+
 
     return (
       <View className='mine-page'>
-        <View className='user-info'>
-          <View className='user-info-wrap'>
-            <Image className='user-info-avatar' src={avatarUrl} />
-            <View className='user-info-text'>
-              <Button className='user-info-name' onClick={nickName ? null : () => this.getUserProfile()}>
-                {nickName ? nickName : '登录'}
-              </Button>
+        {(flag && nickName) ? (
+          <View className='user-info'>
+            <View className='user-info-wrap'>
+              <Image className='user-info-avatar' src={avatar} />
+              <View className='user-info-text'>
+                <Button className='user-info-name'>
+                  {nickName}
+                </Button>
+              </View>
             </View>
-
+            <View className='user-clock-status'>{`连续签到 ${clockinNumbers} 天 ✓`}</View>
           </View>
-          <View className='user-clock-status' onClick={() => this.handleClockInClick(flag)}>{flag ? `连续签到 ${clockinNumbers} 天 ✓` : '签到'}</View>
-        </View>
+        ) : (
+          <View className='user-info'>
+            <View className='user-info-wrap'>
+              <Image className='user-info-avatar' src={avatar} />
+              <View className='user-info-text'>
+                <Button className='user-info-name' onClick={() => this.getUserProfile()}>
+                  登录
+                </Button>
+              </View>
+            </View>
+            <View className='user-clock-status' onClick={() => this.handleClockInClick(flag)}>签到</View>
+          </View>
+        )}
 
 
         {/* 横向3格 */}
@@ -176,7 +190,7 @@ class Mine extends Component {
           isOpened={this.state.isOpened}
           onClose={this.onClose.bind(this)}
         >
-          <ClockInModel avatar={avatarUrl} nickName={nickName} />
+          <ClockInModel avatar={avatar} nickName={nickName} />
         </AtCurtain>
       </View>
     )
@@ -185,13 +199,14 @@ class Mine extends Component {
 
 const mapStateToProps = (state) => {
   console.log("mapStateToProps====", state)
-  const { userInfo, flag } = state.mine
+  let { userInfo, flag } = state.common
   return {
     userInfo, flag
   }
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(mineActions, dispatch),
+  ...bindActionCreators(commonActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mine);

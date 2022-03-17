@@ -7,8 +7,10 @@ import tag from './tag.reducer';
 import favorite from './favorite.reducer';
 import sub_zan from './sub_zan.reducer';
 import sub_history from './sub_history.reducer';
+import common from './common.reducer';
 
 export default combineReducers({
+  common,
   search,
   mine,
   experience,

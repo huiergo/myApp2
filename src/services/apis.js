@@ -31,6 +31,8 @@ const apiObject = {
 
   // 获取用户数据
   getUserInfo: `${baseUrl}/wxmini/userInfo`,
+  // 保存户数据
+  saveUserInfo: `${baseUrl}/wxmini/userInfo`,
 
   // ========  post 请求 ========
   // 首页-登录 入参：code (调用 wx.login() 获取 临时登录凭证code)

@@ -52,7 +52,9 @@ class SubDetail extends Component {
   }
 
   async initSubInterviewDetail(id) {
-    Taro.showLoading()
+    Taro.showLoading({
+      title: '加载中...'
+    })
     let result = await getJSON({ url: apis.getQuestionDetail + id });
     console.log('面经详情----', result)
     if (result) {
@@ -68,7 +70,9 @@ class SubDetail extends Component {
   async handleZan(flag) {
     try {
       console.log("点赞id----", this.state.item.id)
-      Taro.showLoading()
+      Taro.showLoading({
+        title: '加载中...'
+      })
       let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 1 })
       console.log('赞 事件 result----', result)
       result && this.setState({
@@ -89,7 +93,9 @@ class SubDetail extends Component {
   // 收藏 事件
   async handleFavorite(flag) {
     try {
-      Taro.showLoading()
+      Taro.showLoading({
+        title: '加载中...'
+      })
       console.log("收藏 id----", this.state.item.id)
       let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 2 })
       result && this.setState({

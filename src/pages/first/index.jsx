@@ -5,29 +5,23 @@ import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
 import { View, Image, Text, Button } from '@tarojs/components'
 import { AtSearchBar, AtCurtain } from 'taro-ui'
 import * as firstActions from "./first.action"
-
+import * as commonActions from "../../actions/common.action"
 import { gotoPage } from "../../utils/index"
 import Filter from './Filter/index'
 import DTabs from './DTabs'
 import ClockInModel from "../../components/clockInModel";
-
 import './index.scss'
-
 import { getJSON, postJSON } from '../../services/method';
 import apis from '../../services/apis'
 import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 
-
 class First extends Component {
-
   constructor(props) {
     super(props)
     this.state = {
       scrollHeight: '',
       filterOpen: false,
-      userInfo: {},
       isCurtainOpened: false,
-      flag: false
     }
   }
   $instance = getCurrentInstance()
@@ -153,10 +147,9 @@ class First extends Component {
   async fetchUserInfo() {
     try {
       let userInfo = await getJSON({ url: apis.getUserInfo })
-      this.setState({
-        userInfo
-      })
-      console.log('UserInfo----', userInfo)
+      this.props.syncUser(userInfo)
+      console.log('33333======', userInfo)
+      this.props.syncFlag(userInfo.flag)
     } catch (error) {
     }
   }
@@ -168,10 +161,7 @@ class First extends Component {
   async fetchClockIn() {
     try {
       let result = await postJSON({ url: apis.clockIn })
-      this.setState({
-        flag: result
-      })
-      console.log('flag----', result)
+      this.props.syncFlag(result)
     } catch (error) {
     }
   }
@@ -228,32 +218,13 @@ class First extends Component {
   }
 
 
-  /**
-   * 用于完善会员资料
-   */
-
-  getUserProfile() {
-    let _this = this
-    if (!Taro.getStorageSync('nickName')) {
-      Taro.getUserProfile({
-        desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-        success: (res) => {
-          // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-          let { nickName, avatarUrl } = res.userInfo
-          Taro.setStorageSync('nickName', nickName)
-          Taro.setStorageSync('avatarUrl', avatarUrl)
-          _this.handleClockInClick(_this.state.flag)
-          _this.setState({
-            userInfo: {
-              ..._this.state.userInfo,
-              avatar: avatarUrl,
-              nickName: nickName
-            }
-          })
-        }
-      })
+  onClickClockIn() {
+    if (this.props.nickName) {
+      console.log('if...')
+      this.handleClockInClick(this.props.flag)
     } else {
-      this.handleClockInClick(this.state.flag)
+      console.log('else...')
+      this.getUserProfile()
     }
   }
 
@@ -264,11 +235,38 @@ class First extends Component {
     if (!flag) {
       // 调用签到接口
       await this.fetchClockIn()
-      this.setState({
+      await this.setState({
         isCurtainOpened: true
       })
     }
   }
+  /**
+   * 用于完善会员资料
+   */
+  getUserProfile() {
+    let _this = this
+    Taro.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+        console.log('【UserProfile=======】', res)
+        let { nickName, avatarUrl } = res.userInfo
+
+        _this.handleClockInClick(this.props.flag)
+
+        let user = {
+          ..._this.props.userInfo,
+          avatar: avatarUrl,
+          nickName: nickName
+        }
+        _this.props.syncUser(user)
+        let code = Taro.getStorageSync('code')
+        _this.props.submitUserInfo({ ...res, code })
+      }
+    })
+
+  }
+
 
   /**
    *  打卡蒙层 隐藏
@@ -280,8 +278,10 @@ class First extends Component {
   }
 
   render() {
-    let { flag, clockinNumbers, avatar, nickName } = this.state.userInfo
+    let { flag } = this.props
     let { isCurtainOpened } = this.state
+    let { clockinNumbers = 0, avatar, nickName } = this.props.userInfo
+    console.log('22222========', flag && nickName)
     return (
       <View className='first-page'>
 
@@ -290,16 +290,21 @@ class First extends Component {
           <View className='first-search-bar' onClick={() => gotoPage({ url: '../../sub/search/index' })}>
             <AtSearchBar disabled />
           </View>
-          <View className='first_clock_wrap'>
-            <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
-            {flag ?
-              (<View className='clock_text-wrap'>
+
+          {(flag && nickName) ? (
+            <View className='first_clock_wrap'>
+              <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
+              <View className='clock_text-wrap'>
                 <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
                 <View className='clock_text-wrap-bottom'>连续签到</View>
-              </View>) :
-              (<Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={() => this.getUserProfile()}>打卡</Button>)
-            }
-          </View>
+              </View>
+            </View>
+          ) : (
+            <View className='first_clock_wrap'>
+              <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
+              <Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={() => this.onClickClockIn()}>打卡</Button>
+            </View>
+          )}
         </View>
 
         {/* 占位图片 */}
@@ -331,13 +336,18 @@ class First extends Component {
 
 const mapStateToProps = (state) => {
   let { activeIdx, tabList } = state.first
+  let { userInfo, flag } = state.common
+  console.log('[mapStateToProps]  userInfo, flag ========', userInfo, flag)
   return {
     activeIdx,
-    tabList
+    tabList,
+    userInfo,
+    flag
   }
 };
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(firstActions, dispatch),
+  ...bindActionCreators(commonActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(First);

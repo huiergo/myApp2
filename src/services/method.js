@@ -34,6 +34,7 @@ export function taroRequest({ url, data, method, headers }) {
 
 export async function handleGetToken() {
   let { code } = await Taro.login();
+  Taro.setStorage('code', code);
   try {
     let result = await postJSON({ url: apis.login, data: { code } });
     let { token, refreshToken } = result;

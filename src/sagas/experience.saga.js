@@ -22,7 +22,9 @@ function* handleInitData({ payload }) {
   let params = current === 0 ? { sort: 30 } : {};
   // questionBankType:9 面经
   yield put(saveLoading({ type, loading: true }));
-  Taro.showLoading();
+  Taro.showLoading({
+    title: '加载中...',
+  });
   let result = yield getJSON({ url: api, data: { page, questionBankType: 9, ...params } });
   let { pageTotal, rows: list } = result;
   yield put(saveInitData({ type, list, page, pageTotal }));
@@ -35,11 +37,14 @@ function* handleInitData({ payload }) {
  */
 function* handleLoadMore({ payload }) {
   const { type, page, current, index } = payload;
-  let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
+  let api = apis.getQuestionList;
+  let params = current === 0 ? { sort: 30 } : {};
   // questionBankType:9 面经
   yield put(saveLoading({ type, loading: true }));
-  Taro.showLoading();
-  let result = yield getJSON({ url: api, data: { page, questionBankType: 9 } });
+  Taro.showLoading({
+    title: '加载中...',
+  });
+  let result = yield getJSON({ url: api, data: { page, questionBankType: 9, ...params } });
   let { pageTotal, rows: list } = result;
   yield put(saveLoadMore({ type, list, page, pageTotal }));
   yield put(saveLoading({ type, loading: false }));

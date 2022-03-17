@@ -3,7 +3,8 @@ import { View, Button, Image, Text } from '@tarojs/components'
 import Taro, { eventCenter } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as mineActions from "../../actions/mine.action";
+import * as commonActions from "../../actions/common.action"
+
 import './index.scss'
 
 const Split = () => {
@@ -85,14 +86,14 @@ class ClockInModel extends Component {
 
 
 const mapStateToProps = (state) => {
-  const { userInfo, flag } = state.mine
+  const { userInfo, flag } = state.common
   return {
     userInfo, flag
   }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators(mineActions, dispatch),
+  ...bindActionCreators(commonActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClockInModel);

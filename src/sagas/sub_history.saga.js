@@ -19,7 +19,9 @@ function* handleInitData({ payload }) {
   console.log('todo: 需要传递 optType 1点赞2收藏3浏览----', payload);
   const { type, page, questionBankType, optType } = payload;
   yield put(saveLoading({ type, loading: true }));
-  Taro.showLoading();
+  Taro.showLoading({
+    title: '加载中...',
+  });
   let result = yield getJSON({
     url: apis.getOptList,
     data: { page, type, questionBankType, optType },
@@ -37,7 +39,9 @@ function* handleInitData({ payload }) {
 function* handleLoadMore({ payload }) {
   const { type, page, questionBankType, optType } = payload;
   yield put(saveLoading({ type, loading: true }));
-  Taro.showLoading();
+  Taro.showLoading({
+    title: '加载中...',
+  });
   let result = yield getJSON({
     url: apis.getOptList,
     data: { page, type, questionBankType, optType },

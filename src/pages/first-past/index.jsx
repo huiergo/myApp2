@@ -94,7 +94,9 @@ class First extends Component {
 
   async componentDidMount() {
     try {
-      Taro.showLoading()
+      Taro.showLoading({
+        title: '加载中...'
+      })
       await handleGetToken({ showLoad: false })
       await this.props.category()
       this.initMineData()
@@ -320,7 +322,7 @@ class First extends Component {
           // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
           let { nickName, avatarUrl } = res.userInfo
           Taro.setStorageSync('nickName', nickName)
-          Taro.setStorageSync('avatarUrl', avatarUrl)
+          Taro.setStorageSync('avatar', avatarUrl)
           _this.handleClockInClick(_this.props.flag)
         }
       })

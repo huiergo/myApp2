@@ -21,7 +21,9 @@ function* handleInitData({ payload }) {
   console.log('payload extraParams----', extraParams);
   let tempType = type.split('_')[1];
   yield put(saveLoading({ type, loading: true }));
-  Taro.showLoading();
+  Taro.showLoading({
+    title: '加载中...',
+  });
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: {
@@ -45,7 +47,9 @@ function* handleLoadMore({ payload }) {
   const { type, page, questionBankType } = payload;
   let tempType = type.split('_')[1];
   yield put(saveLoading({ type, loading: true }));
-  Taro.showLoading();
+  Taro.showLoading({
+    title: '加载中...',
+  });
   let result = yield getJSON({
     url: apis.getQuestionList,
     data: { page, type: tempType, questionBankType },
