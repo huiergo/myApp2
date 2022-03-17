@@ -9,9 +9,9 @@
 .cu-radio__title{
     display: inline-flex;
     /* padding:8px 20px; */
-    border-radius: 8px;
-    margin-right: 10px;
-    margin-bottom: 10px;    
+    border-radius:55px;
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
  
     /* width: 112px; */
     height: 32px;
@@ -20,7 +20,7 @@
     border-radius: 55px;
     color: #3C3E42;
     font-size: 28px;
-    padding: 12px 12px;
+    padding: 18rpx 28rpx;
 }
 
 .cu-radio__title--checked{

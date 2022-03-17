@@ -173,7 +173,7 @@ class DSortRadio extends Component {
         {this.state.optionsList.map((option, index) => (
           <View
             key={option.id}
-            className={classNames({ 'cu-radio__title': true, 'cu-radio__title--checked': option.selected })}
+            className={classNames({ 'cu-radio__title cu-sort__title': true, 'cu-radio__title--checked': option.selected })}
             onClick={() => this.handleClick(option, index)}
           >
             <DSortItem name={option.name} index={index} selected={option.selected} upArrow={option.upArrow} onStatus={this.onStatus.bind(this)} />
