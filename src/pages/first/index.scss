@@ -7,141 +7,6 @@
   height: 0;
   color: transparent;
 }
-// .index {
-//   display: flex;
-//   flex-direction: column;
-//   height: 100vh;
-// }
-
-// .top-part {
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   padding-right: 32px;
-// }
-
-// .index__search-bar {
-//   flex-grow: 1;
-//   flex-shrink: 0;
-// }
-
-// .index__clock-in-btn {
-//   width: 150px;
-//   height: 56px;
-//   flex-grow: 0;
-//   flex-shrink: 0;
-//   flex-basis: auto;
-// }
-
-// .index__swiper-img {
-//   display: block;
-//   width: 690px;
-//   height: 260px;
-//   margin: 0 auto;
-//   margin-top: 24px;
-//   flex-grow: 0;
-//   flex-shrink: 0;
-// }
-
-// .index-tab-wrap {
-//   position: relative;
-//   flex-grow: 1;
-//   flex-shrink: 0;
-// }
-
-// .test-filter-btn {
-//   position: absolute;
-//   top: 20px;
-//   right: 24px;
-//   width: 30px;
-//   height: 30px;
-//   padding: 10px;
-// }
-
-// .index-tab {
-//   position: relative;
-// }
-// .index-tab .at-tabs__header {
-//   // background-color: red;
-//   padding-right: 88px;
-//   text-align: left;
-// }
-
-// .at-tabs__header {
-//   text-align: left !important;
-// }
-
-// //
-// .custom__tag-title {
-//   color: #3c3e42;
-//   font-size: 28px;
-//   margin-bottom: 23px;
-//   margin-top: 40px;
-// }
-
-// // model层根据UI进行改动
-// .at-float-layout--active .at-float-layout__container,
-// .at-float-layout .layout-header {
-//   border-radius: 16px;
-// }
-// .at-float-layout .layout-header {
-//   padding-left: 50px;
-//   padding-right: 50px;
-// }
-
-// .at-float-layout .layout-body {
-//   padding-left: 50px;
-//   padding-right: 50px;
-// }
-
-// .layout-header__title-complete {
-//   color: #3266ee !important;
-// }
-
-// // .at-tabs__item {
-// //   color: #979797;
-// // }
-// .index_clock_wrap {
-//   position: relative;
-// }
-// .clock_text-wrap {
-//   display: flex;
-//   flex-direction: column;
-//   position: absolute;
-//   top: -2px;
-//   right: 10px;
-//   justify-content: center;
-// }
-
-// .clock_text-wrap-top {
-//   font-size: 32px;
-// }
-
-// .clock_text-wrap-bottom {
-//   font-size: 18px;
-// }
-
-// .clock_text {
-//   margin-left: 0;
-//   background-color: transparent;
-//   border: none;
-//   border-radius: 0;
-//   padding: 0;
-//   // width: 234px;
-//   height: 72px;
-//   margin: 0 auto;
-//   font-size: 44px;
-// }
-
-// .clock_text::after {
-//   border: none;
-// }
-
-// .clock_text-wrap-top,
-// .clock_text-wrap-bottom,
-// .clock_text {
-//   font-family: 'HanTi';
-// }
 
 .first-page {
   display: flex;
@@ -171,4 +36,68 @@
   height: 30px;
   padding: 10px;
   background-color: white;
+}
+
+// top-part
+.top-part {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 32px;
+}
+
+.first-search-bar {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.first-clock-in-btn {
+  width: 150px;
+  height: 56px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+}
+
+// clock part
+.first_clock_wrap {
+  position: relative;
+}
+.clock_text-wrap {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  justify-content: center;
+}
+
+.clock_text-wrap-top {
+  font-size: 32px;
+}
+
+.clock_text-wrap-bottom {
+  font-size: 18px;
+}
+
+.clock_text {
+  margin-left: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  // width: 234px;
+  height: 72px;
+  margin: 0 auto;
+  font-size: 44px;
+}
+
+.clock_text::after {
+  border: none;
+}
+
+.clock_text-wrap-top,
+.clock_text-wrap-bottom,
+.clock_text {
+  font-family: 'HanTi';
 }
