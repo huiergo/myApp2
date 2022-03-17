@@ -56,7 +56,7 @@ class SubDetail extends Component {
     let result = await getJSON({ url: apis.getQuestionDetail + id });
     console.log('面经详情----', result)
     if (result) {
-      this.setState({
+      await this.setState({
         item: result
       })
     }
@@ -137,8 +137,7 @@ class SubDetail extends Component {
           <Image className='detail-interview__user-avatar' src={creatorAvatar} />
           {creatorName}
         </View>
-        {/* <View className='detail-content' dangerouslySetInnerHTML={{ __html: html }}></View> */}
-        <View className='detail-content'>{item.content}</View>
+        <View className='detail-content' dangerouslySetInnerHTML={{ __html: item.content }}></View>
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>

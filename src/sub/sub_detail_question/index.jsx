@@ -62,7 +62,7 @@ class SubDetail extends Component {
     Taro.showLoading()
     let result = await getJSON({ url: apis.getQuestionDetail + id });
 
-    this.setState({
+    await this.setState({
       item: result
     })
     Taro.hideLoading()
@@ -72,7 +72,7 @@ class SubDetail extends Component {
   async handleZan(flag) {
     console.log("点赞id----", this.state.item.id)
     let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
-    result && this.setState({
+    await result && this.setState({
       item: {
         ...this.state.item,
         likeFlag: !flag
@@ -84,7 +84,7 @@ class SubDetail extends Component {
     console.log("收藏 id----", this.state.item.id)
     let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
     console.log("题目详情页： 收藏 请求 结果----", result)
-    result && this.setState({
+    await result && this.setState({
       item: {
         ...this.state.item,
         collectFlag: !flag
@@ -121,9 +121,6 @@ class SubDetail extends Component {
         <HorizonLine />
         <IconText title='答案：' />
         <View className='detail-content' dangerouslySetInnerHTML={{ __html: item.answer }} ></View>
-        {/* <View className='detail-content'>{item.answer}</View> */}
-
-
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
