@@ -76,7 +76,7 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
         // 未过期
         if (errCount > 1) return;
         await handleRefreshToken();
-
+        errCount = 0;
         return await unionJSON({ url, data: requestData, method, headers });
       } else {
       }

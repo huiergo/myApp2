@@ -21,7 +21,7 @@ class DTabContent extends Component {
     super(props)
     this.state = {
       list: [],
-      page: 0,
+      page: 1,
       pageTotal: '',
     }
   }
@@ -109,20 +109,21 @@ class DTabContent extends Component {
     })
     let sortTemp = this.requestParams.selectType + this.requestParams.sortType
     sortTemp = sortTemp == '00' ? '0' : sortTemp
-
-    if ((this.state.page + 1) <= this.state.pageTotal) {
+    let currentPage = this.state.page
+    if ((currentPage + 1) <= this.state.pageTotal) {
       let { pageTotal, rows: list } = await getJSON({
         url: apis.getQuestionList,
         data: {
-          page: this.state.page + 1,
+          page: currentPage + 1,
           keyword: this.props.keyword,
-          questionBankType: 9,
+          questionBankType: 10,
           ...this.props.extraParams,
           type: this.props.type,
           sort: sortTemp
         },
       });
       this.setState({
+        page: currentPage + 1,
         pageTotal,
         list: this.state.list.concat(list)
       })

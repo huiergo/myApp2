@@ -36,22 +36,29 @@ class First extends Component {
     const onReadyEventId = this.$instance.router.onReady
     let viewPortHeight = 0
     let tabbodyTop = 0
+    let tabHeight = 44
+    let searchBarHeight = 0
     let _this = this
+    Taro.setStorageSync('at_tabs_height', tabHeight)
     eventCenter.once(onReadyEventId, () => {
-
       // onReady 触发后才能获取小程序渲染层的节点
       let query = Taro.createSelectorQuery()
-      query.select('.at-tabs__body')
-        .boundingClientRect()
+
+      //获取 tabbodyTop 顶部高度，并缓存
+      //获取 search Bar高度，并缓存
+      query.select('.first-search-bar').boundingClientRect()
+      query.select('.at-tabs__body').boundingClientRect()
         .exec(res => {
-          tabbodyTop = res[0].top
+          searchBarHeight = res[0].height
+          tabbodyTop = res[1].top
+          Taro.setStorageSync('at_search_height', searchBarHeight)
         })
 
       Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
         viewPortHeight = res.height
         Taro.setStorageSync('viewport_height', viewPortHeight)
         _this.setState({
-          scrollHeight: (viewPortHeight - tabbodyTop)
+          scrollHeight: (viewPortHeight - tabbodyTop - tabHeight)
         })
       }).exec()
     })
