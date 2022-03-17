@@ -3,11 +3,8 @@ import apis from '../services/apis';
 
 let errCount = 0;
 
-export async function taroRequest({ url, data, method, headers }) {
+export function taroRequest({ url, data, method, headers }) {
   let token = Taro.getStorageSync('token');
-  if (!token) {
-    await handleGetToken();
-  }
   return new Promise((resolve, reject) => {
     Taro.request({
       url: url,
@@ -15,7 +12,7 @@ export async function taroRequest({ url, data, method, headers }) {
       method: method,
       header: {
         'content-type': 'application/json',
-        Authorization: 'Bearer ' + Taro.getStorageSync('token'),
+        Authorization: 'Bearer ' + token,
         ...headers,
       },
     })
@@ -57,6 +54,10 @@ export async function postJSON({ url, data, headers }) {
 
 export async function unionJSON({ url, data: requestData, method, headers }) {
   try {
+    // let token = Taro.getStorageSync('token');
+    // if (!token) {
+    //   await handleGetToken();
+    // }
     let { statusCode, message, data } = await taroRequest({
       url,
       data: requestData,

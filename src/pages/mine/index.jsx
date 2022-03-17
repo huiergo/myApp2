@@ -47,20 +47,22 @@ class Mine extends Component {
     }
   }
 
-  async handleClockInClick(flag) {
-    if (!flag) {
-      // 调用签到接口
-      await this.props.clockIn()
-      this.setState({
-        isOpened: true
-      })
-    } else {
+  async handleClockInClick() {
+    let { nickName } = this.props.userInfo
+    console.log('nickName----', nickName)
+    if (nickName) {
       Taro.showToast({
         title: '请先登录',
         icon: 'error'
       })
+    } else {
+      await this.props.clockIn()
+      this.setState({
+        isOpened: true
+      })
     }
   }
+
   handleGridClick({ gridType }) {
     if (this.props.userInfo && this.props.userInfo.nickName) {
       this.props.changeOptType(gridType)
