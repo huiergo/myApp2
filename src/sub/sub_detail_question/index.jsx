@@ -124,8 +124,8 @@ class SubDetail extends Component {
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
-          <Image className='zan-btn' src={likeFlag ? 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/zan-fav/zan_select.png' : 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/zan-fav/zan.png'} onClick={() => this.handleZan(likeFlag)} />
-          <Image className='favorite-btn' src={collectFlag ? 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/zan-fav/fav-select.png' : 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/zan-fav/fav.png'} onClick={() => this.handleFavorite(collectFlag)} />
+          <Image className='zan-btn' src={likeFlag ? 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/zan_select.png' : 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/zan.png'} onClick={() => this.handleZan(likeFlag)} />
+          <Image className='favorite-btn' src={collectFlag ? 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/fav_select.png' : 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/fav.png'} onClick={() => this.handleFavorite(collectFlag)} />
         </View>
 
 
