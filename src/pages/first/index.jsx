@@ -219,7 +219,7 @@ class First extends Component {
 
 
   onClickClockIn() {
-    if (this.props.nickName) {
+    if (this.props.userInfo.nickName) {
       console.log('if...')
       this.handleClockInClick(this.props.flag)
     } else {

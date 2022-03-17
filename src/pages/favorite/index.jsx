@@ -17,7 +17,7 @@ class Favorite extends Component {
     }
   }
   componentDidMount() {
-    let nickName = this.props.nickName
+    let { nickName } = this.props.userInfo
     if (nickName) {
       this.setState({
         hasLogin: true
@@ -117,13 +117,13 @@ const mapStateToProps = (state) => {
   let tabList = Object.keys(state.favorite).filter(i => i !== 'currentIdx')
   //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
   let chineseTabList = tabList.map(k => state.favorite[k].des).filter(i => i).map(j => ({ title: j }))
-  let nickName = state.common
+  let { userInfo } = state.common
   return {
     tabList,
     chineseTabList,
     currentIdx,
     exprState: state.favorite,
-    nickName
+    userInfo
   }
 };
 const mapDispatchToProps = (dispatch) => ({

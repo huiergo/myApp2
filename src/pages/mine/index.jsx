@@ -57,7 +57,7 @@ class Mine extends Component {
     }
   }
   handleGridClick({ gridType }) {
-    if (this.state.nickName) {
+    if (this.props.userInfo.nickName) {
       this.props.changeOptType(gridType)
       gotoPage({ url: '../../sub/sub_history/index' })
     } else {
@@ -89,7 +89,7 @@ class Mine extends Component {
 
   getUserProfile() {
     let _this = this
-    if (this.props.nickName) {
+    if (this.props.userInfo.nickName) {
       Taro.getUserProfile({
         desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: (res) => {
