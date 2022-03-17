@@ -44,8 +44,7 @@ class ClockInModel extends Component {
   }
 
   render() {
-    const { clockinNumbers = 0, clockinTotal = 0 } = this.props.userInfo
-    const { avatar, nickName } = this.props
+    const { clockinNumbers = 0, clockinTotal = 0, avatar = '', nickName = '' } = this.props.userInfo
 
     return (
       <View className='clockIn-model'>

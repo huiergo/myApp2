@@ -219,7 +219,7 @@ class First extends Component {
 
 
   onClickClockIn() {
-    if (this.props.userInfo.nickName) {
+    if (this.props.userInfo && this.props.userInfo.nickName) {
       console.log('if...')
       this.handleClockInClick(this.props.flag)
     } else {
@@ -247,7 +247,7 @@ class First extends Component {
     let _this = this
     Taro.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
+      success: async (res) => {
         // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
         console.log('【UserProfile=======】', res)
         let { nickName, avatarUrl } = res.userInfo
@@ -260,7 +260,7 @@ class First extends Component {
           nickName: nickName
         }
         _this.props.syncUser(user)
-        let code = Taro.getStorageSync('code')
+        let { code } = await Taro.login();
         _this.props.submitUserInfo({ ...res, code })
       }
     })
@@ -280,7 +280,7 @@ class First extends Component {
   render() {
     let { flag } = this.props
     let { isCurtainOpened } = this.state
-    let { clockinNumbers = 0, avatar, nickName } = this.props.userInfo
+    let { clockinNumbers = 0, avatar = '', nickName = '' } = this.props.userInfo
     console.log('22222========', flag && nickName)
     return (
       <View className='first-page'>

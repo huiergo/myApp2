@@ -54,10 +54,15 @@ class Mine extends Component {
       this.setState({
         isOpened: true
       })
+    } else {
+      Taro.showToast({
+        title: '请先登录',
+        icon: 'error'
+      })
     }
   }
   handleGridClick({ gridType }) {
-    if (this.props.userInfo.nickName) {
+    if (this.props.userInfo && this.props.userInfo.nickName) {
       this.props.changeOptType(gridType)
       gotoPage({ url: '../../sub/sub_history/index' })
     } else {
@@ -89,25 +94,26 @@ class Mine extends Component {
 
   getUserProfile() {
     let _this = this
-    if (this.props.userInfo.nickName) {
-      Taro.getUserProfile({
-        desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-        success: (res) => {
-          console.log('【UserProfile=======】', res)
-          // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-          let { nickName, avatarUrl } = res.userInfo
-          let user = {
-            ..._this.props.userInfo,
-            avatar: avatarUrl,
-            nickName: nickName
-          }
-          console.log('4---', user)
-          _this.props.syncUser(user)
-          let code = Taro.getStorageSync('code')
-          _this.props.submitUserInfo({ ...res, code })
+    console.log('[getUserProfile]-------', this.props.userInfo && this.props.userInfo.nickName)
+    Taro.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: async (res) => {
+        console.log('【UserProfile=======】', res)
+        // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+
+        let { nickName, avatarUrl } = res.userInfo
+        let user = {
+          ..._this.props.userInfo,
+          avatar: avatarUrl,
+          nickName: nickName
         }
-      })
-    }
+        console.log('4---', user)
+        _this.props.syncUser(user)
+
+        let { code } = await Taro.login();
+        _this.props.submitUserInfo({ ...res, code })
+      }
+    })
 
   }
 
@@ -119,7 +125,7 @@ class Mine extends Component {
   }
 
   render() {
-    const { clockinNumbers = 0, avatar, nickName, } = this.props.userInfo
+    const { clockinNumbers = 0, avatar = 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132', nickName = '', } = this.props.userInfo
     const { flag } = this.props
 
 
@@ -139,10 +145,10 @@ class Mine extends Component {
           </View>
         ) : (
           <View className='user-info'>
-            <View className='user-info-wrap'>
+            <View className='user-info-wrap' onClick={() => this.getUserProfile()}>
               <Image className='user-info-avatar' src={avatar} />
               <View className='user-info-text'>
-                <Button className='user-info-name' onClick={() => this.getUserProfile()}>
+                <Button className='user-info-name'>
                   登录
                 </Button>
               </View>
