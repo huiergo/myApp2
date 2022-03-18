@@ -1,6 +1,6 @@
 import { Component, useState, useEffect } from 'react'
 import { View, Button, Text, ScrollView } from '@tarojs/components'
-import { TaroVirtualList } from 'taro-virtual-list'
+// import { TaroVirtualList } from 'taro-virtual-list'
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,7 +11,10 @@ import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
 
 import QuestionItem from '../../../components/questionItem'
+import TaroVirtualList from '../../../components/VirtualList'
+
 import './index.css'
+
 import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
 
 import * as firstActions from "../first.action"
@@ -114,7 +117,8 @@ class DTabContent extends Component {
     this.setState({
       page: 1,
       pageTotal,
-      list: tempList
+      list: tempList,
+      autoScrollTop: false
     })
 
     this.init = true
@@ -216,12 +220,13 @@ class DTabContent extends Component {
         <TaroVirtualList
           listId={this.state.virtualListId}
           autoScrollTop={this.state.autoScrollTop}
+          resetTwoList={this.state.autoScrollTop}
           listType="multi"
           list={this.state.list}
           pageNum={this.state.page}
           // segmentNum={20}
           onRender={this.renderFunc.bind(this)}
-          onRenderTop={this.renderDemo.bind(this)}
+          // onRenderTop={this.renderDemo.bind(this)}
           onGetScrollData={(res) => { console.log(res) }}
           scrollViewProps={{
             onScrollToLower: this.onPageScrollToLower.bind(this),
