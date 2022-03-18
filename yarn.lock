@@ -12963,6 +12963,11 @@
     "lodash" "^4.17.10"
     "prop-types" "^15.7.2"
 
+"taro-virtual-list@^1.0.13":
+  "integrity" "sha512-Lwfaeqyrp5vPNxjPynE2DW5x4Gt/k6TQC1FB4jpYc11/Ll0rdFo73sxEqexm2kvSFly1ZqcBDG+CvWiWVmusOA=="
+  "resolved" "https://registry.npmmirror.com/taro-virtual-list/-/taro-virtual-list-1.0.13.tgz"
+  "version" "1.0.13"
+
 "temp@^0.8.1", "temp@0.8.3":
   "integrity" "sha512-jtnWJs6B1cZlHs9wPG7BrowKxZw/rf6+UpGAkr8AaYmiTyTO7zQlLoST8zx/8TcUPnZmeBoB+H8ARuHZaSijVw=="
   "resolved" "https://registry.npmmirror.com/temp/-/temp-0.8.3.tgz"

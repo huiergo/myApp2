@@ -2,7 +2,7 @@ import { handleActions as createReducer } from 'redux-actions';
 import { changeActiveIdx, updateTabList, updateExtraParams } from './first.action';
 
 const initialState = {
-  activeIdx: 0,
+  activeIdx: -1,
   tabList: [],
 };
 // 以下是tab列表相关
