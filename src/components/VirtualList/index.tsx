@@ -196,9 +196,12 @@ export default class VirtialList extends Component {
                         twoList: [],
                         innerScrollTop: 0,
                     }, () => {
-                        if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
-                            this.formatMultiList(nextProps.list, nextProps.pageNum);
-                        }
+                        setTimeout(() => {
+                            if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
+                                this.formatMultiList(nextProps.list, nextProps.pageNum);
+                            }
+                        }, 300);
+                        
                     });
             }else{
                 if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
