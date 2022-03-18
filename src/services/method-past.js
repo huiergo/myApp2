@@ -1,39 +1,10 @@
 import Taro from '@tarojs/taro';
-import apis from '../services/apis';
+import apis from './apis';
 
 let errCount = 0;
 
-export async function newUserGetToken() {
-  let { code } = await Taro.login();
-  try {
-    let result = await Taro.request({
-      url: apis.login,
-      data: { code },
-      method: 'POST',
-      header: {
-        'content-type': 'application/json',
-      },
-    });
-    if (result && result.data) {
-      let { token, refreshToken } = result.data.data;
-      Taro.setStorageSync('token', token);
-      Taro.setStorageSync('refreshToken', refreshToken);
-      console.log('5-111', result);
-      console.log('555 token===', token);
-      return token;
-    }
-  } catch (err) {
-    return Taro.showToast({ title: '获取token失败' });
-  }
-}
-
-export async function taroRequest({ url, data, method, headers }) {
+export function taroRequest({ url, data, method, headers }) {
   let token = Taro.getStorageSync('token');
-  console.log(444, token);
-  if (!token) {
-    token = await newUserGetToken();
-    console.log(666, token);
-  }
   return new Promise((resolve, reject) => {
     Taro.request({
       url: url,
@@ -60,6 +31,7 @@ export async function taroRequest({ url, data, method, headers }) {
       });
   });
 }
+
 export async function handleGetToken() {
   let { code } = await Taro.login();
   try {
@@ -82,6 +54,10 @@ export async function postJSON({ url, data, headers }) {
 
 export async function unionJSON({ url, data: requestData, method, headers }) {
   try {
+    // let token = Taro.getStorageSync('token');
+    // if (!token) {
+    //   await handleGetToken();
+    // }
     let { statusCode, message, data } = await taroRequest({
       url,
       data: requestData,
@@ -110,7 +86,6 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
       }
     }
   } catch (error) {
-    console.log('error====', error);
     await handleGetToken();
     return await unionJSON({ url, data: requestData, method, headers });
   }
