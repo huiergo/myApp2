@@ -30,19 +30,11 @@ export async function newUserGetToken() {
 }
 
 export async function taroRequest({ url, data, method, headers }) {
-<<<<<<< HEAD
-  let token = Taro.getStorageSync('token');
-  console.log(444, token);
-  if (!token) {
-    token = await newUserGetToken();
-    console.log(666, token);
-=======
   console.log(TAG, url, data, method, headers);
   let token = Taro.getStorageSync('token');
   console.log(TAG, token);
   if (!token) {
     token = await newUserGetToken();
->>>>>>> 23485490108012655f60904af55adfdfb33e09b1
   }
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -128,11 +120,7 @@ export async function unionJSON({ url, data: requestData, method, headers, retry
       }
     }
   } catch (error) {
-<<<<<<< HEAD
-    console.log('error====', error);
-=======
     console.log(TAG, 'error====', error);
->>>>>>> 23485490108012655f60904af55adfdfb33e09b1
     await handleGetToken();
     return await unionJSON({ url, data: requestData, method, headers, retry });
   }
