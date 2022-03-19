@@ -19,6 +19,7 @@ import { set as setGlobalData, get as getGlobalData } from '../../../global_data
 
 import * as firstActions from "../first.action"
 
+let TAG = 'DTabContent'
 class DTabContent extends Component {
   constructor(props) {
     super(props)
@@ -64,9 +65,11 @@ class DTabContent extends Component {
   async initData() {
 
     if (this.tabActiveIdx < 0) return
-    this.setState({
-      autoScrollTop: true,
-    })
+    // this.setState({
+    //   autoScrollTop: true,
+    // }, () => {
+    //   console.log(TAG, '【scroll top 0】')
+    // })
 
     // todo: 等待传递 写死 questionBankType=9
     Taro.showLoading({
@@ -76,11 +79,6 @@ class DTabContent extends Component {
     sortTemp = sortTemp == '00' ? '0' : sortTemp
 
     console.log("DContent extraParams", this.props.extraParams)
-    // this.setState({
-    //   page: 1,
-    //   pageTotal: '',
-    //   list: [],
-    // })
 
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
@@ -99,7 +97,9 @@ class DTabContent extends Component {
       page: 1,
       pageTotal,
       list: tempList,
-      autoScrollTop: false
+      autoScrollTop: true
+    }, () => {
+      console.log(TAG, '【init setData 设置完成】')
     })
 
     setTimeout(() => {
@@ -205,80 +205,3 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(DTabContent);
 
 
-
- // list: [{
-      //   "id": "18207",
-      //   "questionNo": "ZT025646",
-      //   "stem": "骨架屏",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 3,
-      //   "views": "4",
-      //   "likeCount": "1",
-      //   "questionBankType": 10,
-      //   "creatorName": "294",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-11-09",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "12750",
-      //   "questionNo": "ZT020177",
-      //   "stem": "骨架屏",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 2,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "4552",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-09-01",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "12915",
-      //   "questionNo": "ZT020342",
-      //   "stem": "骨架屏......",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 2,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "1077",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-09-04",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "14139",
-      //   "questionNo": "ZT021567",
-      //   "stem": "骨架屏......",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 4,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "1007",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-09-16",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "6013",
-      //   "questionNo": "ZT013393",
-      //   "stem": "骨架屏......",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 2,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "1742",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-04-29",
-      //   "likeFlag": 0
-      // },]

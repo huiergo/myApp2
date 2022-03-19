@@ -162,8 +162,13 @@ export default class VirtialList extends Component {
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         var _a;
-        const { list, listType,resetTwoList } = this.props;
-        console.log('resetTwoList====',resetTwoList)
+
+        console.log('【Virtual Recive Props】',this.props)
+        console.log('【Virtual Next Props】',nextProps)
+        const { list, listType } = this.props;
+        const { resetTwoList } = nextProps;
+        
+
         if (listType === "single") {
             // 提前把innerScrollTop置为不是0，防止列表置顶失效
             this.setState({
@@ -196,8 +201,10 @@ export default class VirtialList extends Component {
                         twoList: [],
                         innerScrollTop: 0,
                     }, () => {
+                        // 防止在滚动过程中切换tab, 导致页面不置顶
                         setTimeout(() => {
                             if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
+                                console.log('【 走 if。。。。】')
                                 this.formatMultiList(nextProps.list, nextProps.pageNum);
                             }
                         }, 50);
@@ -205,6 +212,7 @@ export default class VirtialList extends Component {
                     });
             }else{
                 if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
+                    console.log('【 走 else。。。。】')
                     this.formatMultiList(nextProps.list, nextProps.pageNum);
                 }
             }
