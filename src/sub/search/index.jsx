@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Component, createRef } from 'react'
 import { View, Button, Text } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
 import Taro from '@tarojs/taro';
@@ -6,13 +6,15 @@ import DSearchBar from './DSearchBar/index'
 import DSearchRecord from './DSearchRecord/index'
 import DSearchList from './DSearchList/index'
 import './index.css'
+import { SEARCH_DEFAULT, SEARCH_CLICK } from '../../utils/constant'
 
 class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
       keyword: '',
-      scrollHeight: ''
+      scrollHeight: '',
+      searchAction: SEARCH_DEFAULT
     }
   }
 
@@ -52,7 +54,12 @@ class Search extends Component {
   onActionClick() {
     // 隐藏添加到storage
     this.child.searchValue(this.state.keyword)
+    this.setState({
+      keyword: this.state.keyword,
+      searchAction: SEARCH_CLICK
+    })
   }
+
   render() {
 
     return (
@@ -60,7 +67,7 @@ class Search extends Component {
         <DSearchBar onInputChange={(v) => this.onInputChange(v)} onActionClick={() => this.onActionClick()} />
         <View className='search-content-wrap'>
           {!this.state.keyword && <DSearchRecord onRef={this.onRef} />}
-          {this.state.keyword && <DSearchList keyword={this.state.keyword} scrollHeight={this.state.scrollHeight} />}
+          {this.state.keyword && <DSearchList searchAction={this.state.searchAction} keyword={this.state.keyword} scrollHeight={this.state.scrollHeight} />}
         </View>
       </View>
     )

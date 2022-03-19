@@ -42,6 +42,7 @@ class Search extends Component {
   }
 
   onActionClick() {
+
     this.props.onActionClick()
     console.log('开始搜索')
   }
@@ -50,7 +51,6 @@ class Search extends Component {
     return (
       <View className='index'>
         <AtSearchBar
-          showActionButton
           value={this.state.value}
           onChange={this.onChange.bind(this)}
           onActionClick={this.onActionClick.bind(this)}

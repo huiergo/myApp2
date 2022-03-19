@@ -1,12 +1,12 @@
 import { Component } from 'react'
-import { View, Button, Text, ScrollView } from '@tarojs/components'
-import { AtSearchBar } from 'taro-ui'
+import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro';
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
 // 写死，这里需要判断 当前是首页还是面经页面的tab ，然后渲染的  QuestionItem or InterviewItem
 import QuestionItem from '../../../components/questionItem'
 import './index.css'
+import { SEARCH_CLICK, LOADING_DESC } from '../../../utils/constant'
 
 let timer = null
 class Search extends Component {
@@ -23,9 +23,8 @@ class Search extends Component {
   async componentDidMount() {
     await this.initData()
   }
-  componentWillReceiveProps(prev, next) {
-    console.log('[componentWillReceiveProps---]', prev, next)
 
+  componentWillReceiveProps(prev, next) {
     const debounce = (fn, delay = 300) => {
       return function () {
         const args = arguments;
@@ -38,37 +37,31 @@ class Search extends Component {
         }, delay);
       };
     }
-    let fn = debounce(async () => {
-      // todo: 等待传递 写死 questionBankType=9
-      let { pageTotal, rows: list } = await getJSON({
-        url: apis.getQuestionList,
-        data: { page: 1, keyword: this.props.keyword, questionBankType: 9 },
-      });
-      console.log(' componentWillReceiveProps  请求数据---', list)
-      this.setState({
-        pageTotal,
-        list
-      })
+    let fn = debounce(() => {
+      this.initData()
     }, 1000)
     fn()
   }
 
   async initData() {
     // todo: 等待传递 写死 questionBankType=9
-
+    if (this.props.searchAction === SEARCH_CLICK) {
+      Taro.showLoading({
+        title: LOADING_DESC
+      })
+    }
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
-      data: { page: 1, keyword: this.props.keyword, questionBankType: 9 },
+      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, pageSize: 30 },
     });
-    console.log(' componentWillReceiveProps  初始化请求---', list)
-
-    console.log('拼接数组----', this.state.list.concat(list))
 
     this.setState({
       pageTotal,
       list
     })
-
+    if (this.props.searchAction === SEARCH_CLICK) {
+      Taro.hideLoading()
+    }
   }
 
   // async loadmore() {
@@ -85,6 +78,7 @@ class Search extends Component {
   //     })
   //   }
   // }
+
   render() {
     const { scrollHeight } = this.props
     return (
