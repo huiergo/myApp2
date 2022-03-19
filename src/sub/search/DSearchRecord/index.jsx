@@ -1,6 +1,6 @@
 import { Component } from 'react'
-import { View, Button, Text, Image } from '@tarojs/components'
-import { AtSearchBar, AtTag } from 'taro-ui'
+import { View, Text, Image } from '@tarojs/components'
+import { AtTag } from 'taro-ui'
 import Taro from '@tarojs/taro';
 import './index.css'
 
@@ -29,32 +29,20 @@ class Search extends Component {
     })
   }
 
-  componentDidShow() {
-
-  }
-
-  addValue(v) {
-    console.log('----', v)
-    this.onAdd(v)
-  }
-
-  searchValue(v) {
-    this.onAdd(v)
-    setStorage('record_list', [...this.state.list]);
-  }
-
-  // 当搜索完成时候，调用此方法
-  onAdd(v) {
+  insertSearchKey(v) {
     let index = this.state.list.indexOf(v);
     if (index > -1) {
       this.state.list.splice(index, 1);
     }
     this.state.list.unshift(v)
 
+    setStorage('record_list', [...this.state.list]);
+
     this.setState({
       list: [...this.state.list]
     })
 
+    this.props.onRecordItemClick(v)
   }
 
   // 单个删除按钮
@@ -76,6 +64,7 @@ class Search extends Component {
 
   }
 
+  // 编辑状态的切换
   onEditTrigger(editFlag) {
     this.setState({
       isEditAll: editFlag
@@ -114,7 +103,7 @@ class Search extends Component {
           <AtTag className='tag-search' key={index} type='primary' circle>
             <Text
               onClick={() => {
-                this.onAdd(item)
+                this.insertSearchKey(item)
               }}
             >{item}</Text>
             {isEditAll ?

@@ -16,14 +16,17 @@ class Search extends Component {
       scrollHeight: '',
       searchAction: SEARCH_DEFAULT
     }
+
+    // 创建 searchInput 的 引用
+    this.searchInputRef = createRef()
+    // 创建 record 的引用
+    this.recordRef = createRef()
+    console.log('this.searchInputRef ', this.searchInputRef)
+    console.log('this.recordRef', this.recordRef)
   }
 
   componentDidMount() {
     this.getScrollHeight()
-  }
-
-  componentDidShow() {
-
   }
 
   getScrollHeight() {
@@ -41,7 +44,7 @@ class Search extends Component {
     }).exec()
   }
 
-  // 父组件调用子组件的方法
+  // 输入框输入回调，刷新列表
   onRef = (ref) => {
     this.child = ref
   }
@@ -51,22 +54,38 @@ class Search extends Component {
       keyword: v
     })
   }
-  onActionClick() {
-    // 隐藏添加到storage
-    this.child.searchValue(this.state.keyword)
+
+  // 搜索按钮回调：用keyword, 更新record的值和刷新列表
+  onSearchBtnClick() {
+    console.log('[this.recordRef]', this.recordRef)
+    this.child.insertSearchKey(this.state.keyword)
     this.setState({
       keyword: this.state.keyword,
       searchAction: SEARCH_CLICK
     })
   }
 
+  // 记录回调： 搜索某个记录的点击，更新输入框和列表
+  onRecordItemClick(v) {
+    this.searchInputRef.current.manualChange(v)
+    this.setState({
+      keyword: v,
+    })
+  }
+
+
   render() {
 
     return (
       <View className='search-page'>
-        <DSearchBar onInputChange={(v) => this.onInputChange(v)} onActionClick={() => this.onActionClick()} />
+        <DSearchBar ref={this.searchInputRef} onInputChange={(v) => this.onInputChange(v)} onSearchBtnClick={() => this.onSearchBtnClick()} />
         <View className='search-content-wrap'>
-          {!this.state.keyword && <DSearchRecord onRef={this.onRef} />}
+          {!this.state.keyword &&
+            <DSearchRecord
+              onRef={this.onRef}
+              onRecordItemClick={(v) => this.onRecordItemClick(v)}
+            />
+          }
           {this.state.keyword && <DSearchList searchAction={this.state.searchAction} keyword={this.state.keyword} scrollHeight={this.state.scrollHeight} />}
         </View>
       </View>
