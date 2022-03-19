@@ -13,7 +13,7 @@ import apis from '../../../services/apis'
 import QuestionItem from '../../../components/questionItem'
 import TaroVirtualList from '../../../components/VirtualList'
 
-import './index.css'
+// import './index.css'
 
 import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
 
@@ -49,15 +49,16 @@ class DTabContent extends Component {
       return
     }
 
-    if (next.tabActiveIdx == this.tabActiveIdx) {
+    let globalData = getGlobalData('filter_data')
+    let itemData = globalData[next.tabActiveIdx]
+
+    // 防止同一tab点击刷新，防止filter参数完全一致刷新
+    if (next.tabActiveIdx === this.tabActiveIdx && this.requestParams.selectType === itemData.selectType
+      && this.requestParams.sortType == itemData.sortType) {
       return
     }
 
     this.tabActiveIdx = next.tabActiveIdx
-
-    let globalData = getGlobalData('filter_data')
-    console.log('globalData========', globalData)
-    let itemData = globalData[this.tabActiveIdx]
     this.requestParams = itemData
     this.initData()
   }
@@ -65,11 +66,6 @@ class DTabContent extends Component {
   async initData() {
 
     if (this.tabActiveIdx < 0) return
-    // this.setState({
-    //   autoScrollTop: true,
-    // }, () => {
-    //   console.log(TAG, '【scroll top 0】')
-    // })
 
     // todo: 等待传递 写死 questionBankType=9
     Taro.showLoading({

@@ -194,6 +194,8 @@ export default class VirtialList extends Component {
         }
         else if (listType === "multi") {
             if(resetTwoList){
+                if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
+
                     this.pageHeightArr = [];
                     this.setState({
                         wholePageIndex: 0,
@@ -203,13 +205,13 @@ export default class VirtialList extends Component {
                     }, () => {
                         // 防止在滚动过程中切换tab, 导致页面不置顶
                         setTimeout(() => {
-                            if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
                                 console.log('【 走 if。。。。】')
                                 this.formatMultiList(nextProps.list, nextProps.pageNum);
-                            }
+                         
                         }, 50);
                         
                     });
+                }
             }else{
                 if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
                     console.log('【 走 else。。。。】')
