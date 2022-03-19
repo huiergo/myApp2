@@ -25,33 +25,44 @@ class Topic extends Component {
       this.initByTabChange(currentIndex)
     })
 
-    //收藏 用的是qustionItem ,  eventChange_favorite
-    eventCenter.on('eventChange_favorite_interview', (currentIndex) => {
-      this.initByTabChange(currentIndex)
+    //收藏 用的是interviewItem ,  eventChange_favorite
+    eventCenter.on('eventChange_favorite_interview', (currentIndex, isForceReload) => {
+      if (isForceReload) {
+        this.forceReload(currentIndex)
+      } else {
+        this.initByTabChange(currentIndex)
+      }
     })
-
     // 我的收藏，浏览，点赞 子页面 监听 ： 
-    eventCenter.on('eventChange_sub_history_interview', (currentIndex) => {
-      this.initByTabChange(currentIndex)
+    eventCenter.on('eventChange_sub_history_interview', (currentIndex, isForceReload) => {
+      if (isForceReload) {
+        this.forceReload(currentIndex)
+      } else {
+        this.initByTabChange(currentIndex)
+      }
     })
-
   }
 
   initByTabChange(currentIndex = 0) {
-    console.log("[topic2 initByTabChange]========", currentIndex)
-    if (this.init && (this.props.index === currentIndex)) {
-      this.init = false
+    if (this.props.index === currentIndex) {
       // type, page: page + 1, current, index 
-      console.log("topic 2  initdata")
       this.props.initData({ type: this.props.type, page: 1, current: currentIndex, questionBankType: this.props.questionBankType, optType: this.props.optType })
     }
   }
 
+  forceReload(currentIndex = 0) {
+    this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType })
+  }
+
   componentWillUnmount() {
-    // 卸载
-    eventCenter.off('eventChange_experience')
-    eventCenter.off('eventChange_favorite_interview')
-    eventCenter.off('eventChange_sub_history_interview')
+    // 反注册时间
+    if (this.props.fromType == 'sub_history') {
+      eventCenter.off('eventChange_sub_history_interview')
+    } else if (this.props.fromType == 'favorite') {
+      eventCenter.off('eventChange_favorite_interview')
+    } else {
+      eventCenter.off('eventChange_experience')
+    }
   }
 
   render() {

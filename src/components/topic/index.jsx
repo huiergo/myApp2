@@ -35,12 +35,20 @@ class Topic extends Component {
       this.initByTabChange(selectIndex, keyword, sort)
     })
     //收藏 用的是qustionItem ,  eventChange_favorite
-    eventCenter.on('eventChange_favorite_question', (currentIndex) => {
-      this.initByTabChange(currentIndex)
+    eventCenter.on('eventChange_favorite_question', (currentIndex, isForceReload) => {
+      if (isForceReload) {
+        this.forceReload(currentIndex)
+      } else {
+        this.initByTabChange(currentIndex)
+      }
     })
     // 我的收藏，浏览，点赞 子页面 监听 ： 
-    eventCenter.on('eventChange_sub_history_question', (currentIndex) => {
-      this.initByTabChange(currentIndex)
+    eventCenter.on('eventChange_sub_history_question', (currentIndex, isForceReload) => {
+      if (isForceReload) {
+        this.forceReload(currentIndex)
+      } else {
+        this.initByTabChange(currentIndex)
+      }
     })
 
   }
@@ -48,17 +56,26 @@ class Topic extends Component {
   initByTabChange(currentIndex = 0, ...extraParams) {
 
     console.log('initData extraParams----', extraParams)
-    if (this.init && (this.props.index === currentIndex)) {
-      this.init = false
+    if (this.props.index === currentIndex) {
       this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType, extraParams: extraParams })
     }
   }
 
+  forceReload(currentIndex = 0) {
+    this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType })
+  }
+
   componentWillUnmount() {
     // 卸载
-    eventCenter.off('eventChange')
-    eventCenter.off('eventChange_favorite_question')
-    eventCenter.off('eventChange_sub_history_question')
+
+
+    if (this.props.fromType == 'sub_history') {
+      eventCenter.off('eventChange_sub_history_question')
+    } else if (this.props.fromType == 'favorite') {
+      eventCenter.off('eventChange_favorite_question')
+    } else {
+      eventCenter.off('eventChange')
+    }
   }
 
   render() {

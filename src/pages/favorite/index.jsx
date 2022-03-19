@@ -16,6 +16,8 @@ class Favorite extends Component {
       hasLogin: false
     }
   }
+  mCurIndex = 0
+
   componentDidMount() {
     let { nickName } = this.props.userInfo
     if (nickName) {
@@ -32,17 +34,25 @@ class Favorite extends Component {
       })
     }
   }
-  change(v) {
-    this.props.changeTab(v)
-    if (v === 0) {
+
+  componentDidShow() {
+    this.triggerEvent(this.mCurIndex, true)
+  }
+
+  change(index) {
+    this.mCurIndex = index
+    this.props.changeTab(index)
+    this.triggerEvent(index, true)
+  }
+
+  triggerEvent(index, forceReload) {
+    if (index === 0) {
       // 0 题目
-      eventCenter.trigger('eventChange_favorite_question', v)
+      eventCenter.trigger('eventChange_favorite_question', index, forceReload)
     } else {
       // 1 面经
-      eventCenter.trigger('eventChange_favorite_interview', v)
-
+      eventCenter.trigger('eventChange_favorite_interview', index, forceReload)
     }
-    console.log("change......====", v)
   }
 
   render() {
@@ -85,6 +95,7 @@ class Favorite extends Component {
                       initData={initData}
                       loadMore={loadMore}
                       questionBankType={10}
+                      fromType='favorite'
                     /> : <Topic2
                       scrollHeight={scrollHeight}
                       current={currentIdx}
@@ -97,6 +108,7 @@ class Favorite extends Component {
                       initData={initData}
                       loadMore={loadMore}
                       questionBankType={9}
+                      fromType='favorite'
                     />
                   }
 

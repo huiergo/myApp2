@@ -120,9 +120,7 @@ class SubDetail extends Component {
   async unitOptRequest({ action, id, type = 1, optType }) {
     let api = action == 'opt' ? apis.opt : apis.unOpt
     let result = await postJSON({ url: api, data: { id, type, optType } });
-    if (result && result.data && result.data.data) {
-      return true
-    }
+    return result
   }
 
   render() {

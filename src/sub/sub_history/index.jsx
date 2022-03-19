@@ -17,8 +17,10 @@ class Sub extends Component {
     }
   }
 
+  mCurIndex = 0
+
   componentDidMount() {
-    this.change(0)
+    // this.change(0)
     Taro.setNavigationBarTitle({
       title: this.handleNavTitle(this.props.optType)
     })
@@ -26,6 +28,27 @@ class Sub extends Component {
       this.getScrollHeight()
     }, 1000);
 
+  }
+
+  componentDidShow() {
+    this.triggerEvent(this.mCurIndex, true)
+  }
+
+  change(index) {
+    this.mCurIndex = index
+    this.props.changeTab(index)
+
+    this.triggerEvent(index, true)
+  }
+
+  triggerEvent(index, forceReload) {
+    if (index === 0) {
+      // 0 题目
+      eventCenter.trigger('eventChange_sub_history_question', index, forceReload)
+    } else {
+      // 1 面经
+      eventCenter.trigger('eventChange_sub_history_interview', index, forceReload)
+    }
   }
 
   handleNavTitle(optType) {
@@ -52,17 +75,6 @@ class Sub extends Component {
         scrollHeight: scrollHeight
       })
     }).exec()
-  }
-
-  change(v) {
-    this.props.changeTab(v)
-    if (v === 0) {
-      // 0 题目
-      eventCenter.trigger('eventChange_sub_history_question', v)
-    } else {
-      // 1 面经
-      eventCenter.trigger('eventChange_sub_history_interview', v)
-    }
   }
 
   render() {
@@ -103,6 +115,7 @@ class Sub extends Component {
                       initData={initData}
                       loadMore={loadMore}
                       questionBankType={10}
+                      fromType='sub_history'
                     /> : <Topic2
                       scrollHeight={scrollHeight}
                       optType={optType}
@@ -115,6 +128,7 @@ class Sub extends Component {
                       initData={initData}
                       loadMore={loadMore}
                       questionBankType={9}
+                      fromType='sub_history'
                     />
                   }
 
