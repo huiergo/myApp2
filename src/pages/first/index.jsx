@@ -14,6 +14,7 @@ import './index.scss'
 import { getJSON, postJSON } from '../../services/method';
 import apis from '../../services/apis'
 import { set as setGlobalData, get as getGlobalData } from '../../global_data'
+import DTabContent from "./DTabContent/index";
 
 class First extends Component {
   constructor(props) {
@@ -59,10 +60,18 @@ class First extends Component {
   }
 
   async componentDidMount() {
-    // 请求 type类型接口
-    await this.fetchCategory()
+    //获取数据,初始化全局tabGlobal
+    await this.fetchCategoryAndInitGlobal()
+    //默认选中第一个tab
+    await this.props.changeActiveIdx(0)
+    //获取用户信息
     this.fetchUserInfo()
-    this.initGlobalData()
+    //注册全局监听
+    this.initEvent()
+  }
+
+  /* 筛选框完成事件 */
+  initEvent() {
     eventCenter.on('event_filter_complete', () => {
       //关闭panel
       this.setState({
@@ -127,7 +136,7 @@ class First extends Component {
   /**
    * 获取分类
    */
-  async fetchCategory() {
+  async fetchCategoryAndInitGlobal() {
     try {
       let tabList = await getJSON({ url: apis.getCategory })
       let tempList = tabList.map(i => {
@@ -136,7 +145,8 @@ class First extends Component {
           title: i.name
         }
       })
-      this.props.updateTabList(tempList)
+      await this.props.updateTabList(tempList)
+      this.initGlobalData()
     } catch (error) {
     }
   }
@@ -179,19 +189,21 @@ class First extends Component {
       index: idx
     })
     this.syncUpdateActiveIndexAndTabList(idx)
+
   }
 
   syncUpdateActiveIndexAndTabList(idx) {
     let tempList = this.props.tabList.map((item, index) => {
       if (idx === index) {
         item.selected = true
-        this.props.changeActiveIdx(idx)
+
       } else {
         item.selected = false
       }
       return item
     })
     this.props.updateTabList(tempList)
+    this.props.changeActiveIdx(idx)
 
 
     let v_sort = getGlobalData('sort_radio_select')
@@ -278,10 +290,12 @@ class First extends Component {
   }
 
   render() {
-    let { flag } = this.props
+    let { flag, activeIdx = 0, tabList } = this.props
     let { isCurtainOpened } = this.state
     let { clockinNumbers = 0, avatar = '', nickName = '' } = this.props.userInfo
-    console.log('22222========', flag && nickName)
+
+
+    console.log('22222========', this.props.tabList && this.props.tabList.length > 0)
     return (
       <View className='first-page'>
 
@@ -320,6 +334,10 @@ class First extends Component {
             onClick={() => this.showFilterPanel()}
           />
         </View>
+        <DTabContent tabList={this.props.tabList} tabActiveIdx={activeIdx} index={activeIdx} scrollHeight={this.state.scrollHeight} />
+
+
+        {/* <DTabContent tabList={this.props.tabList} tabActiveIdx={activeIdx} index={activeIdx} scrollHeight={this.state.scrollHeight} /> */}
         <View>
           <AtCurtain
             closeBtnPosition='top-right'
