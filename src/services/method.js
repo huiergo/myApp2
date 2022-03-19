@@ -30,11 +30,12 @@ export async function newUserGetToken() {
 }
 
 export async function taroRequest({ url, data, method, headers }) {
-  console.log(TAG, url, data, method, headers);
+  console.log(TAG, '【start request 参数】', url, data, method, headers);
   let token = Taro.getStorageSync('token');
-  console.log(TAG, token);
+  console.log(TAG, '【本地获取token】', token);
   if (!token) {
     token = await newUserGetToken();
+    console.log(TAG, '【新用户】', token);
   }
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -104,13 +105,13 @@ export async function unionJSON({ url, data: requestData, method, headers, retry
       Taro.showToast({ title: message });
     }
     if (statusCode === 401) {
-      console.log(TAG, '【401】', statusCode, message, data);
+      console.log(TAG, '【命中401】');
       retry--;
       let valid = await Taro.checkSession();
       if (valid.errMsg.indexOf('ok') > -1) {
         // 未过期
         if (retry < 0) return;
-        console.log(TAG, '【handleRefreshToken】', statusCode, message, data);
+        console.log(TAG, `【retry ${retry} handleRefreshToken】`);
         await handleRefreshToken();
         return await unionJSON({ url, data: requestData, method, headers, retry });
       } else {
@@ -129,7 +130,7 @@ export async function unionJSON({ url, data: requestData, method, headers, retry
 export async function handleRefreshToken() {
   let storage_refreshToken = Taro.getStorageSync('refreshToken');
   let storage_token = Taro.getStorageSync('token');
-  console.log(TAG, 'storage refresh====', storage_refreshToken, storage_token);
+  console.log(TAG, '【storage refresh】', storage_refreshToken, storage_token);
   let data = await postJSON({
     url: apis.refreshToken,
     data: { token: storage_token },
