@@ -60,10 +60,18 @@ class First extends Component {
   }
 
   async componentDidMount() {
-    // 请求 type类型接口
-    await this.fetchCategory()
+    //获取数据,初始化全局tabGlobal
+    await this.fetchCategoryAndInitGlobal()
+    //默认选中第一个tab
+    await this.props.changeActiveIdx(0)
+    //获取用户信息
     this.fetchUserInfo()
-    this.initGlobalData()
+    //注册全局监听
+    this.initEvent()
+  }
+
+  /* 筛选框完成事件 */
+  initEvent() {
     eventCenter.on('event_filter_complete', () => {
       //关闭panel
       this.setState({
@@ -128,7 +136,7 @@ class First extends Component {
   /**
    * 获取分类
    */
-  async fetchCategory() {
+  async fetchCategoryAndInitGlobal() {
     try {
       let tabList = await getJSON({ url: apis.getCategory })
       let tempList = tabList.map(i => {
@@ -137,9 +145,8 @@ class First extends Component {
           title: i.name
         }
       })
-
       await this.props.updateTabList(tempList)
-      await this.props.changeActiveIdx(0)
+      this.initGlobalData()
     } catch (error) {
     }
   }

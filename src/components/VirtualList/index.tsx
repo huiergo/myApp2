@@ -200,7 +200,7 @@ export default class VirtialList extends Component {
                             if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
                                 this.formatMultiList(nextProps.list, nextProps.pageNum);
                             }
-                        }, 300);
+                        }, 50);
                         
                     });
             }else{

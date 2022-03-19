@@ -1,7 +1,9 @@
 import Taro from '@tarojs/taro';
 import apis from '../services/apis';
 
-let errCount = 0;
+// 接口报错后refreshToken次数
+let repeatCount = 1;
+let TAG = 'TaroRequest';
 
 export async function newUserGetToken() {
   let { code } = await Taro.login();
@@ -28,11 +30,11 @@ export async function newUserGetToken() {
 }
 
 export async function taroRequest({ url, data, method, headers }) {
+  console.log(TAG, url, data, method, headers);
   let token = Taro.getStorageSync('token');
-  console.log(444, token);
+  console.log(TAG, token);
   if (!token) {
     token = await newUserGetToken();
-    console.log(666, token);
   }
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -46,6 +48,7 @@ export async function taroRequest({ url, data, method, headers }) {
       },
     })
       .then((result) => {
+        console.log(TAG, '【请求数据成功=====】', url);
         if (result && result.data) {
           resolve({
             statusCode: result.data.code,
@@ -56,15 +59,18 @@ export async function taroRequest({ url, data, method, headers }) {
         }
       })
       .catch((err) => {
+        console.log(TAG, '【请求数据 catch=====】', url);
         reject(err);
       });
   });
 }
 export async function handleGetToken() {
   let { code } = await Taro.login();
+  console.log(TAG, '【login code=====】', code);
   try {
     let result = await postJSON({ url: apis.login, data: { code } });
     let { token, refreshToken } = result;
+    console.log(TAG, '【handleGetToken=====】', token, refreshToken);
     Taro.setStorageSync('token', token);
     Taro.setStorageSync('refreshToken', refreshToken);
   } catch (err) {
@@ -73,14 +79,14 @@ export async function handleGetToken() {
 }
 
 export async function getJSON({ url, data, headers }) {
-  return await unionJSON({ url, data, headers, method: 'GET' });
+  return await unionJSON({ url, data, headers, method: 'GET', retry: repeatCount });
 }
 
 export async function postJSON({ url, data, headers }) {
-  return await unionJSON({ url, data, headers, method: 'POST' });
+  return await unionJSON({ url, data, headers, method: 'POST', retry: repeatCount });
 }
 
-export async function unionJSON({ url, data: requestData, method, headers }) {
+export async function unionJSON({ url, data: requestData, method, headers, retry }) {
   try {
     let { statusCode, message, data } = await taroRequest({
       url,
@@ -88,7 +94,7 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
       method,
       headers,
     });
-
+    console.log(TAG, '【statusCode====】', statusCode, message, data, retry);
     if (statusCode === 10000) {
       // 请求正常
       return data;
@@ -98,33 +104,40 @@ export async function unionJSON({ url, data: requestData, method, headers }) {
       Taro.showToast({ title: message });
     }
     if (statusCode === 401) {
-      errCount++;
+      console.log(TAG, '【401】', statusCode, message, data);
+      retry--;
       let valid = await Taro.checkSession();
       if (valid.errMsg.indexOf('ok') > -1) {
         // 未过期
-        if (errCount > 1) return;
+        if (retry < 0) return;
+        console.log(TAG, '【handleRefreshToken】', statusCode, message, data);
         await handleRefreshToken();
-        errCount = 0;
-        return await unionJSON({ url, data: requestData, method, headers });
+        return await unionJSON({ url, data: requestData, method, headers, retry });
       } else {
+        console.log(TAG, '【handleRefreshToken else】', statusCode, message, data);
+        await handleGetToken();
+        return await unionJSON({ url, data: requestData, method, headers, retry });
       }
     }
   } catch (error) {
-    console.log('error====', error);
+    console.log(TAG, 'error====', error);
     await handleGetToken();
-    return await unionJSON({ url, data: requestData, method, headers });
+    return await unionJSON({ url, data: requestData, method, headers, retry });
   }
 }
 
 export async function handleRefreshToken() {
   let storage_refreshToken = Taro.getStorageSync('refreshToken');
   let storage_token = Taro.getStorageSync('token');
+  console.log(TAG, 'storage refresh====', storage_refreshToken, storage_token);
   let data = await postJSON({
     url: apis.refreshToken,
     data: { token: storage_token },
     headers: { Authorization: 'Bearer ' + storage_refreshToken },
   });
   let { token, refreshToken } = data;
+  console.log(TAG, 'refresh 结果  ====', token, refreshToken);
+
   Taro.setStorageSync('token', token);
   Taro.setStorageSync('refreshToken', refreshToken);
 }
