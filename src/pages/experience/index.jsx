@@ -37,7 +37,7 @@ class Experience extends Component {
 
     return (
       <View className='index'>
-        <View className='index__search-bar' onClick={() => gotoPage({ url: '../../sub/search/index' })}>
+        <View className='index__search-bar' onClick={() => gotoPage({ url: '../../sub/search/index?fromType=experience' })}>
           <AtSearchBar
             placeholder='请输入搜索关键词'
             disabled

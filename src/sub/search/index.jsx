@@ -1,7 +1,7 @@
 import { Component, createRef } from 'react'
 import { View, Button, Text } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
-import Taro from '@tarojs/taro';
+import Taro, { getCurrentInstance } from '@tarojs/taro';
 import DSearchBar from './DSearchBar/index'
 import DSearchRecord from './DSearchRecord/index'
 import DSearchList from './DSearchList/index'
@@ -23,9 +23,12 @@ class Search extends Component {
     this.recordRef = createRef()
     console.log('this.searchInputRef ', this.searchInputRef)
     console.log('this.recordRef', this.recordRef)
+    this.fromType = ''
   }
+  $instance = getCurrentInstance()
 
   componentDidMount() {
+    this.fromType = this.$instance.router.params.fromType
     this.getScrollHeight()
   }
 
@@ -86,7 +89,7 @@ class Search extends Component {
               onRecordItemClick={(v) => this.onRecordItemClick(v)}
             />
           }
-          {this.state.keyword && <DSearchList searchAction={this.state.searchAction} keyword={this.state.keyword} scrollHeight={this.state.scrollHeight} />}
+          {this.state.keyword && <DSearchList fromType={this.fromType} searchAction={this.state.searchAction} keyword={this.state.keyword} scrollHeight={this.state.scrollHeight} />}
         </View>
       </View>
     )

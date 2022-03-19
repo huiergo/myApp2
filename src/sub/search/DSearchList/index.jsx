@@ -3,12 +3,25 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro';
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
-// 写死，这里需要判断 当前是首页还是面经页面的tab ，然后渲染的  QuestionItem or InterviewItem
 import QuestionItem from '../../../components/questionItem'
+import InterviewItem from '../../../components/interviewItem'
+
 import './index.css'
 import { SEARCH_CLICK, LOADING_DESC } from '../../../utils/constant'
 
 let timer = null
+
+const renderQuestionList = (list) => {
+  return list.map((item, index) => {
+    return <QuestionItem item={item} key={index} />
+  })
+}
+
+const renderInterviewList = (list) => {
+  return list.map((item, index) => {
+    return <InterviewItem item={item} key={index} />
+  })
+}
 class Search extends Component {
   constructor(props) {
     super(props)
@@ -44,15 +57,15 @@ class Search extends Component {
   }
 
   async initData() {
-    // todo: 等待传递 写死 questionBankType=9
     if (this.props.searchAction === SEARCH_CLICK) {
       Taro.showLoading({
         title: LOADING_DESC
       })
     }
+    let type = this.props.fromType == 'experience' ? 9 : 10
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
-      data: { page: 1, keyword: this.props.keyword, questionBankType: 9, pageSize: 30 },
+      data: { page: 1, keyword: this.props.keyword, questionBankType: type, pageSize: 30 },
     });
 
     this.setState({
@@ -83,9 +96,12 @@ class Search extends Component {
     const { scrollHeight } = this.props
     return (
       <View className='search-scroll' style={{ height: scrollHeight }}>
-        {this.state.list.map((item, index) => {
-          return <QuestionItem item={item} key={index} />
-        })}
+        {
+          this.props.fromType == 'experience'
+            ? renderInterviewList(this.state.list) :
+            renderQuestionList(this.state.list)
+        }
+
       </View>
     )
   }
