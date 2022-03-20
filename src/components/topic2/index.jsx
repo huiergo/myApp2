@@ -19,28 +19,29 @@ class Topic extends Component {
 
   componentWillMount() {
     this.initByTabChange(0)
-    // 监听一个事件，接受参数
-    eventCenter.on('eventChange_experience', (currentIndex) => {
-      console.log("[topic2 eventChange_experience  currentIndex]", currentIndex, this.props.index)
-      this.initByTabChange(currentIndex)
-    })
 
-    //收藏 用的是interviewItem ,  eventChange_favorite
-    eventCenter.on('eventChange_favorite_interview', (currentIndex, isForceReload) => {
-      if (isForceReload) {
-        this.forceReload(currentIndex)
-      } else {
+    if (this.props.fromType == 'sub_history') {
+      eventCenter.on('eventChange_sub_history_interview', (currentIndex, isForceReload) => {
+        if (isForceReload) {
+          this.forceReload(currentIndex)
+        } else {
+          this.initByTabChange(currentIndex)
+        }
+      })
+    } else if (this.props.fromType == 'favorite') {
+      eventCenter.on('eventChange_favorite_interview', (currentIndex, isForceReload) => {
+        if (isForceReload) {
+          this.forceReload(currentIndex)
+        } else {
+          this.initByTabChange(currentIndex)
+        }
+      })
+    } else {
+      eventCenter.on('eventChange_experience', (currentIndex) => {
         this.initByTabChange(currentIndex)
-      }
-    })
-    // 我的收藏，浏览，点赞 子页面 监听 ： 
-    eventCenter.on('eventChange_sub_history_interview', (currentIndex, isForceReload) => {
-      if (isForceReload) {
-        this.forceReload(currentIndex)
-      } else {
-        this.initByTabChange(currentIndex)
-      }
-    })
+      })
+    }
+
   }
 
   initByTabChange(currentIndex = 0) {

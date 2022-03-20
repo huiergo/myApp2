@@ -44,14 +44,17 @@ class First extends Component {
       query.select('.first-search-bar').boundingClientRect()
       query.select('.at-tabs__body').boundingClientRect()
         .exec(res => {
+          console.log('[获取高度]', res)
           searchBarHeight = res[0].height
           tabbodyTop = res[1].top
           Taro.setStorageSync('at_search_height', searchBarHeight)
         })
 
       Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
+        console.log('[可视区域高度]', res)
         viewPortHeight = res.height
         Taro.setStorageSync('viewport_height', viewPortHeight)
+        console.log('滚动区域设置为', viewPortHeight - tabbodyTop - tabHeight)
         _this.setState({
           scrollHeight: (viewPortHeight - tabbodyTop - tabHeight)
         })

@@ -72,6 +72,7 @@ class Favorite extends Component {
       <View className='index'>
         <AtTabs
           scroll
+          animated={false}
           swipeable={false}
           current={currentIdx}
           tabList={chineseTabList}

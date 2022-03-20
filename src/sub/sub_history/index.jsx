@@ -24,9 +24,7 @@ class Sub extends Component {
     Taro.setNavigationBarTitle({
       title: this.handleNavTitle(this.props.optType)
     })
-    setTimeout(() => {
-      this.getScrollHeight()
-    }, 1000);
+    this.getScrollHeight()
 
   }
 
@@ -92,6 +90,7 @@ class Sub extends Component {
       <View className='index'>
         <AtTabs
           scroll
+          animated={false}
           swipeable={false}
           current={currentIdx}
           tabList={chineseTabList}

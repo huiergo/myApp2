@@ -18,43 +18,48 @@ const Row = React.memo(({ id, index, style, data }) => {
 })
 
 class Topic extends Component {
-  // loading = false
-  init = true
 
   componentWillMount() {
     this.initByTabChange(0)
-    // 监听一个事件，接受参数
-    eventCenter.on('eventChange', (...args) => {
-      console.log('args----', args)
-      // const { selectIndex, keyword, sort } = args
+    if (this.props.fromType == 'sub_history') {
+      eventCenter.on('eventChange_sub_history_question', (currentIndex, isForceReload) => {
+        if (isForceReload) {
+          this.forceReload(currentIndex)
+        } else {
+          this.initByTabChange(currentIndex)
+        }
+      })
+    } else if (this.props.fromType == 'favorite') {
+      eventCenter.on('eventChange_favorite_question', (currentIndex, isForceReload) => {
+        if (isForceReload) {
+          this.forceReload(currentIndex)
+        } else {
+          this.initByTabChange(currentIndex)
+        }
+      })
+    } else {
+      eventCenter.on('eventChange', (...args) => {
+        let selectIndex = args[0]
+        let keyword = args[1]
+        let sort = args[2]
+        this.initByTabChange(selectIndex, keyword, sort)
+      })
 
-      let selectIndex = args[0]
-      let keyword = args[1]
-      let sort = args[2]
-      // console.log("[topic eventChange  currentIndex]", currentIndex, this.props.index)
-      this.initByTabChange(selectIndex, keyword, sort)
-    })
-    //收藏 用的是qustionItem ,  eventChange_favorite
-    eventCenter.on('eventChange_favorite_question', (currentIndex, isForceReload) => {
-      if (isForceReload) {
-        this.forceReload(currentIndex)
-      } else {
-        this.initByTabChange(currentIndex)
-      }
-    })
-    // 我的收藏，浏览，点赞 子页面 监听 ： 
-    eventCenter.on('eventChange_sub_history_question', (currentIndex, isForceReload) => {
-      if (isForceReload) {
-        this.forceReload(currentIndex)
-      } else {
-        this.initByTabChange(currentIndex)
-      }
-    })
+    }
+  }
 
+  componentWillUnmount() {
+    // 卸载
+    if (this.props.fromType == 'sub_history') {
+      eventCenter.off('eventChange_sub_history_question')
+    } else if (this.props.fromType == 'favorite') {
+      eventCenter.off('eventChange_favorite_question')
+    } else {
+      eventCenter.off('eventChange')
+    }
   }
 
   initByTabChange(currentIndex = 0, ...extraParams) {
-
     console.log('initData extraParams----', extraParams)
     if (this.props.index === currentIndex) {
       this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType, extraParams: extraParams })
@@ -63,19 +68,6 @@ class Topic extends Component {
 
   forceReload(currentIndex = 0) {
     this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType })
-  }
-
-  componentWillUnmount() {
-    // 卸载
-
-
-    if (this.props.fromType == 'sub_history') {
-      eventCenter.off('eventChange_sub_history_question')
-    } else if (this.props.fromType == 'favorite') {
-      eventCenter.off('eventChange_favorite_question')
-    } else {
-      eventCenter.off('eventChange')
-    }
   }
 
   render() {

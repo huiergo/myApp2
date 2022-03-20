@@ -35,6 +35,7 @@ class Sub extends Component {
 
         <AtTabs
           scroll
+          animated={false}
           swipeable={false}
           current={currentIdx}
           tabList={chineseTabList}

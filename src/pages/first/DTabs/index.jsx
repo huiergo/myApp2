@@ -26,6 +26,7 @@ class DTabs extends Component {
         className='first-tab'
         current={activeIdx}
         scroll
+        animated={false}
         tabList={tabList}
         onClick={this.handleClick.bind(this)}
       >
