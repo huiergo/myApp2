@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro, { eventCenter } from '@tarojs/taro';
+import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -13,8 +13,28 @@ import * as experienceActions from "../../actions/experience.action"
 class Experience extends Component {
   constructor() {
     super(...arguments)
-
+    this.state = {
+      scrollHeight: 0,
+    }
   }
+
+  $instance = getCurrentInstance()
+
+  componentWillMount() {
+    const onReadyEventId = this.$instance.router.onReady
+    let _this = this
+    eventCenter.once(onReadyEventId, () => {
+      let tabBarHeight = Taro.getStorageSync('at_tabs_height')
+      let searchBarHeight = Taro.getStorageSync('at_search_height')
+      let viewportHeight = Taro.getStorageSync('viewport_height')
+      let scrollHeight = viewportHeight - searchBarHeight - tabBarHeight
+
+      _this.setState({
+        scrollHeight
+      })
+    })
+  }
+
   change(v) {
     this.props.changeTab(v)
     eventCenter.trigger('eventChange_experience', v)
@@ -30,10 +50,6 @@ class Experience extends Component {
       initData,
       loadMore
     } = this.props
-    let tabBarHeight = Taro.getStorageSync('at_tabs_height')
-    let searchBarHeight = Taro.getStorageSync('at_search_height')
-    let viewportHeight = Taro.getStorageSync('viewport_height')
-    let scrollHeight = viewportHeight - searchBarHeight - tabBarHeight
 
     return (
       <View className='index'>
@@ -57,7 +73,7 @@ class Experience extends Component {
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
                   {/* index-{item.title} - {idx} */}
                   <Topic2
-                    scrollHeight={scrollHeight}
+                    scrollHeight={this.state.scrollHeight}
                     current={currentIdx}
                     index={idx}
                     type={tabList[idx]}

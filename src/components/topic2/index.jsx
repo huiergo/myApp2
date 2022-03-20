@@ -96,7 +96,7 @@ class Topic extends Component {
             scrollDirection === 'forward' &&
             // 5 = (列表高度 / 单项列表高度)
             // 100 = 滚动提前加载量，可根据样式情况调整
-            scrollOffset > (dataLen * itemSize - 600)
+            scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
           ) {
 
             if ((page + 1) <= pageTotal) {
