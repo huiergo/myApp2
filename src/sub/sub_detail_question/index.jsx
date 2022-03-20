@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import Taro from '@tarojs/taro';
 import { View, Image, Button, Text } from '@tarojs/components';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as commonActions from "../../actions/common.action"
 import apis from '../../services/apis';
+import { loggingDecorator } from "../../utils/index"
 
 import { getJSON, postJSON } from "../../services/method";
 
@@ -72,27 +76,35 @@ class SubDetail extends Component {
 
   // 赞 事件
   async handleZan(flag) {
-    console.log("点赞id----", this.state.item.id)
-    let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
-    await result && this.setState({
-      item: {
-        ...this.state.item,
-        likeFlag: !flag
-      }
-    })
+    const fn = async () => {
+      console.log("点赞id----", this.state.item.id)
+      let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
+      await result && this.setState({
+        item: {
+          ...this.state.item,
+          likeFlag: !flag
+        }
+      })
+    }
+    loggingDecorator(fn)
   }
+
   // 收藏 事件
   async handleFavorite(flag) {
-    console.log("收藏 id----", this.state.item.id)
-    let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
-    console.log("题目详情页： 收藏 请求 结果----", result)
-    await result && this.setState({
-      item: {
-        ...this.state.item,
-        collectFlag: !flag
-      }
-    })
+    const fn = async () => {
+      console.log("收藏 id----", this.state.item.id)
+      let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
+      console.log("题目详情页： 收藏 请求 结果----", result)
+      await result && this.setState({
+        item: {
+          ...this.state.item,
+          collectFlag: !flag
+        }
+      })
+    }
+    loggingDecorator(fn)
   }
+
   /**
    * type:     0面试题1面经
    * optType:  1点赞2收藏3浏览
@@ -138,4 +150,14 @@ class SubDetail extends Component {
   }
 }
 
-export default SubDetail
+const mapStateToProps = (state) => {
+  let { userInfo, flag } = state.common
+  return {
+    userInfo, flag
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(commonActions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubDetail);

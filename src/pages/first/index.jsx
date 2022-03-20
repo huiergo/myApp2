@@ -6,7 +6,7 @@ import { View, Image, Text, Button } from '@tarojs/components'
 import { AtSearchBar, AtCurtain } from 'taro-ui'
 import * as firstActions from "./first.action"
 import * as commonActions from "../../actions/common.action"
-import { gotoPage } from "../../utils/index"
+import { gotoPage, loggingDecorator } from "../../utils/index"
 import Filter from './Filter/index'
 import DTabs from './DTabs'
 import ClockInModel from "../../components/clockInModel";
@@ -161,7 +161,6 @@ class First extends Component {
     try {
       let userInfo = await getJSON({ url: apis.getUserInfo })
       this.props.syncUser(userInfo)
-      console.log('33333======', userInfo)
       this.props.syncFlag(userInfo.flag)
     } catch (error) {
     }
@@ -232,15 +231,12 @@ class First extends Component {
     eventCenter.trigger('event_update_sort_view')
   }
 
-
+  // 打卡行为
   onClickClockIn() {
-    if (this.props.userInfo && this.props.userInfo.nickName) {
-      console.log('if...')
+    const fn = () => {
       this.handleClockInClick(this.props.flag)
-    } else {
-      console.log('else...')
-      this.getUserProfile()
     }
+    loggingDecorator(fn);
   }
 
   /**
@@ -255,33 +251,6 @@ class First extends Component {
       })
     }
   }
-  /**
-   * 用于完善会员资料
-   */
-  getUserProfile() {
-    let _this = this
-    Taro.getUserProfile({
-      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: async (res) => {
-        // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-        console.log('【UserProfile=======】', res)
-        let { nickName, avatarUrl } = res.userInfo
-
-        _this.handleClockInClick(this.props.flag)
-
-        let user = {
-          ..._this.props.userInfo,
-          avatar: avatarUrl,
-          nickName: nickName
-        }
-        _this.props.syncUser(user)
-        let { code } = await Taro.login();
-        _this.props.submitUserInfo({ ...res, code })
-      }
-    })
-
-  }
-
 
   /**
    *  打卡蒙层 隐藏
@@ -298,7 +267,6 @@ class First extends Component {
     let { clockinNumbers = 0, avatar = '', nickName = '' } = this.props.userInfo
 
 
-    console.log('22222========', this.props.tabList && this.props.tabList.length > 0)
     return (
       <View className='first-page'>
 

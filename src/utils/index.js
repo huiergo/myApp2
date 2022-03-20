@@ -1,4 +1,5 @@
 import Taro from '@tarojs/taro';
+import store from '../store/index';
 
 export function setStorage(key, value) {
   Taro.setStorageSync(key, value);
@@ -34,6 +35,14 @@ export function gotoPage({ url }) {
 
 export function redirectToPage({ url }) {
   return Taro.redirectTo({ url });
+}
+
+// 按钮点击拦截装饰器
+export function loggingDecorator(fn = () => {}) {
+  let { nickName } = store.getState().common.userInfo;
+  if (!nickName) return gotoPage({ url: '../../sub/login/index' });
+  fn.apply(this);
+  console.log('执行完成');
 }
 
 // // 防抖

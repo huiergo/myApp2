@@ -9,7 +9,7 @@ import { AtList, AtListItem, AtGrid, AtCurtain } from "taro-ui"
 import * as mineActions from "../../actions/mine.action";
 import * as commonActions from "../../actions/common.action"
 
-import { gotoPage } from '../../utils/index'
+import { gotoPage, loggingDecorator } from '../../utils/index'
 
 import ClockInModel from "../../components/clockInModel";
 import './index.scss'
@@ -63,18 +63,7 @@ class Mine extends Component {
     }
   }
 
-  handleGridClick({ gridType }) {
-    if (this.props.userInfo && this.props.userInfo.nickName) {
-      this.props.changeOptType(gridType)
-      gotoPage({ url: '../../sub/sub_history/index' })
-    } else {
-      Taro.showToast({
-        title: '请先登录',
-        icon: 'error'
-      })
-    }
 
-  }
 
   onClose() {
     this.setState({
@@ -94,31 +83,6 @@ class Mine extends Component {
     }
   }
 
-  getUserProfile() {
-    let _this = this
-    console.log('[getUserProfile]-------', this.props.userInfo && this.props.userInfo.nickName)
-    Taro.getUserProfile({
-      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: async (res) => {
-        console.log('【UserProfile=======】', res)
-        // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-
-        let { nickName, avatarUrl } = res.userInfo
-        let user = {
-          ..._this.props.userInfo,
-          avatar: avatarUrl,
-          nickName: nickName
-        }
-        console.log('4---', user)
-        _this.props.syncUser(user)
-
-        let { code } = await Taro.login();
-        _this.props.submitUserInfo({ ...res, code })
-      }
-    })
-
-  }
-
   toastToSignup() {
     Taro.showToast({
       title: '请先登录',
@@ -126,38 +90,56 @@ class Mine extends Component {
     })
   }
 
+
+
+  // 头像点击事件
+  onLoginClick() {
+    const fn = () => {
+      console.log('此处登录没啥内置逻辑')
+    }
+    loggingDecorator(fn);
+  }
+
+  // 子页面 点击事件
+  handleGridClick({ gridType }) {
+    const fn = () => {
+      this.props.changeOptType(gridType)
+      gotoPage({ url: '../../sub/sub_history/index' })
+    }
+    loggingDecorator(fn);
+  }
   render() {
     const { clockinNumbers = 0, avatar = 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132', nickName = '', } = this.props.userInfo
     const { flag } = this.props
 
-
     return (
       <View className='mine-page'>
-        {(flag && nickName) ? (
-          <View className='user-info'>
-            <View className='user-info-wrap'>
-              <Image className='user-info-avatar' src={avatar} />
-              <View className='user-info-text'>
-                <Button className='user-info-name'>
-                  {nickName}
-                </Button>
+        {!nickName
+          ? (
+            <View className='user-info'>
+              <View className='user-info-wrap' onClick={() => this.onLoginClick()}>
+                <Image className='user-info-avatar' src={avatar} />
+                <View className='user-info-text'>
+                  <Button className='user-info-name'>
+                    登录
+                  </Button>
+                </View>
               </View>
+              <View className='user-clock-status' onClick={() => this.handleClockInClick(flag)}>签到</View>
             </View>
-            <View className='user-clock-status'>{`连续签到 ${clockinNumbers} 天 ✓`}</View>
-          </View>
-        ) : (
-          <View className='user-info'>
-            <View className='user-info-wrap' onClick={() => this.getUserProfile()}>
-              <Image className='user-info-avatar' src={avatar} />
-              <View className='user-info-text'>
-                <Button className='user-info-name'>
-                  登录
-                </Button>
+          ) : (
+            <View className='user-info'>
+              <View className='user-info-wrap'>
+                <Image className='user-info-avatar' src={avatar} />
+                <View className='user-info-text'>
+                  <Button className='user-info-name'>
+                    {nickName}
+                  </Button>
+                </View>
               </View>
+              <View className='user-clock-status' onClick={() => flag ? null : this.handleClockInClick(flag)}>{flag ? `连续签到 ${clockinNumbers} 天 ✓` : '签到'}</View>
             </View>
-            <View className='user-clock-status' onClick={() => this.handleClockInClick(flag)}>签到</View>
-          </View>
-        )}
+          )}
 
 
         {/* 横向3格 */}
