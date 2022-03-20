@@ -173,7 +173,8 @@ class First extends Component {
   async fetchClockIn() {
     try {
       let result = await postJSON({ url: apis.clockIn })
-      this.props.syncFlag(result)
+      this.props.syncFlag(result.flag ? result.flag : true)
+      this.props.syncUser(result)
     } catch (error) {
     }
   }
@@ -232,23 +233,20 @@ class First extends Component {
   }
 
   // 打卡行为
-  onClickClockIn() {
-    const fn = () => {
-      this.handleClockInClick(this.props.flag)
-    }
-    loggingDecorator(fn);
-  }
-
-  /**
-   *  打卡蒙层 展示与否
-   */
-  async handleClockInClick(flag) {
-    if (!flag) {
+  handleClockInClick() {
+    let { nickName } = this.props.userInfo
+    const fn = async () => {
       // 调用签到接口
       await this.fetchClockIn()
       await this.setState({
         isCurtainOpened: true
       })
+    }
+
+    if (nickName) {
+      fn()
+    } else {
+      loggingDecorator(fn);
     }
   }
 
@@ -287,7 +285,7 @@ class First extends Component {
           ) : (
             <View className='first_clock_wrap'>
               <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
-              <Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={() => this.onClickClockIn()}>打卡</Button>
+              <Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={() => this.handleClockInClick()}>打卡</Button>
             </View>
           )}
         </View>

@@ -49,21 +49,18 @@ class Mine extends Component {
 
   async handleClockInClick() {
     let { nickName } = this.props.userInfo
-    console.log('nickName----', nickName)
-    if (nickName) {
-      Taro.showToast({
-        title: '请先登录',
-        icon: 'error'
-      })
-    } else {
+    const fn = async () => {
       await this.props.clockIn()
       this.setState({
         isOpened: true
       })
     }
+    if (nickName) {
+      loggingDecorator(fn);
+    } else {
+      fn()
+    }
   }
-
-
 
   onClose() {
     this.setState({

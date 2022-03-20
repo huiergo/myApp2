@@ -39,7 +39,9 @@ function* handleFlag(params) {
 function* handleClockIn() {
   // todo : params 应该从store中取得，不应该组件传递
   let result = yield postJSON({ url: apis.clockIn });
-  yield put(syncFlag(result));
+
+  yield put(syncFlag(result.flag ? result.flag : true));
+  yield put(syncUser(result));
 }
 
 /**
