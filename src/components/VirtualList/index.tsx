@@ -204,12 +204,10 @@ export default class VirtialList extends Component {
                         innerScrollTop: 0,
                     }, () => {
                         // 防止在滚动过程中切换tab, 导致页面不置顶
-                        setTimeout(() => {
-                                console.log('【 走 if。。。。】')
+                        Taro.nextTick(() => {
                                 this.formatMultiList(nextProps.list, nextProps.pageNum);
-                         
-                        }, 50);
-                        
+                        })
+
                     });
                 }
             }else{
