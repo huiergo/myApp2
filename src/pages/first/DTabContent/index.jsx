@@ -24,7 +24,7 @@ class DTabContent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      autoScrollTop: false,
+      resetTwoList: false,
       list: [],
       page: 1,
       pageTotal: '',
@@ -93,7 +93,7 @@ class DTabContent extends Component {
       page: 1,
       pageTotal,
       list: tempList,
-      autoScrollTop: true
+      resetTwoList: true
     }, () => {
       console.log(TAG, '【init setData 设置完成】')
     })
@@ -128,7 +128,7 @@ class DTabContent extends Component {
       });
       console.log("【loadmore ====】", list, pageTotal)
       this.setState({
-        autoScrollTop: false,
+        resetTwoList: false,
         page: currentPage + 1,
         pageTotal,
         list: this.state.list.concat(list)
@@ -164,8 +164,8 @@ class DTabContent extends Component {
       <View>
         <TaroVirtualList
           listId={this.state.virtualListId}
-          autoScrollTop={this.state.autoScrollTop}
-          resetTwoList={this.state.autoScrollTop}
+          autoScrollTop={false}
+          resetTwoList={this.state.resetTwoList}
           listType="multi"
           list={this.state.list}
           pageNum={this.state.page}

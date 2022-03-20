@@ -194,6 +194,10 @@ export default class VirtialList extends Component {
         }
         else if (listType === "multi") {
             if(resetTwoList){
+                // 提前把innerScrollTop置为不是0，防止列表置顶失效
+                this.setState({
+                    innerScrollTop: 1,
+                });
                 if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
 
                     this.pageHeightArr = [];

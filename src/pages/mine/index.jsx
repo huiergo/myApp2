@@ -56,9 +56,10 @@ class Mine extends Component {
       })
     }
     if (nickName) {
-      loggingDecorator(fn);
-    } else {
       fn()
+    } else {
+      loggingDecorator(fn);
+
     }
   }
 
@@ -106,8 +107,10 @@ class Mine extends Component {
     loggingDecorator(fn);
   }
   render() {
-    const { clockinNumbers = 0, avatar = 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132', nickName = '', } = this.props.userInfo
+    let defaultAvatar = 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132'
+    let { clockinNumbers = 0, avatar = defaultAvatar, nickName = '', } = this.props.userInfo
     const { flag } = this.props
+    avatar = (avatar && avatar !== '') ? avatar : defaultAvatar
 
     return (
       <View className='mine-page'>

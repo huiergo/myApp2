@@ -69,7 +69,12 @@ export async function handleGetToken() {
   let { code } = await Taro.login();
   console.log(TAG, '【login code=====】', code);
   try {
-    let result = await postJSON({ url: apis.login, data: { code } });
+    let result = await unionJSON({
+      url: apis.login,
+      data: { code },
+      method: 'POST',
+      retry: 0,
+    });
     let { token, refreshToken } = result;
     console.log(TAG, '【handleGetToken=====】', token, refreshToken);
     Taro.setStorageSync('token', token);
@@ -131,10 +136,13 @@ export async function handleRefreshToken() {
   let storage_refreshToken = Taro.getStorageSync('refreshToken');
   let storage_token = Taro.getStorageSync('token');
   console.log(TAG, '【storage refresh】', storage_refreshToken, storage_token);
-  let data = await postJSON({
+
+  let data = await unionJSON({
     url: apis.refreshToken,
     data: { token: storage_token },
     headers: { Authorization: 'Bearer ' + storage_refreshToken },
+    method: 'POST',
+    retry: 0,
   });
   let { token, refreshToken } = data;
   console.log(TAG, 'refresh 结果  ====', token, refreshToken);
