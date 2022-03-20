@@ -17,7 +17,7 @@ class Sub extends Component {
     }
   }
 
-  mCurIndex = 0
+  mCurIndex = this.props.currentIdx || 0
 
   componentDidMount() {
     // this.change(0)

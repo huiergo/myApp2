@@ -38,12 +38,6 @@ class Topic extends Component {
         }
       })
     } else {
-      eventCenter.on('eventChange', (...args) => {
-        let selectIndex = args[0]
-        let keyword = args[1]
-        let sort = args[2]
-        this.initByTabChange(selectIndex, keyword, sort)
-      })
 
     }
   }
@@ -55,7 +49,7 @@ class Topic extends Component {
     } else if (this.props.fromType == 'favorite') {
       eventCenter.off('eventChange_favorite_question')
     } else {
-      eventCenter.off('eventChange')
+
     }
   }
 
