@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as commonActions from "../../actions/common.action"
-
+import { LOADING_DESC } from "../../utils/constant";
 import './index.scss'
 
 class Share extends Component {
@@ -15,17 +15,24 @@ class Share extends Component {
   }
 
   componentDidMount() {
+    Taro.showLoading({
+      title: LOADING_DESC
+    })
+
     setTimeout(() => {
       if (this.props.flag) {
         Taro.showToast({
           title: '打卡成功'
         })
       }
-      //  else {
-      //   Taro.showToast({
-      //     title: '打卡失败'
-      //   })
-      // }
+      else {
+        // todo: 成功，失败的通知 这里想下怎么处理
+        Taro.showToast({
+          title: '打卡失败'
+        })
+      }
+      Taro.hideLoading()
+
     }, 300);
   }
 
