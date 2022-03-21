@@ -121,7 +121,7 @@ class SubDetail extends Component {
           <Image className='detail-interview__user-avatar' src={creatorAvatar} />
           {creatorName}
         </View>
-        <View className='detail-content' dangerouslySetInnerHTML={{ __html: item.content }}></View>
+        <View className='detail-content detail-content-interview' dangerouslySetInnerHTML={{ __html: item.content }}></View>
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
