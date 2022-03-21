@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 
 import * as commonActions from "../../actions/common.action"
 
-import './index.css'
+import './index.scss'
 
 class Login extends Component {
   constructor() {
@@ -47,7 +47,8 @@ class Login extends Component {
   render() {
     return (
       <View className='login-page'>
-        <Button onClick={() => this.login()}>登录</Button>
+        <Image className='login_content_img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/long_content_img.png' />
+        <Image className='login_btn_img' onClick={() => this.login()} src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/login_btn%402x.png' />
       </View>
     )
   }
