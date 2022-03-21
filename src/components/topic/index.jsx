@@ -7,7 +7,7 @@ import { View, Image, Button } from '@tarojs/components'
 import VirtualList from '@tarojs/components/virtual-list'
 import QuestionItem from '../questionItem'
 import * as firstActions from "../../actions/first.action"
-
+import './index.scss'
 
 const Row = React.memo(({ id, index, style, data }) => {
   return (
@@ -70,42 +70,56 @@ class Topic extends Component {
     const itemSize = 80
 
     return (
-      <VirtualList
-        className='List'
-        height={this.props.scrollHeight}
-        // height={300}
-        itemData={list}
-        itemCount={dataLen}
-        itemSize={itemSize}
-        width='100%'
-        bounces={false}
-        // upperThreshold={100}
-        // lowerThreshold={100}
-        overscanCount={30}
+      <View className='topic-page'>
+        {list && list.length > 0 ?
+          <VirtualList
+            className='List'
+            height={this.props.scrollHeight}
+            // height={300}
+            itemData={list}
+            itemCount={dataLen}
+            itemSize={itemSize}
+            width='100%'
+            bounces={false}
+            // upperThreshold={100}
+            // lowerThreshold={100}
+            overscanCount={30}
 
-        onScroll={({ scrollDirection, scrollOffset, detail }) => {
-          console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
-          console.log('scroll  top -----', detail.scrollTop)
+            onScroll={({ scrollDirection, scrollOffset, detail }) => {
+              console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
+              console.log('scroll  top -----', detail.scrollTop)
 
-          // 上拉加载
-          if (!this.props.loading &&
-            // 只有往前滚动我们才触发
-            scrollDirection === 'forward' &&
-            // 5 = (列表高度 / 单项列表高度)
-            // 100 = 滚动提前加载量，可根据样式情况调整
-            scrollOffset > (dataLen * itemSize - 600)
-          ) {
+              // 上拉加载
+              if (!this.props.loading &&
+                // 只有往前滚动我们才触发
+                scrollDirection === 'forward' &&
+                // 5 = (列表高度 / 单项列表高度)
+                // 100 = 滚动提前加载量，可根据样式情况调整
+                scrollOffset > (dataLen * itemSize - 600)
+              ) {
 
-            if ((page + 1) <= pageTotal) {
-              console.log('loadmore before')
-              loadMore({ type, page: page + 1, questionBankType, optType, extraParams })
-              console.log('loadmore after')
-            }
-          }
-        }}
-      >
-        {Row}
-      </VirtualList>
+                if ((page + 1) <= pageTotal) {
+                  console.log('loadmore before')
+                  loadMore({ type, page: page + 1, questionBankType, optType, extraParams })
+                  console.log('loadmore after')
+                }
+              }
+            }}
+          >
+            {Row}
+          </VirtualList>
+          :
+          <View className='blank_page'>
+            {/* 内容展示区 */}
+            <View className='blank-content'>
+              <Image className='blank-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/blank.png' />
+              <View className='blank-des'>暂无题目浏览记录</View>
+            </View>
+          </View>
+        }
+
+      </View>
+
     );
   }
 }
