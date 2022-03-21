@@ -1,11 +1,13 @@
 .custom-model-layout .at-float-layout__container{
-  border-top-left-radius: 42px;
+  border-top-left-radius:42px;
   border-top-right-radius: 42px;
 }
 
 .custom-model-layout .layout-header{
   border-top-left-radius: 42px;
-  border-top-right-radius: 42px;
+  border-top-right-radius:42px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 
@@ -14,4 +16,9 @@
     font-size: 28px;
     margin-bottom: 23px;
     margin-top: 40px;
+  }
+
+
+  .custom-model-layout   .layout-body {
+    padding: 0 50px;
   }

@@ -48,7 +48,7 @@ class Filter extends Component {
   render() {
     return (
       <CustomModel
-        className='custom-model'
+        className='custom-model-layout'
         isOpened={this.props.filterOpen}
         title='重置'
         closeText='完成'
@@ -57,12 +57,12 @@ class Filter extends Component {
         onHideModel={() => this.props.hideModel()}
       >
         <View className='panel__content no-padding'>
-          <View className='custom__tag-title'> 题目排序</View>
+          <View className='custom__tag-title'>题目排序</View>
           <View className='radio-container'>
             <DSortRadio isReset={this.state.isReset} onClick={this.handleSortRadio.bind(this)} />
           </View>
 
-          <View className='custom__tag-title'> 测试阶段</View>
+          <View className='custom__tag-title'>选择阶段</View>
           <View className='radio-container'>
             <DPureRadio tabList={this.props.tabList} isReset={this.state.isReset} onClick={this.handlePureRadio.bind(this)} />
           </View>
