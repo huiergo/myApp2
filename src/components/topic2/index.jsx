@@ -88,7 +88,8 @@ class Topic extends Component {
             // upperThreshold={100}
             // lowerThreshold={100}
             overscanCount={30}
-
+            enhanced
+            showScrollbar={false}
             onScroll={({ scrollDirection, scrollOffset, detail }) => {
               console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
               console.log('scroll  top -----', detail.scrollTop)
