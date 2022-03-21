@@ -48,6 +48,7 @@ class Filter extends Component {
   render() {
     return (
       <CustomModel
+        className='custom-model'
         isOpened={this.props.filterOpen}
         title='重置'
         closeText='完成'

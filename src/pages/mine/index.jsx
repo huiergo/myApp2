@@ -146,15 +146,15 @@ class Mine extends Component {
         {/* 横向3格 */}
         <View className='grid-wrap'>
           <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 3 })}>
-            <Image className='grid-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/mine_icons/my_history_icon.png' />
+            <Image className='grid-item-icon' src={require('../../assets/myBtns/my_history.png')} />
             <Text className='grid-item-text'>历史记录</Text>
           </View>
           <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 2 })}>
-            <Image className='grid-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/mine_icons/my_favo_icon.png' />
+            <Image className='grid-item-icon' src={require('../../assets/myBtns/my_favorite.png')} />
             <Text className='grid-item-text'>我的收藏</Text>
           </View>
           <View className='grid-item' onClick={() => this.handleGridClick({ gridType: 1 })}>
-            <Image className='grid-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/mine_icons/my_zan_icon.png' />
+            <Image className='grid-item-icon' src={require('../../assets/myBtns/my_zan.png')} />
             <Text className='grid-item-text'>我的点赞</Text>
           </View>
         </View>

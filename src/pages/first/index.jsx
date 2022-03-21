@@ -288,7 +288,7 @@ class First extends Component {
             </View>
           ) : (
             <View className='first_clock_wrap'>
-              <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
+              <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/un_clock_img.png' />
               <Button className='clock_text-wrap clock_text' open-type='getUserProfile' lang="zh_CN" onClick={() => this.handleClockInClick()}>打卡</Button>
             </View>
           )}

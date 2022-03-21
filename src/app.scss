@@ -1,5 +1,7 @@
 @import '~taro-ui/dist/style/index.scss';
 
+@import './font/font-icons/iconfont.css';
+
 .at-tabs__header {
   text-align: left !important;
   padding-left: 32px;
@@ -9,6 +11,10 @@
 /* 修复官方问题 */
 .at-tabs-pane {
   // display: block;
+}
+
+.at-search-bar::after {
+  border: none;
 }
 
 @font-face {

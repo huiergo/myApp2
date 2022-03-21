@@ -1,3 +1,14 @@
+.custom-model-layout .at-float-layout__container{
+  border-top-left-radius: 42px;
+  border-top-right-radius: 42px;
+}
+
+.custom-model-layout .layout-header{
+  border-top-left-radius: 42px;
+  border-top-right-radius: 42px;
+}
+
+
 .custom__tag-title {
     color: #3c3e42;
     font-size: 28px;

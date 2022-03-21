@@ -20,6 +20,9 @@ $hard-color: #f2994a;
   font-size: 28px;
   color: #121826;
   font-weight: bold;
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
 .icon-text-des {
