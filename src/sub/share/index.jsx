@@ -22,7 +22,8 @@ class Share extends Component {
     setTimeout(() => {
       if (this.props.flag) {
         Taro.showToast({
-          title: '打卡成功'
+          title: '打卡成功',
+          duration: 1000
         })
       }
       else {
