@@ -50,10 +50,11 @@ class Mine extends Component {
   async handleClockInClick() {
     let { nickName } = this.props.userInfo
     const fn = async () => {
+      gotoPage({ url: '../../sub/share/index' })
       await this.props.clockIn()
-      this.setState({
-        isOpened: true
-      })
+      // this.setState({
+      //   isOpened: true
+      // })
     }
     if (nickName) {
       fn()

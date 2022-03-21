@@ -236,11 +236,13 @@ class First extends Component {
   handleClockInClick() {
     let { nickName } = this.props.userInfo
     const fn = async () => {
+      gotoPage({ url: '../../sub/share/index' })
       // 调用签到接口
       await this.fetchClockIn()
-      await this.setState({
-        isCurtainOpened: true
-      })
+      // await this.setState({
+      //   isCurtainOpened: true
+      // })
+
     }
 
     if (nickName) {

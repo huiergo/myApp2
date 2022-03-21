@@ -9,6 +9,7 @@ export default defineAppConfig({
     {
       root: 'sub/',
       pages: [
+        'share/index',
         'search/index',
         'sub_detail_interview/index',
         'sub_detail_question/index',
