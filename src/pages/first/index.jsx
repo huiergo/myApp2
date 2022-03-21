@@ -142,9 +142,10 @@ class First extends Component {
   async fetchCategoryAndInitGlobal() {
     try {
       let tabList = await getJSON({ url: apis.getCategory })
-      let tempList = tabList.map(i => {
+      let tempList = tabList.map((i, idx) => {
         return {
           ...i,
+          selected: idx === 0 ? true : false,
           title: i.name
         }
       })
