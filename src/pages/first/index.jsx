@@ -239,10 +239,6 @@ class First extends Component {
       gotoPage({ url: '../../sub/share/index' })
       // 调用签到接口
       await this.fetchClockIn()
-      // await this.setState({
-      //   isCurtainOpened: true
-      // })
-
     }
 
     if (nickName) {
@@ -279,7 +275,7 @@ class First extends Component {
           </View>
 
           {(flag && nickName) ? (
-            <View className='first_clock_wrap'>
+            <View className='first_clock_wrap' onClick={() => gotoPage({ url: '../../sub/share/index' })}>
               <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
               <View className='clock_text-wrap'>
                 <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
