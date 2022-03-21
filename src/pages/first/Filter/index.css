@@ -19,6 +19,7 @@
   }
 
 
-  .custom-model-layout   .layout-body {
+  .custom-model-layout .layout-body {
     padding: 0 50px;
+    padding-bottom: 80px;
   }
