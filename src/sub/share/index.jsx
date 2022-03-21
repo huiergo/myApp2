@@ -58,7 +58,7 @@ class Share extends Component {
             <View className='share-userInfo-des'>我在<Text className='share-font-black'>「面试宝典」小程序中</Text></View>
           </View>
         </View>
-        <Button className='share-btn'>
+        <Button className='share-btn' open-type="share">
           <Image className='clockIn-share-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/share_img.png' onClick={this.shareClockInImg} />
         </Button>
       </View>

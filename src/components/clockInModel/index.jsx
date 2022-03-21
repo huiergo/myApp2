@@ -38,11 +38,6 @@ class ClockInModel extends Component {
     })
   }
 
-  // 分享海报
-  shareClockInImg() {
-
-  }
-
   render() {
     const { clockinNumbers = 0, clockinTotal = 0, avatar = '', nickName = '' } = this.props.userInfo
 
@@ -75,7 +70,7 @@ class ClockInModel extends Component {
         </View>
         <View className='clockIn-btns'>
           <Button className='share-btn' open-type="share">
-            <Image className='clockIn-share-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/share_img.png' onClick={this.shareClockInImg} />
+            <Image className='clockIn-share-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/share_img.png' />
           </Button>
         </View>
       </View>
