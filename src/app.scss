@@ -38,3 +38,19 @@
   font-style: normal;
   font-display: swap;
 }
+
+.at-tabs__item-underline {
+  width: 32% !important;
+  left: 36% !important;
+  background-color: #121826 !important;
+  height: 4px !important;
+}
+
+// #979797
+.at-tabs__item {
+  color: #979797;
+}
+
+.at-tabs__item--active {
+  color: #121826;
+}
