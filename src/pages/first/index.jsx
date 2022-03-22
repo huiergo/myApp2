@@ -20,7 +20,7 @@ class First extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollHeight: '',
+      scrollHeight: 0,
       filterOpen: false,
       isCurtainOpened: false,
     }

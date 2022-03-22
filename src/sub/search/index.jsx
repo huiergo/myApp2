@@ -13,7 +13,7 @@ class Search extends Component {
     super(props)
     this.state = {
       keyword: '',
-      scrollHeight: '',
+      scrollHeight: 0,
       searchAction: SEARCH_DEFAULT
     }
 

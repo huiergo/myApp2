@@ -13,7 +13,7 @@ class Sub extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      scrollHeight: ''
+      scrollHeight: 0
     }
   }
 
