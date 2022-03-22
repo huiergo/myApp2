@@ -113,7 +113,7 @@ class Topic extends Component {
             {/* 内容展示区 */}
             <View className='blank-content'>
               <Image className='blank-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/blank.png' />
-              <View className='blank-des'>暂无题目浏览记录</View>
+              <View className='blank-des'>暂无记录</View>
             </View>
           </View>
         }
