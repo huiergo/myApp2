@@ -57,11 +57,13 @@ class SubDetail extends Component {
         }, () => {
           if (flag) {
             Taro.showToast({
-              title: '点赞已取消'
+              title: '点赞已取消',
+              duration: 1000
             })
           } else {
             Taro.showToast({
-              title: '感谢您的认可'
+              title: '感谢您的认可',
+              duration: 1000
             })
           }
         })
@@ -92,11 +94,13 @@ class SubDetail extends Component {
         }, () => {
           if (flag) {
             Taro.showToast({
-              title: '收藏已取消'
+              title: '收藏已取消',
+              duration: 1000
             })
           } else {
             Taro.showToast({
-              title: '收藏成功'
+              title: '收藏成功',
+              duration: 1000
             })
           }
         })
