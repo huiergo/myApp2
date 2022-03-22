@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro';
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
@@ -11,16 +11,38 @@ import { SEARCH_CLICK, LOADING_DESC } from '../../../utils/constant'
 
 let timer = null
 
-const renderQuestionList = (list) => {
-  return list.map((item, index) => {
-    return <QuestionItem item={item} key={index} />
-  })
+const renderQuestionList = (list, isLoad) => {
+  if (list && list.length > 0) {
+    return list.map((item, index) => {
+      return <QuestionItem item={item} key={index} />
+    })
+  } else {
+    return isLoad && (<View className='blank_page'>
+      {/* 内容展示区 */}
+      <View className='blank-content'>
+        <Image className='blank-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/blank.png' />
+        <View className='blank-des'>暂无记录</View>
+      </View>
+    </View>)
+
+  }
 }
 
-const renderInterviewList = (list) => {
-  return list.map((item, index) => {
-    return <InterviewItem item={item} key={index} />
-  })
+const renderInterviewList = (list, isLoad) => {
+  if (list && list.length > 0) {
+    return list.map((item, index) => {
+      return <InterviewItem item={item} key={index} />
+    })
+  } else {
+    return isLoad && (<View className='blank_page'>
+      {/* 内容展示区 */}
+      <View className='blank-content'>
+        <Image className='blank-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/blank.png' />
+        <View className='blank-des'>暂无记录</View>
+      </View>
+    </View>)
+  }
+
 }
 class Search extends Component {
   constructor(props) {
@@ -29,8 +51,9 @@ class Search extends Component {
       list: [],
       page: 0,
       pageTotal: '',
-
+      isLoad: false
     }
+
   }
 
   async componentDidMount() {
@@ -38,6 +61,9 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(prev, next) {
+    this.setState({
+      isLoad: false
+    })
     const debounce = (fn, delay = 300) => {
       return function () {
         const args = arguments;
@@ -68,7 +94,9 @@ class Search extends Component {
       data: { page: 1, keyword: this.props.keyword, questionBankType: type, pageSize: 30 },
     });
 
+
     this.setState({
+      isLoad: true,
       pageTotal,
       list
     })
@@ -77,29 +105,14 @@ class Search extends Component {
     }
   }
 
-  // async loadmore() {
-  //   // let {page,pageTotal}=this.state
-  //   if ((this.state.page + 1) <= this.state.pageTotal) {
-  //     let { pageTotal, rows: list } = await getJSON({
-  //       url: apis.getQuestionList,
-  //       data: { page: 1, keyword: this.props.keyword, questionBankType: 9 },
-  //     });
-  //     console.log('拼接数组----', this.state.list.concat(list))
-  //     this.setState({
-  //       pageTotal,
-  //       list: this.state.list.concat(list)
-  //     })
-  //   }
-  // }
-
   render() {
     const { scrollHeight } = this.props
     return (
       <View className='search-scroll' style={{ height: scrollHeight }}>
         {
           this.props.fromType == 'experience'
-            ? renderInterviewList(this.state.list) :
-            renderQuestionList(this.state.list)
+            ? renderInterviewList(this.state.list, this.state.isLoad) :
+            renderQuestionList(this.state.list, this.state.isLoad)
         }
 
       </View>
