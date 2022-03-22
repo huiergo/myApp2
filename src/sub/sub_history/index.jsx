@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro, { eventCenter } from '@tarojs/taro';
+import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
@@ -13,18 +13,41 @@ class Sub extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      scrollHeight: 550
+      scrollHeight: ''
     }
   }
 
   mCurIndex = this.props.currentIdx || 0
+  $instance = getCurrentInstance()
+
+  componentWillMount() {
+    const onReadyEventId = this.$instance.router.onReady
+    let viewPortHeight = 0
+    let tabbodyTop = 0
+    let tabHeight = 44
+    let searchBarHeight = 0
+    let _this = this
+    Taro.setStorageSync('at_tabs_height', tabHeight)
+    eventCenter.once(onReadyEventId, () => {
+      // onReady 触发后才能获取小程序渲染层的节点
+
+      let tabBarHeight = Taro.getStorageSync('at_tabs_height')
+
+      Taro.createSelectorQuery().selectViewport().boundingClientRect(async function (res) {
+        let total = res.height
+        let scrollHeight = total - tabBarHeight
+        _this.setState({
+          scrollHeight: scrollHeight
+        })
+      }).exec()
+    })
+  }
 
   componentDidMount() {
     // this.change(0)
     Taro.setNavigationBarTitle({
       title: this.handleNavTitle(this.props.optType)
     })
-    this.getScrollHeight()
 
   }
 
@@ -62,18 +85,6 @@ class Sub extends Component {
     }
   }
 
-  getScrollHeight() {
-    let _this = this
-    let tabBarHeight = Taro.getStorageSync('at_tabs_height')
-
-    Taro.createSelectorQuery().selectViewport().boundingClientRect(async function (res) {
-      let total = res.height
-      let scrollHeight = total - tabBarHeight
-      _this.setState({
-        scrollHeight: scrollHeight
-      })
-    }).exec()
-  }
 
   render() {
     const {

@@ -279,8 +279,8 @@ class First extends Component {
             <View className='first_clock_wrap' onClick={() => gotoPage({ url: '../../sub/share/index' })}>
               <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
               <View className='clock_text-wrap'>
-                <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
-                <View className='clock_text-wrap-bottom'>连续签到</View>
+                <View className='clock_text-wrap-top'><Text className='clock_text-wrap-top-number'>{clockinNumbers}</Text>天</View>
+                <View className='clock_text-wrap-bottom'>连续打卡</View>
               </View>
             </View>
           ) : (

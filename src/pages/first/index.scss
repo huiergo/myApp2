@@ -74,7 +74,14 @@
 }
 
 .clock_text-wrap-top {
+  font-size: 24px;
+  // font-family: 'Hanti';
+}
+
+.clock_text-wrap-top-number {
+  font-family: 'AlibabaPuHuiTiH';
   font-size: 42px;
+  line-height: 0;
 }
 
 .clock_text-wrap-bottom {

@@ -57,7 +57,7 @@ class ClockInModel extends Component {
 
             <View className='clockIn-time'>
               <View className='clockIn-column column1'>
-                <View className='clockIn-column-des'>连续签到</View>
+                <View className='clockIn-column-des'>连续打卡</View>
                 <View className='clockIn-column-number'><Text className='clock-font-big'>{clockinNumbers}</Text> 天</View>
               </View>
               <Split />

@@ -138,7 +138,7 @@ class Mine extends Component {
                   </Button>
                 </View>
               </View>
-              <View className='user-clock-status' onClick={() => flag ? gotoPage({ url: '../../sub/share/index' }) : this.handleClockInClick(flag)}>{flag ? `连续签到 ${clockinNumbers} 天 ✓` : '签到'}</View>
+              <View className='user-clock-status' onClick={() => flag ? gotoPage({ url: '../../sub/share/index' }) : this.handleClockInClick(flag)}>{flag ? `连续打卡 ${clockinNumbers} 天 >` : '签到'}</View>
             </View>
           )}
 
