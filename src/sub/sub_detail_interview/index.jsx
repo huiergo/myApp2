@@ -45,18 +45,27 @@ class SubDetail extends Component {
   async handleZan(flag) {
     const fn = async () => {
       try {
-        console.log("点赞id----", this.state.item.id)
         Taro.showLoading({
           title: '加载中...'
         })
         let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 1 })
-        console.log('赞 事件 result----', result)
         result && this.setState({
           item: {
             ...this.state.item,
             likeFlag: !flag
           }
+        }, () => {
+          if (flag) {
+            Taro.showToast({
+              title: '点赞已取消'
+            })
+          } else {
+            Taro.showToast({
+              title: '感谢您的认可'
+            })
+          }
         })
+
         Taro.hideLoading()
       } catch (error) {
         Taro.showToast({
@@ -74,12 +83,21 @@ class SubDetail extends Component {
         Taro.showLoading({
           title: '加载中...'
         })
-        console.log("收藏 id----", this.state.item.id)
         let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 1, optType: 2 })
         result && this.setState({
           item: {
             ...this.state.item,
             collectFlag: !flag
+          }
+        }, () => {
+          if (flag) {
+            Taro.showToast({
+              title: '收藏已取消'
+            })
+          } else {
+            Taro.showToast({
+              title: '收藏成功'
+            })
           }
         })
         Taro.hideLoading()

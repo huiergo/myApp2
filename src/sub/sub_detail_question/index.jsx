@@ -77,14 +77,24 @@ class SubDetail extends Component {
   // 赞 事件
   async handleZan(flag) {
     const fn = async () => {
-      console.log("点赞id----", this.state.item.id)
       let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
       await result && this.setState({
         item: {
           ...this.state.item,
           likeFlag: !flag
         }
+      }, () => {
+        if (flag) {
+          Taro.showToast({
+            title: '点赞已取消'
+          })
+        } else {
+          Taro.showToast({
+            title: '感谢您的认可'
+          })
+        }
       })
+
     }
     loggingDecorator(fn)
   }
@@ -92,15 +102,24 @@ class SubDetail extends Component {
   // 收藏 事件
   async handleFavorite(flag) {
     const fn = async () => {
-      console.log("收藏 id----", this.state.item.id)
       let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
-      console.log("题目详情页： 收藏 请求 结果----", result)
       await result && this.setState({
         item: {
           ...this.state.item,
           collectFlag: !flag
         }
+      }, () => {
+        if (flag) {
+          Taro.showToast({
+            title: '收藏已取消'
+          })
+        } else {
+          Taro.showToast({
+            title: '收藏成功'
+          })
+        }
       })
+
     }
     loggingDecorator(fn)
   }
