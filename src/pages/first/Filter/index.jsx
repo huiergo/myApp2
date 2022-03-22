@@ -1,16 +1,12 @@
 import { Component } from 'react'
-import { View, Button, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import Taro, { eventCenter } from '@tarojs/taro';
-import { AtTabs, AtTabsPane } from 'taro-ui'
-import DTabContent from '../DTabContent/index'
+import { eventCenter } from '@tarojs/taro';
 import CustomModel from '../../../components/customModel'
 import DPureRadio from '../../../components/DPureRadio'
 import DSortRadio from '../../../components/DSortRadio'
 import * as firstActions from '../first.action'
-
-
 import './index.css'
 
 class Filter extends Component {
@@ -19,14 +15,6 @@ class Filter extends Component {
     this.state = {
       isReset: false
     }
-  }
-
-  handlePureRadio(v) {
-    console.log('handle Pure Radio----', v)
-  }
-
-  handleSortRadio(v) {
-    console.log('handle Sort Radio----', v)
   }
 
   reset() {
@@ -59,12 +47,12 @@ class Filter extends Component {
         <View className='panel__content no-padding'>
           <View className='custom__tag-title'>题目排序</View>
           <View className='radio-container'>
-            <DSortRadio isReset={this.state.isReset} onClick={this.handleSortRadio.bind(this)} />
+            <DSortRadio isReset={this.state.isReset} />
           </View>
 
           <View className='custom__tag-title'>选择阶段</View>
           <View className='radio-container'>
-            <DPureRadio tabList={this.props.tabList} isReset={this.state.isReset} onClick={this.handlePureRadio.bind(this)} />
+            <DPureRadio tabList={this.props.tabList} isReset={this.state.isReset} />
           </View>
 
         </View>

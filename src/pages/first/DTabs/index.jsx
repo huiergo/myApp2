@@ -11,11 +11,9 @@ class DTabs extends Component {
   }
 
   componentDidMount() {
-    // 接收到 完成的消息通知后， 去全局变量拿值，然后作相应的切换
   }
 
   handleClick(idx) {
-    // 2.知道当前选择的idx , 怎么同步到更新filter的idx (如果filter idx更改了，那么)
     this.props.onChangeTab(idx)
   }
 
@@ -33,7 +31,6 @@ class DTabs extends Component {
         {tabList.map((item, idx) => {
           return (
             <AtTabsPane current={activeIdx} index={idx} key={idx}>
-              {/* <DTabContent tabActiveIdx={activeIdx} type={item.id} index={idx} scrollHeight={this.props.scrollHeight} /> */}
             </AtTabsPane>)
         })}
       </AtTabs>

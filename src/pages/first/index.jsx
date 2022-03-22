@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
-import { View, Image, Text, Button } from '@tarojs/components'
+import { View, Image, Button } from '@tarojs/components'
 import { AtSearchBar, AtCurtain } from 'taro-ui'
 import * as firstActions from "./first.action"
 import * as commonActions from "../../actions/common.action"
@@ -16,7 +16,7 @@ import apis from '../../services/apis'
 import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 import DTabContent from "./DTabContent/index";
 
-class First extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,41 +25,9 @@ class First extends Component {
       isCurtainOpened: false,
     }
   }
-  $instance = getCurrentInstance()
 
   componentWillMount() {
-    const onReadyEventId = this.$instance.router.onReady
-    let viewPortHeight = 0
-    let tabbodyTop = 0
-    let tabHeight = 44
-    let searchBarHeight = 0
-    let _this = this
-    Taro.setStorageSync('at_tabs_height', tabHeight)
-    eventCenter.once(onReadyEventId, () => {
-      // onReady 触发后才能获取小程序渲染层的节点
-      let query = Taro.createSelectorQuery()
-
-      //获取 tabbodyTop 顶部高度，并缓存
-      //获取 search Bar高度，并缓存
-      query.select('.first-search-bar').boundingClientRect()
-      query.select('.at-tabs__body').boundingClientRect()
-        .exec(res => {
-          console.log('[获取高度]', res)
-          searchBarHeight = res[0].height
-          tabbodyTop = res[1].top
-          Taro.setStorageSync('at_search_height', searchBarHeight)
-        })
-
-      Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
-        console.log('[可视区域高度]', res)
-        viewPortHeight = res.height
-        Taro.setStorageSync('viewport_height', viewPortHeight)
-        console.log('滚动区域设置为', viewPortHeight - tabbodyTop - tabHeight)
-        _this.setState({
-          scrollHeight: (viewPortHeight - tabbodyTop - tabHeight)
-        })
-      }).exec()
-    })
+    this.calculateScrollHeight()
   }
 
   async componentDidMount() {
@@ -73,10 +41,48 @@ class First extends Component {
     this.initEvent()
   }
 
+  componentWillUnmount() {
+    eventCenter.off('event_filter_complete')
+  }
+
+  /* 页面实例用于跳转 */
+  $instance = getCurrentInstance()
+
+  /* 计算scrollViewHeight */
+  calculateScrollHeight() {
+    const onReadyEventId = this.$instance.router.onReady
+    let viewPortHeight = 0
+    let tabBodyTop = 0
+    let tabHeight = 44
+    let searchBarHeight = 0
+    let _this = this
+    Taro.setStorageSync('at_tabs_height', tabHeight)
+    eventCenter.once(onReadyEventId, () => {
+      // onReady 触发后才能获取小程序渲染层的节点
+      let query = Taro.createSelectorQuery()
+      //获取 search Bar高度，并缓存
+      query.select('.first-search-bar').boundingClientRect()
+      //获取 tabBodyTop 顶部高度，并缓存
+      query.select('.at-tabs__body').boundingClientRect()
+        .exec(res => {
+          searchBarHeight = res[0].height
+          tabBodyTop = res[1].top
+          Taro.setStorageSync('at_search_height', searchBarHeight)
+        })
+
+      Taro.createSelectorQuery().selectViewport().boundingClientRect(function (res) {
+        viewPortHeight = res.height
+        Taro.setStorageSync('viewport_height', viewPortHeight)
+        _this.setState({
+          scrollHeight: (viewPortHeight - tabBodyTop - tabHeight)
+        })
+      }).exec()
+    })
+  }
+
   /* 筛选框完成事件 */
   initEvent() {
     eventCenter.on('event_filter_complete', () => {
-      //关闭panel
       this.setState({
         filterOpen: false
       })
@@ -88,20 +94,14 @@ class First extends Component {
         index = this.props.activeIdx
       }
 
-
-      // let index = getGlobalData('pure_radio_select') && getGlobalData('pure_radio_select').index || this.props.activeIdx
       this.syncUpdateActiveIndexAndTabList(index)
-      console.log("[ 000========]", index, getGlobalData('pure_radio_select'))
 
-      //赋值
       let optionData = getGlobalData('sort_radio_select')
-      console.log("[ 111========]", optionData)
       this.updateGlobal(optionData.option, index)
     })
   }
 
-
-
+  /* 初始化筛选面板初始数据 */
   initGlobalData() {
     let tempList = this.props.tabList.map(i => {
       return {
@@ -120,25 +120,17 @@ class First extends Component {
     )
   }
 
+  /* 初始完成更新面板数据 */
   updateGlobal(option, index) {
     let array = getGlobalData('filter_data')
-    console.log('updateGlobal before---', array, this.props.activeIdx, option.id, option.upArrow)
     array[index] = {
       selectType: option.id,
       sortType: option.upArrow
     }
-    console.log('updateGlobal after----', array)
     setGlobalData('filter_data', array)
   }
 
-
-  componentWillUnmount() {
-    eventCenter.off('event_filter_complete')
-  }
-
-  /**
-   * 获取分类
-   */
+  /* 获取分类 */
   async fetchCategoryAndInitGlobal() {
     try {
       let tabList = await getJSON({ url: apis.getCategory })
@@ -155,9 +147,7 @@ class First extends Component {
     }
   }
 
-  /**
-   * 获取用户信息
-   */
+  /* 获取用户信息 */
   async fetchUserInfo() {
     try {
       let userInfo = await getJSON({ url: apis.getUserInfo })
@@ -167,10 +157,7 @@ class First extends Component {
     }
   }
 
-
-  /**
-   * 调用签到接口
-   */
+  /* 调用签到接口 */
   async fetchClockIn() {
     try {
       let result = await postJSON({ url: apis.clockIn })
@@ -186,14 +173,12 @@ class First extends Component {
     })
   }
 
-  // tab 点击 切换
   onChangeTab(idx) {
     setGlobalData('pure_radio_select', {
       option: this.props.tabList[idx],
       index: idx
     })
     this.syncUpdateActiveIndexAndTabList(idx)
-
   }
 
   syncUpdateActiveIndexAndTabList(idx) {
@@ -338,4 +323,4 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(commonActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(First);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

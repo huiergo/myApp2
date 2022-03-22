@@ -1,12 +1,11 @@
-import { Component, useState, useEffect } from 'react'
-import { View, Button, Text, ScrollView } from '@tarojs/components'
+import { Component } from 'react'
+import { View } from '@tarojs/components'
 // import { TaroVirtualList } from 'taro-virtual-list'
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Taro, { eventCenter } from '@tarojs/taro';
-import { AtTabs, AtTabsPane } from 'taro-ui'
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
 
@@ -32,13 +31,6 @@ class DTabContent extends Component {
     }
   }
 
-  tabActiveIdx = -1
-  requestParams = {
-    selectType: '0',
-    sortType: '0'
-  }
-
-
   componentDidMount() {
   }
 
@@ -61,6 +53,12 @@ class DTabContent extends Component {
     this.tabActiveIdx = next.tabActiveIdx
     this.requestParams = itemData
     this.initData()
+  }
+
+  tabActiveIdx = -1
+  requestParams = {
+    selectType: '0',
+    sortType: '0'
   }
 
   async initData() {
@@ -104,8 +102,6 @@ class DTabContent extends Component {
   }
 
   async loadMore() {
-    // todo: 等待传递 写死 questionBankType=9
-
     let sortTemp = this.requestParams.selectType + this.requestParams.sortType
     sortTemp = sortTemp == '00' ? '0' : sortTemp
     let currentPage = this.state.page
@@ -113,7 +109,6 @@ class DTabContent extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-
 
       let { pageTotal, rows: list } = await getJSON({
         url: apis.getQuestionList,
@@ -126,7 +121,6 @@ class DTabContent extends Component {
           sort: sortTemp
         },
       });
-      console.log("【loadmore ====】", list, pageTotal)
       this.setState({
         resetTwoList: false,
         page: currentPage + 1,

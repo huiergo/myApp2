@@ -3,7 +3,7 @@ import Taro, { eventCenter } from '@tarojs/taro';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Image, Button } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
 import Topic2 from '../../components/topic2'
@@ -16,7 +16,6 @@ class Favorite extends Component {
       hasLogin: false
     }
   }
-  mCurIndex = 0
 
   componentDidMount() {
     let { nickName } = this.props.userInfo
@@ -38,6 +37,8 @@ class Favorite extends Component {
   componentDidShow() {
     this.triggerEvent(this.mCurIndex, true)
   }
+
+  mCurIndex = 0
 
   change(index) {
     this.mCurIndex = index

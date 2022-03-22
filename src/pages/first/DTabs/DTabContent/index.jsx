@@ -1,12 +1,11 @@
-import { Component, useState, useEffect } from 'react'
-import { View, Button, Text, ScrollView } from '@tarojs/components'
+import { Component } from 'react'
+import { View } from '@tarojs/components'
 // import { TaroVirtualList } from 'taro-virtual-list'
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Taro, { eventCenter } from '@tarojs/taro';
-import { AtTabs, AtTabsPane } from 'taro-ui'
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
 
@@ -30,13 +29,6 @@ class DTabContent extends Component {
       virtualListId: 'zt-virtial-list'
     }
   }
-
-  tabActiveIdx = -1
-  requestParams = {
-    selectType: '0',
-    sortType: '0'
-  }
-
 
   componentDidMount() {
   }
@@ -75,13 +67,6 @@ class DTabContent extends Component {
     let sortTemp = this.requestParams.selectType + this.requestParams.sortType
     sortTemp = sortTemp == '00' ? '0' : sortTemp
 
-    console.log("DContent extraParams", this.props.extraParams)
-    // this.setState({
-    //   page: 1,
-    //   pageTotal: '',
-    //   list: [],
-    // })
-
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
       data: {
@@ -107,6 +92,12 @@ class DTabContent extends Component {
     }, 300);
   }
 
+  tabActiveIdx = -1
+  requestParams = {
+    selectType: '0',
+    sortType: '0'
+  }
+
   async loadMore() {
     // todo: 等待传递 写死 questionBankType=9
 
@@ -130,7 +121,6 @@ class DTabContent extends Component {
           sort: sortTemp
         },
       });
-      console.log("【loadmore ====】", list, pageTotal)
       this.setState({
         autoScrollTop: false,
         page: currentPage + 1,
@@ -203,82 +193,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DTabContent);
-
-
-
- // list: [{
-      //   "id": "18207",
-      //   "questionNo": "ZT025646",
-      //   "stem": "骨架屏",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 3,
-      //   "views": "4",
-      //   "likeCount": "1",
-      //   "questionBankType": 10,
-      //   "creatorName": "294",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-11-09",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "12750",
-      //   "questionNo": "ZT020177",
-      //   "stem": "骨架屏",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 2,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "4552",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-09-01",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "12915",
-      //   "questionNo": "ZT020342",
-      //   "stem": "骨架屏......",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 2,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "1077",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-09-04",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "14139",
-      //   "questionNo": "ZT021567",
-      //   "stem": "骨架屏......",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 4,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "1007",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-09-16",
-      //   "likeFlag": 0
-      // }, {
-      //   "id": "6013",
-      //   "questionNo": "ZT013393",
-      //   "stem": "骨架屏......",
-      //   "content": "",
-      //   "subjectName": "前端与移动开发",
-      //   "questionType": 5,
-      //   "difficulty": 2,
-      //   "views": "1",
-      //   "likeCount": "0",
-      //   "questionBankType": 10,
-      //   "creatorName": "1742",
-      //   "creatorAvatar": "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png",
-      //   "createdAt": "2021-04-29",
-      //   "likeFlag": 0
-      // },]

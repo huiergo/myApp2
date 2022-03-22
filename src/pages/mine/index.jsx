@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtGrid, AtCurtain } from "taro-ui"
+import { AtCurtain } from "taro-ui"
 
 import * as mineActions from "../../actions/mine.action";
 import * as commonActions from "../../actions/common.action"
@@ -41,7 +41,6 @@ class Mine extends Component {
   }
 
   handleListClick({ type }) {
-    console.log("[handleListClick] item index----", type)
     if (type === 'aboutUs') {
       gotoPage({ url: '../sub/sub_aboutUs/index' })
     }
@@ -52,9 +51,6 @@ class Mine extends Component {
     const fn = async () => {
       gotoPage({ url: '../../sub/share/index' })
       await this.props.clockIn()
-      // this.setState({
-      //   isOpened: true
-      // })
     }
     if (nickName) {
       fn()
@@ -88,8 +84,6 @@ class Mine extends Component {
       icon: 'error'
     })
   }
-
-
 
   // 头像点击事件
   onLoginClick() {
@@ -189,7 +183,6 @@ class Mine extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps====", state)
   let { userInfo, flag } = state.common
   return {
     userInfo, flag
