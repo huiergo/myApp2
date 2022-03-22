@@ -12,14 +12,14 @@ $hard-color: #f2994a;
   margin: 0 auto;
   border-bottom: 20rpx solid #f6f7f9;
   box-sizing: border-box;
-  height: 280px;
-  overflow: hidden;
+  height: 290px;
+  // overflow: hidden;
 
   &__top {
     display: flex;
     flex-direction: row;
     padding-bottom: 20px;
-    padding-top: 30px;
+    padding-top: 35px;
     align-items: center;
     &-avatar {
       width: 60px;
