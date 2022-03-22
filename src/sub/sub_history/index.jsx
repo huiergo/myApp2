@@ -56,6 +56,10 @@ class Sub extends Component {
     this.triggerEvent(this.mCurIndex, true)
   }
 
+  componentWillUnmount() {
+    this.props.changeTab(0)
+  }
+
   change(index) {
     this.mCurIndex = index
     this.props.changeTab(index)
