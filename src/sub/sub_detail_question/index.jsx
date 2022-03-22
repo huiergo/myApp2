@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from '@tarojs/taro';
-import { View, Image, Button, Text } from '@tarojs/components';
+import { View, Image, Button, Text, RichText } from '@tarojs/components';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as commonActions from "../../actions/common.action"
@@ -159,7 +159,9 @@ class SubDetail extends Component {
 
         <HorizonLine />
         <IconText title='答案：' />
-        <View className='detail-content' dangerouslySetInnerHTML={{ __html: item.answer }} ></View>
+        <View className='detail-content'>
+          <RichText nodes={item.answer} />
+        </View>
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>

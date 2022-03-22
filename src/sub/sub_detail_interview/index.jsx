@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from '@tarojs/taro';
-import { View, Image, Button } from '@tarojs/components';
+import { View, Image, Button, RichText } from '@tarojs/components';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as commonActions from "../../actions/common.action"
@@ -143,7 +143,10 @@ class SubDetail extends Component {
           <Image className='detail-interview__user-avatar' src={creatorAvatar} />
           {creatorName}
         </View>
-        <View className='detail-content detail-content-interview' dangerouslySetInnerHTML={{ __html: item.content }}></View>
+        {/* dangerouslySetInnerHTML={{ __html: item.content }} */}
+        <View className='detail-content detail-content-interview' >
+          <RichText nodes={item.content} />
+        </View>
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
