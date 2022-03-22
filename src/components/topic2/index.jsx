@@ -104,7 +104,7 @@ class Topic extends Component {
               ) {
 
                 if ((page + 1) <= pageTotal) {
-                  loadMore({ type, page: page + 1, current, index, optType })
+                  loadMore({ type, page: page + 1, current, index, optType, questionBankType: this.props.questionBankType, })
                 }
               }
             }}
