@@ -145,7 +145,9 @@ class SubDetail extends Component {
     console.log('是否会变----', likeFlag, collectFlag)
     return (
       <View className='index'>
-        <IconText title='题目：' des={item.stem} />
+        <IconText title='题目：' />
+        <View className='des-content'>{item.stem}</View>
+
         <View className='detail-item__tag-wrapper'>
           <View className={`detail-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}
