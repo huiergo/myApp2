@@ -7,6 +7,7 @@ import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
 import Topic2 from '../../components/topic2'
 import * as sub_historyActions from "../../actions/sub_history.action"
+import './index.css'
 
 class Sub extends Component {
 
