@@ -43,7 +43,7 @@ class Mine extends Component {
   handleListClick({ type }) {
     console.log("[handleListClick] item index----", type)
     if (type === 'aboutUs') {
-      gotoPage({ url: '../sub/sub_aboutUs/index' })
+      gotoPage({ url: '../../sub/sub_aboutUs/index' })
     }
   }
 
