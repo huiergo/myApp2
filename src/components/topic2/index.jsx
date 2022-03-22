@@ -71,7 +71,7 @@ class Topic extends Component {
     const { type, list, page, pageTotal, initData, loadMore, current, index, optType } = this.props
 
     const dataLen = list.length
-    const itemSize = 150
+    const itemSize = 140
 
     return (
       <View>
