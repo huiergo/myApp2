@@ -61,7 +61,7 @@ class Search extends Component {
   // 搜索按钮回调：用keyword, 更新record的值和刷新列表
   onSearchBtnClick() {
     console.log('[this.recordRef]', this.recordRef)
-    this.state.keyword && this.child.insertSearchKey(this.state.keyword)
+    this.state.keyword.trim() && this.child.insertSearchKey(this.state.keyword)
     this.setState({
       keyword: this.state.keyword,
       searchAction: SEARCH_CLICK
