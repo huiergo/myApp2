@@ -161,7 +161,7 @@ class SubDetail extends Component {
     return {
       title: this.title,
       path: this.url,
-      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_detail_question.png'
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
     }
   }
 
