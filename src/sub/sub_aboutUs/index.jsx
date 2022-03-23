@@ -11,7 +11,7 @@ class SubAboutUs extends Component {
   render() {
     return (
       <View className='index'>
-        <Image className='about_us_img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/about_us_img.png' />
+        <Image className='about_us_img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/law.png' />
       </View>
     )
   }
