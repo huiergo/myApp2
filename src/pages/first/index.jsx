@@ -304,7 +304,7 @@ class First extends Component {
         </View>
 
         {/* 占位图片 */}
-        <Image className='index__swiper-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png' />
+        <Image className='index__swiper-img' src={require('../../assets/ad.png')} />
         {/* 筛选区域 */}
         <Filter filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
         {/* tabs联动组件 */}
