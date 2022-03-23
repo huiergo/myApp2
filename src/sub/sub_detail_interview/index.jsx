@@ -145,7 +145,7 @@ class SubDetail extends Component {
         </View>
         {/* dangerouslySetInnerHTML={{ __html: item.content }} */}
         <View className='detail-content detail-content-interview' >
-          <RichText nodes={item.content} />
+          <RichText className='rich-text' nodes={item.content} />
         </View>
 
         {/* 点赞和收藏按钮 */}

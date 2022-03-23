@@ -69,3 +69,19 @@
 .detail-content-interview {
   color: #3c3e42;
 }
+
+.rich-text {
+  width: 686rpx;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: break-all !important;
+  word-wrap: break-word !important;
+}
+
+.language-java {
+  width: 686rpx;
+  word-break: break-all !important;
+  word-wrap: break-word !important;
+  display: -webkit-box;
+  white-space: pre-line;
+}
