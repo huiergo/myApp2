@@ -68,6 +68,9 @@ class SubDetail extends Component {
     const { id } = options
     console.log("[SubDetail questionn------]", id)
     await this.initSubQuestionDetail(id)
+    Taro.reportAnalytics('question_detail', {
+      id: id,
+    })
   }
 
 
