@@ -45,6 +45,26 @@ export function loggingDecorator(fn = () => {}) {
   console.log('执行完成');
 }
 
+export const throttle = (fn, delay, mustRunDelay) => {
+  let timer;
+  let startTime;
+  return (...args) => {
+    const curTime = Date.now();
+    clearTimeout(timer);
+    if (!startTime) {
+      startTime = curTime;
+    }
+    if (curTime - startTime >= mustRunDelay) {
+      fn.apply(this, args);
+      startTime = curTime;
+    } else {
+      timer = setTimeout(() => {
+        fn.apply(this, args);
+      }, delay);
+    }
+  };
+};
+
 // // 防抖
 // function debounce(fn, delay = 300) {
 //   //默认300毫秒

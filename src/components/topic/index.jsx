@@ -8,6 +8,8 @@ import VirtualList from '@tarojs/components/virtual-list'
 import QuestionItem from '../questionItem'
 import * as firstActions from "../../actions/first.action"
 import './index.scss'
+import { throttle } from "../../utils";
+
 
 const Row = React.memo(({ id, index, style, data }) => {
   return (
@@ -87,45 +89,23 @@ class Topic extends Component {
             overscanCount={30}
             showScrollbar={false}
             onScroll={({ scrollDirection, scrollOffset, detail }) => {
-              console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
-              console.log('scroll  top -----', detail.scrollTop)
-              const throttle = (fn, delay = 300) => {
-                let timer = null
+              this.handleScroll = throttle(() => {
+                // 上拉加载
+                if (!this.props.loading &&
+                  // 只有往前滚动我们才触发
+                  scrollDirection === 'forward' &&
+                  // 5 = (列表高度 / 单项列表高度)
+                  // 100 = 滚动提前加载量，可根据样式情况调整
+                  // scrollOffset > (dataLen * itemSize - 600)
+                  scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
 
-                let flag = true;
-                console.log(111, flag)
-                return () => {
-                  console.log(222, flag)
-                  if (!flag) return;
-                  flag = false;
-                  timer = setTimeout(() => {
-                    console.log(333)
-                    fn();
-                    flag = true;
-                  }, delay);
-                };
-              }
-              // 上拉加载
-              if (!this.props.loading &&
-                // 只有往前滚动我们才触发
-                scrollDirection === 'forward' &&
-                // 5 = (列表高度 / 单项列表高度)
-                // 100 = 滚动提前加载量，可根据样式情况调整
-                // scrollOffset > (dataLen * itemSize - 600)
-                scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
-
-              ) {
-
-                let fn = () => {
-                  console.log('哈哈哈')
+                ) {
                   if ((page + 1) <= pageTotal) {
-                    console.log('loadmore before')
                     loadMore({ type, page: page + 1, questionBankType, optType, extraParams })
-                    console.log('loadmore after')
                   }
                 }
-                throttle(fn, 300)()
-              }
+              }, 300, 300);
+              this.handleScroll()
             }}
           >
             {Row}
