@@ -94,6 +94,23 @@ class Topic extends Component {
               console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
               console.log('scroll  top -----', detail.scrollTop)
 
+
+              const throttle = (fn, delay = 300) => {
+                let timer = null
+
+                let flag = true;
+                console.log(111, flag)
+                return () => {
+                  console.log(222, flag)
+                  if (!flag) return;
+                  flag = false;
+                  timer = setTimeout(() => {
+                    console.log(333)
+                    fn();
+                    flag = true;
+                  }, delay);
+                };
+              }
               // 上拉加载
               if (!this.props.loading &&
                 // 只有往前滚动我们才触发
@@ -103,9 +120,13 @@ class Topic extends Component {
                 scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
               ) {
 
-                if ((page + 1) <= pageTotal) {
-                  loadMore({ type, page: page + 1, current, index, optType, questionBankType: this.props.questionBankType, })
+                let fn = () => {
+                  console.log('嘻嘻嘻')
+                  if ((page + 1) <= pageTotal) {
+                    loadMore({ type, page: page + 1, current, index, optType, questionBankType: this.props.questionBankType, })
+                  }
                 }
+                throttle(fn, 300)()
               }
             }}
           >
