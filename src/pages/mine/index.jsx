@@ -78,7 +78,7 @@ class Mine extends Component {
     return {
       title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',
-      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png'
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
     }
   }
 
