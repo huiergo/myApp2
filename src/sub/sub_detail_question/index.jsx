@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as commonActions from "../../actions/common.action"
 import apis from '../../services/apis';
-import { loggingDecorator } from "../../utils/index"
+import { loggingDecorator, getCurrentPageUrlWithArgs } from "../../utils/index"
 
 import { getJSON, postJSON } from "../../services/method";
 
@@ -55,12 +55,22 @@ class SubDetail extends Component {
       item: {}
     }
   }
+  url = ''
+  title = ''
+
+  componentDidMount() {
+    this.url = getCurrentPageUrlWithArgs()
+    console.log('url------', this.url)
+  }
+
   // onLoad
   async onLoad(options) {
     const { id } = options
     console.log("[SubDetail questionn------]", id)
     await this.initSubQuestionDetail(id)
   }
+
+
 
   async initSubQuestionDetail(id) {
     Taro.showLoading({
@@ -71,6 +81,9 @@ class SubDetail extends Component {
     await this.setState({
       item: result
     })
+
+    this.title = result.stem
+    console.log('this.title----', this.title)
     Taro.hideLoading()
   }
 
@@ -139,6 +152,19 @@ class SubDetail extends Component {
 
     return result
   }
+
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: this.title,
+      path: this.url,
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_detail_question.png'
+    }
+  }
+
   render() {
     let { item } = this.state
     let { collectFlag, likeFlag } = item
