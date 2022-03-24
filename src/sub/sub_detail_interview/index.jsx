@@ -35,7 +35,7 @@ class SubDetail extends Component {
   async onLoad(options) {
     const { id } = options
     await this.initSubInterviewDetail(id)
-    Taro.reportAnalytics('interview_detail', {
+    Taro.reportEvent('interview_detail', {
       id: id,
     })
   }
