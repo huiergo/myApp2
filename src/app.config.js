@@ -53,6 +53,7 @@ export default defineAppConfig({
     borderStyle: 'white',
   },
   window: {
+    backgroundColor: '#fff',
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
