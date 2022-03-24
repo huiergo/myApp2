@@ -27,7 +27,7 @@ class Index extends Component {
         <View className='interview-item__top'>
           <Image className='interview-item__top-avatar' src={item.creatorAvatar} />
           <View className='interview-item__top-content'>
-            <View className='interview-item__top-content-title'>面经 | {item.stem}</View>
+            <View className='interview-item__top-content-title'>{item.stem}</View>
             <View className='interview-item__top-content-des'>{item.creatorName} | {item.createdAt}</View>
           </View>
         </View>
