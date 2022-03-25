@@ -9,7 +9,6 @@ import * as commonActions from "../../actions/common.action"
 import { gotoPage, loggingDecorator } from "../../utils/index"
 import Filter from './Filter/index'
 import DTabs from './DTabs'
-import ClockInModel from "../../components/clockInModel";
 import './index.scss'
 import { getJSON, postJSON } from '../../services/method';
 import apis from '../../services/apis'
