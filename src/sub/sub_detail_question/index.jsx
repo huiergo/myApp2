@@ -62,13 +62,11 @@ class SubDetail extends Component {
 
   componentDidMount() {
     this.url = getCurrentPageUrlWithArgs()
-    console.log('url------', this.url)
   }
 
   // onLoad
   async onLoad(options) {
     const { id } = options
-    console.log("[SubDetail questionn------]", id)
     await this.initSubQuestionDetail(id)
     this.currentId = id
     Taro.reportEvent('question_detail', {
@@ -78,12 +76,10 @@ class SubDetail extends Component {
 
   componentDidShow() {
     this.startTime = new Date().getTime()
-    console.log('开始时间')
   }
 
   componentWillUnmount() {
     let stayTime = (new Date().getTime() - this.startTime) / 1000
-    console.log('时间差', stayTime)
     Taro.reportEvent('question_stay', {
       id: this.currentId,
       stay_time: stayTime.toString()
@@ -102,7 +98,6 @@ class SubDetail extends Component {
     })
 
     this.title = result.stem
-    console.log('this.title----', this.title)
     Taro.hideLoading()
   }
 
@@ -167,16 +162,10 @@ class SubDetail extends Component {
   async unitOptRequest({ action, id, type = 0, optType }) {
     let api = action == 'opt' ? apis.opt : apis.unOpt
     let result = await postJSON({ url: api, data: { id, type, optType } });
-    console.log("题目详情页： 收藏 入参'result----", result)
-
     return result
   }
 
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  onShareAppMessage() {
     return {
       title: this.title,
       path: this.url,
@@ -187,7 +176,6 @@ class SubDetail extends Component {
   render() {
     let { item } = this.state
     let { collectFlag, likeFlag } = item
-    console.log('是否会变----', likeFlag, collectFlag)
     return (
       <View className='index'>
         <IconText title='题目：' />

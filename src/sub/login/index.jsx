@@ -21,8 +21,6 @@ class Login extends Component {
     var p1 = new Promise((resolve, reject) => {
       Taro.login({
         success: res => {
-          // 这里也可以选择性返回需要的字段
-          console.log('login---', res)
           resolve(res)
         }
       })
@@ -31,18 +29,12 @@ class Login extends Component {
       Taro.getUserProfile({
         desc: '用于完善会员资料',
         success: res => {
-          // 这里也可以选择性返回需要的字段
-          console.log('getUserProfile---', res)
           resolve(res)
         }
       })
     })
-    // 同时执行p1和p2，并在它们都完成后执行then
     Promise.all([p1, p2]).then((results) => {
-      console.log('results====', results)
-      // results是一个长度为2的数组，放置着p1、p2的resolve
       this.handleUserInfo({
-        // 这里也可以选择性返回需要的字段
         ...results[0],
         ...results[1]
       })

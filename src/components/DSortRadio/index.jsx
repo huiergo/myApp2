@@ -33,14 +33,8 @@ class DSortRadio extends Component {
   componentDidMount() {
     //  消息监听： 点击筛选按钮
     eventCenter.on('event_update_sort_view', () => {
-      //  触发 sortRadio 刷新，数据取自 globalData
       let array = getGlobalData('filter_data')
-      // array[this.props.activeIdx] 
       let activeObj = array[this.props.activeIdx]
-
-      console.log("this.state.optionsList-----", this.state.optionsList)
-      console.log("activeObj----", activeObj)
-
       setGlobalData('sort_radio_select', {
         option: {
           name: '默认',
@@ -94,25 +88,7 @@ class DSortRadio extends Component {
       this.setState({
         optionsList: tempList
       })
-      console.log("sort set ===", tempList)
-      console.log('sort触发了--- event_reset_sort', getGlobalData('sort_radio_select'))
-
     })
-  }
-
-
-  componentWillReceiveProps(next) {
-    console.log('next---', next)
-    // if (!next) return
-    // if (next.isReset) {
-    //   let optionsList = this.state.optionsList
-    //   optionsList.map((item, idx) => {
-    //     optionsList[idx].selected = false
-    //   })
-    //   this.setState({
-    //     optionsList: this.state.optionsList
-    //   })
-    // }
   }
 
   componentWillUnmount() {
@@ -141,7 +117,6 @@ class DSortRadio extends Component {
   }
 
   writeToGlobal(option, index) {
-    console.log('writeToGlobal sort----', option, 'index---', index)
     setGlobalData('sort_radio_select', {
       option: {
         ...option,
@@ -151,10 +126,7 @@ class DSortRadio extends Component {
   }
 
   onStatus(idx) {
-    console.log('sort status---', idx)
-
     let tempList = this.state.optionsList.map((item, index) => {
-      console.log('item====', item)
       if (index === idx) {
         item.upArrow = item.upArrow == '0' ? '1' : '0'
         upArrow = item.upArrow == '0' ? '1' : '0'

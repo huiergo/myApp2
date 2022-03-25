@@ -34,8 +34,6 @@ class DTabContent extends Component {
   }
 
   componentWillReceiveProps(next, prev) {
-    console.log('111next---', next)
-
     if (!next || next.tabActiveIdx == -1) {
       return
     }
@@ -47,7 +45,6 @@ class DTabContent extends Component {
     this.tabActiveIdx = next.tabActiveIdx
 
     let globalData = getGlobalData('filter_data')
-    console.log('globalData========', globalData)
     let itemData = globalData[this.tabActiveIdx]
     this.requestParams = itemData
     this.initData()

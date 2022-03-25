@@ -243,11 +243,7 @@ class HomePage extends Component {
     })
   }
 
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  onShareAppMessage() {
     return {
       title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',
@@ -323,7 +319,6 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
   let { activeIdx, tabList } = state.first
   let { userInfo, flag } = state.common
-  console.log('[mapStateToProps]  userInfo, flag ========', userInfo, flag)
   return {
     activeIdx,
     tabList,

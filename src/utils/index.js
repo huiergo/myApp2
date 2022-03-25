@@ -42,7 +42,6 @@ export function loggingDecorator(fn = () => {}) {
   let { nickName } = store.getState().common.userInfo;
   if (!nickName) return gotoPage({ url: '../../sub/login/index' });
   fn.apply(this);
-  console.log('执行完成');
 }
 
 export const throttle = (fn, delay, mustRunDelay) => {

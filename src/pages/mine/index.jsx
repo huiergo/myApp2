@@ -66,11 +66,7 @@ class Mine extends Component {
     })
   }
 
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  onShareAppMessage() {
     return {
       title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',
@@ -88,7 +84,6 @@ class Mine extends Component {
   // 头像点击事件
   onLoginClick() {
     const fn = () => {
-      console.log('此处登录没啥内置逻辑')
     }
     loggingDecorator(fn);
   }

@@ -162,9 +162,6 @@ export default class VirtialList extends Component {
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         var _a;
-
-        console.log('【Virtual Recive Props】',this.props)
-        console.log('【Virtual Next Props】',nextProps)
         const { list, listType } = this.props;
         const { resetTwoList } = nextProps;
         
@@ -216,7 +213,6 @@ export default class VirtialList extends Component {
                 }
             }else{
                 if (JSON.stringify(nextProps.list) !== JSON.stringify(list)) {
-                    console.log('【 走 else。。。。】')
                     this.formatMultiList(nextProps.list, nextProps.pageNum);
                 }
             }

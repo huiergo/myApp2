@@ -21,8 +21,6 @@ class Search extends Component {
     this.searchInputRef = createRef()
     // 创建 record 的引用
     this.recordRef = createRef()
-    console.log('this.searchInputRef ', this.searchInputRef)
-    console.log('this.recordRef', this.recordRef)
     this.fromType = ''
   }
   $instance = getCurrentInstance()
@@ -40,7 +38,6 @@ class Search extends Component {
       total = res.height
       Taro.setStorageSync('viewport_height', total)
       let searchBarHeight = Taro.getStorageSync('at_search_height')
-      console.log('total searchBarHeight-----', total, searchBarHeight)
       _this.setState({
         scrollHeight: (total - searchBarHeight - 44)
       })
@@ -60,7 +57,6 @@ class Search extends Component {
 
   // 搜索按钮回调：用keyword, 更新record的值和刷新列表
   onSearchBtnClick() {
-    console.log('[this.recordRef]', this.recordRef)
     this.state.keyword.trim() && this.child.insertSearchKey(this.state.keyword)
     this.setState({
       keyword: this.state.keyword,
@@ -77,11 +73,7 @@ class Search extends Component {
   }
 
 
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  onShareAppMessage() {
     return {
       title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',

@@ -27,7 +27,6 @@ class ClockInModel extends Component {
             success: function () {
               Taro.saveImageToPhotosAlbum({
                 success: function (res) {
-                  console.log("保存图片成功----", res)
                 }
               })
 

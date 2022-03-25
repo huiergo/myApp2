@@ -39,9 +39,6 @@ class SearchList extends Component {
         overscanCount={30}
 
         onScroll={({ scrollDirection, scrollOffset, detail }) => {
-          console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
-          console.log('scroll  top -----', detail.scrollTop)
-
           // 上拉加载
           if (!this.props.loading &&
             // 只有往前滚动我们才触发
@@ -56,17 +53,6 @@ class SearchList extends Component {
             }
           }
         }}
-
-      // onScrollToLower={() => {
-      //   console.log("[search onScrollToLower.....]", page, pageTotal)
-      //   if ((page + 1) <= pageTotal) {
-      //     loadMore({ page: page + 1, keyword, questionBankType })
-      //   }
-
-      // }}
-      // onScrollToUpper={() => {
-      //   initData({ page: 1, keyword, questionBankType })
-      // }}
       >
         {Row}
       </VirtualList>

@@ -70,7 +70,6 @@ const handleSaveLoadMore = (state, action) => {
 
 const handleSaveLoading = (state, action) => {
   const { type, loading } = action.payload;
-  console.log('[save loading-------]', type, loading);
   return {
     ...state,
     [type]: {

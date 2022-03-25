@@ -38,15 +38,10 @@ class Experience extends Component {
   change(v) {
     this.props.changeTab(v)
     eventCenter.trigger('eventChange_experience', v)
-    console.log("change......====", v)
   }
 
 
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  onShareAppMessage() {
     return {
       title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',

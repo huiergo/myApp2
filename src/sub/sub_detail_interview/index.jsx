@@ -30,7 +30,6 @@ class SubDetail extends Component {
 
   componentDidMount() {
     this.url = getCurrentPageUrlWithArgs()
-    console.log('url------', this.url)
   }
 
 
@@ -45,12 +44,10 @@ class SubDetail extends Component {
 
   componentDidShow() {
     this.startTime = new Date().getTime()
-    console.log('开始时间')
   }
 
   componentWillUnmount() {
     let stayTime = (new Date().getTime() - this.startTime) / 1000
-    console.log('时间差', stayTime)
     Taro.reportEvent('interview_stay', {
       id: this.currentId,
       stay_time: stayTime.toString()
@@ -156,11 +153,7 @@ class SubDetail extends Component {
   }
 
 
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
+  onShareAppMessage() {
     return {
       title: this.title,
       path: this.url,

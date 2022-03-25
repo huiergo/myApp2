@@ -56,7 +56,6 @@ class Topic extends Component {
   }
 
   initByTabChange(currentIndex = 0, ...extraParams) {
-    console.log('initData extraParams----', extraParams)
     if (this.props.index === currentIndex) {
       this.props.initData({ type: this.props.type, page: 1, questionBankType: this.props.questionBankType, optType: this.props.optType, extraParams: extraParams })
     }

@@ -15,9 +15,6 @@ import {
  */
 function* handleInitData({ payload }) {
   const { type, page, current, index } = payload;
-  console.log(' current, index ==========', current, index);
-  // let api = current === 0 ? apis.getRecommendList : apis.getQuestionList;
-
   let api = apis.getQuestionList;
   let params = current === 0 ? { sort: 30 } : {};
   // questionBankType:9 面经

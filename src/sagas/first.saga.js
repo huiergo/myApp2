@@ -18,7 +18,6 @@ import { saveCategoryToTag } from '../actions/tag.action';
  */
 function* handleInitData({ payload }) {
   const { type, page, questionBankType, extraParams } = payload;
-  console.log('payload extraParams----', extraParams);
   let tempType = type.split('_')[1];
   yield put(saveLoading({ type, loading: true }));
   Taro.showLoading({
@@ -55,12 +54,10 @@ function* handleLoadMore({ payload }) {
     data: { page, type: tempType, questionBankType },
   });
   let { pageTotal, rows: list } = result;
-  console.log('saveLoadMore before');
   yield put(saveLoadMore({ type, list, page, pageTotal }));
 
   yield put(saveLoading({ type, loading: false }));
   Taro.hideLoading();
-  console.log('saveLoadMore after');
 }
 
 /**

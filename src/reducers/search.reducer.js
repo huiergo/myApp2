@@ -88,7 +88,6 @@ const handleSaveLoadSearchMore = (state, action) => {
 
 const handleInputTrigger = (state, action) => {
   const value = action.payload;
-  console.log('[handleInputTrigger-----]', value);
   return {
     ...state,
     hasInput: value ? true : false,

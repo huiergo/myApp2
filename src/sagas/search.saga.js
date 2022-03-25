@@ -35,7 +35,6 @@ function* handleInitSearchData({ payload }) {
  */
 function* handleLoadSearchMore({ payload }) {
   const { keyword, page, questionBankType } = payload;
-  console.log('[handleLoadSearchMore  payload-----]', payload);
   yield put(saveLoading({ loading: true }));
   Taro.showLoading({
     title: '加载中...',

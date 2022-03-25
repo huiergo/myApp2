@@ -15,8 +15,6 @@ import {
  */
 
 function* handleInitData({ payload }) {
-  // todo: 需要传递 optType 1点赞2收藏3浏览
-  console.log('todo: 需要传递 optType 1点赞2收藏3浏览----', payload);
   const { type, page, questionBankType, optType } = payload;
   yield put(saveLoading({ type, loading: true }));
   Taro.showLoading({

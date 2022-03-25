@@ -40,7 +40,6 @@ const handleSaveInitData = (state, action) => {
 
 const handleSaveLoadMore = (state, action) => {
   const { type, list, page, pageTotal } = action.payload;
-  console.log('去你大爷的。。。。');
   return {
     ...state,
     [type]: {
@@ -55,7 +54,6 @@ const handleSaveLoadMore = (state, action) => {
 
 const handleSaveLoading = (state, action) => {
   const { type, loading } = action.payload;
-  console.log('[save loading-------]', type, loading);
   return {
     ...state,
     [type]: {

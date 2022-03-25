@@ -35,8 +35,6 @@ class DTabContent extends Component {
   }
 
   componentWillReceiveProps(next, prev) {
-    console.log('111next---', next)
-
     if (!next || next.tabActiveIdx == -1) {
       return
     }
@@ -65,14 +63,11 @@ class DTabContent extends Component {
 
     if (this.tabActiveIdx < 0) return
 
-    // todo: 等待传递 写死 questionBankType=9
     Taro.showLoading({
       title: '加载中...'
     })
     let sortTemp = this.requestParams.selectType + this.requestParams.sortType
     sortTemp = sortTemp == '00' ? '0' : sortTemp
-
-    console.log("DContent extraParams", this.props.extraParams)
 
     let { pageTotal, rows: list } = await getJSON({
       url: apis.getQuestionList,
@@ -93,7 +88,6 @@ class DTabContent extends Component {
       list: tempList,
       resetTwoList: true
     }, () => {
-      console.log(TAG, '【init setData 设置完成】')
     })
 
     setTimeout(() => {
@@ -144,13 +138,10 @@ class DTabContent extends Component {
       let timer = null
 
       let flag = true;
-      console.log(111, flag)
       return () => {
-        console.log(222, flag)
         if (!flag) return;
         flag = false;
         timer = setTimeout(() => {
-          console.log(333)
           fn();
           flag = true;
         }, delay);
@@ -159,7 +150,6 @@ class DTabContent extends Component {
 
 
     let fn = () => {
-      console.log('嗯嗯嗯')
       this.loadMore()
     }
     throttle(fn, 300)()

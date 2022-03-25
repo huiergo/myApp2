@@ -13,7 +13,6 @@ const initialState = {
 };
 
 const handleSyncUser = (state, action) => {
-  console.log('[handleSyncUser-------]', action);
   return {
     ...state,
     userInfo: action.payload,
@@ -21,7 +20,6 @@ const handleSyncUser = (state, action) => {
 };
 
 const handleSyncFlag = (state, action) => {
-  console.log('sync flag-----', action);
   return {
     ...state,
     flag: action.payload,
