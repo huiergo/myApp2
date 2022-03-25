@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import Topic from '../../components/topic'
-import Topic2 from '../../components/topic2'
+import VirtualQuestion from '../../components/virtualQuestion'
+import VirtualInterview from '../../components/virtualInterview'
 import * as sub_historyActions from "../../actions/sub_history.action"
 import './index.css'
 
@@ -119,7 +119,7 @@ class Sub extends Component {
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
 
                   {idx === 0 ?
-                    <Topic
+                    <VirtualQuestion
                       scrollHeight={scrollHeight}
                       optType={optType}
                       current={currentIdx}
@@ -132,7 +132,7 @@ class Sub extends Component {
                       loadMore={loadMore}
                       questionBankType={10}
                       fromType='sub_history'
-                    /> : <Topic2
+                    /> : <VirtualInterview
                       scrollHeight={scrollHeight}
                       optType={optType}
                       current={currentIdx}

@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import Topic from '../../components/topic'
-import Topic2 from '../../components/topic2'
+import VirtualQuestion from '../../components/virtualQuestion'
+import VirtualInterview from '../../components/virtualInterview'
 import * as favoriteActions from "../../actions/favorite.action"
 
 class Favorite extends Component {
@@ -84,7 +84,7 @@ class Favorite extends Component {
               return (
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
                   {idx === 0 ?
-                    <Topic
+                    <VirtualQuestion
                       scrollHeight={scrollHeight}
                       current={currentIdx}
                       index={idx}
@@ -97,7 +97,7 @@ class Favorite extends Component {
                       loadMore={loadMore}
                       questionBankType={10}
                       fromType='favorite'
-                    /> : <Topic2
+                    /> : <VirtualInterview
                       scrollHeight={scrollHeight}
                       current={currentIdx}
                       index={idx}

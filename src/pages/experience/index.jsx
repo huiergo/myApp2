@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
 import { AtSearchBar, AtTabs, AtTabsPane } from 'taro-ui'
-import Topic2 from '../../components/topic2'
+import VirtualInterview from '../../components/virtualInterview'
 
 import { gotoPage } from '../../utils/index'
 import * as experienceActions from "../../actions/experience.action"
@@ -79,7 +79,7 @@ class Experience extends Component {
             chineseTabList.map((item, idx) => {
               return (
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
-                  <Topic2
+                  <VirtualInterview
                     scrollHeight={this.state.scrollHeight}
                     current={currentIdx}
                     index={idx}
