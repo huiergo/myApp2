@@ -3,7 +3,6 @@ import apis from '../services/apis';
 
 // 接口报错后refreshToken次数
 let repeatCount = 1;
-let TAG = 'TaroRequest';
 
 export async function newUserGetToken() {
   let { code } = await Taro.login();

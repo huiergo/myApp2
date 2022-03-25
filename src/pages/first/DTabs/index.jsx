@@ -1,10 +1,9 @@
 import { Component } from 'react'
-import { View, Button, Text } from '@tarojs/components'
-import Taro, { eventCenter } from '@tarojs/taro';
+import { View } from '@tarojs/components'
+import Taro from '@tarojs/taro';
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import DTabContent from '../DTabContent/index'
-import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
 import './index.css'
+
 class DTabs extends Component {
   constructor(props) {
     super(props)

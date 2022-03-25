@@ -1,13 +1,8 @@
 import classNames from 'classnames'
-import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
-
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
 import Taro, { eventCenter } from '@tarojs/taro';
-
-import { Text, View } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { set as setGlobalData, get as getGlobalData } from '../../global_data'
 import DSortItem from '../DSortItem'
 import './index.css'
@@ -18,20 +13,15 @@ class DSortRadio extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // 
       optionsList: [
         { name: '默认', id: '0', upArrow: '0', selected: true },
         { name: '难易', id: '1', upArrow: '0' },
         { name: '浏览量', id: '2', upArrow: '0' }
       ],
-      upArrow: '0'
-
-
     }
   }
 
   componentDidMount() {
-    //  消息监听： 点击筛选按钮
     eventCenter.on('event_update_sort_view', () => {
       let array = getGlobalData('filter_data')
       let activeObj = array[this.props.activeIdx]
@@ -54,17 +44,12 @@ class DSortRadio extends Component {
         }
         return item
       })
-
       this.setState({
         optionsList: tempList
       })
-
     })
 
-
     eventCenter.on('event_reset_sort', () => {
-      //  触发 sortRadio 刷新，数据取自 globalData
-
       setGlobalData('sort_radio_select', {
         option: {
           name: '默认',
@@ -99,7 +84,6 @@ class DSortRadio extends Component {
 
   handleClick(option, index) {
     let optionsList = this.state.optionsList
-
     optionsList.map((item, idx) => {
       if (idx === index) {
         optionsList[idx].selected = true
@@ -110,10 +94,7 @@ class DSortRadio extends Component {
     this.setState({
       optionsList: this.state.optionsList
     })
-
-    // 存到全局变量里面
     this.writeToGlobal(option, index)
-    // this.updateGlobal(option)
   }
 
   writeToGlobal(option, index) {
@@ -139,7 +120,7 @@ class DSortRadio extends Component {
   }
 
   render() {
-    const { customStyle, className, id } = this.props
+    const { customStyle, className } = this.props
     return (
       <View className={classNames('cu-radio', className)} style={customStyle}>
         {this.state.optionsList.map((option, index) => (
@@ -164,7 +145,6 @@ const mapStateToProps = (state) => {
   }
 };
 const mapDispatchToProps = (dispatch) => ({
-  // ...bindActionCreators(firstActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DSortRadio);

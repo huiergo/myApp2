@@ -10,7 +10,6 @@ import * as sub_historyActions from "../../actions/sub_history.action"
 import './index.css'
 
 class Sub extends Component {
-
   constructor() {
     super(...arguments)
     this.state = {
@@ -23,17 +22,11 @@ class Sub extends Component {
 
   componentWillMount() {
     const onReadyEventId = this.$instance.router.onReady
-    let viewPortHeight = 0
-    let tabbodyTop = 0
     let tabHeight = 44
-    let searchBarHeight = 0
     let _this = this
     Taro.setStorageSync('at_tabs_height', tabHeight)
     eventCenter.once(onReadyEventId, () => {
-      // onReady 触发后才能获取小程序渲染层的节点
-
       let tabBarHeight = Taro.getStorageSync('at_tabs_height')
-
       Taro.createSelectorQuery().selectViewport().boundingClientRect(async function (res) {
         let total = res.height
         let scrollHeight = total - tabBarHeight
@@ -169,9 +162,7 @@ class Sub extends Component {
 const mapStateToProps = (state) => {
   let { currentIdx, } = state.sub_history
   let { optType } = state.mine
-  // 其实是筛选了下 ：结果是 ['recommand','lastest']
   let tabList = Object.keys(state.sub_history).filter(i => i !== 'currentIdx')
-  //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
   let chineseTabList = tabList.map(k => state.sub_history[k].des).filter(i => i).map(j => ({ title: j }))
 
   return {

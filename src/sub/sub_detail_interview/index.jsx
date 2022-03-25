@@ -180,7 +180,6 @@ class SubDetail extends Component {
           <Image className='detail-interview__user-avatar' src={creatorAvatar} />
           {creatorName}
         </View>
-        {/* dangerouslySetInnerHTML={{ __html: item.content }} */}
         <View className='detail-content detail-content-interview' >
           <RichText className='rich-text' nodes={item.content} />
         </View>

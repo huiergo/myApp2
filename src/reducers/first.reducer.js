@@ -2,7 +2,6 @@ import { handleActions as createReducer } from 'redux-actions';
 import {
   submitFilterParams,
   triggerModel,
-  // 以下为列表
   changeTab,
   saveInitData,
   saveLoadMore,
@@ -12,7 +11,6 @@ import {
 
 const initialState = {
   extraParams: {},
-  // 以下是tab列表相关，将来会抽离
   currentIdx: 0,
 };
 
@@ -107,12 +105,10 @@ export default createReducer(
   {
     [submitFilterParams]: handleSubmitFilterParams,
     [triggerModel]: handleTrigger,
-    // 以下是tab列表相关
     [changeTab]: handleChangeTab,
     [saveInitData]: handleSaveInitData, // 因为有刷新
     [saveLoadMore]: handleSaveLoadMore,
     [saveLoading]: handleSaveLoading,
-    // 分类
     [saveCategory]: handelSaveCategory,
   },
   initialState,

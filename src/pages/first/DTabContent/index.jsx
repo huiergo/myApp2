@@ -1,24 +1,15 @@
 import { Component } from 'react'
 import { View } from '@tarojs/components'
-// import { TaroVirtualList } from 'taro-virtual-list'
-
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
-import Taro, { eventCenter } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
-
 import QuestionItem from '../../../components/questionItem'
 import TaroVirtualList from '../../../components/VirtualList'
-
-// import './index.css'
-
-import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
-
+import { get as getGlobalData } from '../../../global_data'
 import * as firstActions from "../first.action"
 
-let TAG = 'DTabContent'
 class DTabContent extends Component {
   constructor(props) {
     super(props)
@@ -127,7 +118,7 @@ class DTabContent extends Component {
 
   }
 
-  renderFunc(item, index, pageIndex) {
+  renderFunc(item, index) {
     return (
       <QuestionItem item={item} key={index} />
     )
@@ -136,7 +127,6 @@ class DTabContent extends Component {
   onPageScrollToLower = () => {
     const throttle = (fn, delay = 300) => {
       let timer = null
-
       let flag = true;
       return () => {
         if (!flag) return;
@@ -148,7 +138,6 @@ class DTabContent extends Component {
       };
     }
 
-
     let fn = () => {
       this.loadMore()
     }
@@ -159,7 +148,6 @@ class DTabContent extends Component {
     try {
       Taro.hideLoading()
     } catch (error) {
-
     }
   }
 

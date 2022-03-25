@@ -5,7 +5,6 @@ const initialState = {
   activeIdx: -1,
   tabList: [],
 };
-// 以下是tab列表相关
 
 const handleChangeActiveIdx = (state, action) => {
   return {

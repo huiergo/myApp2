@@ -1,21 +1,14 @@
 import { Component } from 'react'
 import { View } from '@tarojs/components'
-// import { TaroVirtualList } from 'taro-virtual-list'
-
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
-import Taro, { eventCenter } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import { getJSON } from '../../../services/method';
 import apis from '../../../services/apis'
-
 import QuestionItem from '../../../components/questionItem'
 import TaroVirtualList from '../../../components/VirtualList'
-
 import './index.css'
-
-import { set as setGlobalData, get as getGlobalData } from '../../../global_data'
-
+import { get as getGlobalData } from '../../../global_data'
 import * as firstActions from "../first.action"
 
 class DTabContent extends Component {
@@ -57,7 +50,6 @@ class DTabContent extends Component {
       autoScrollTop: true,
     })
 
-    // todo: 等待传递 写死 questionBankType=9
     Taro.showLoading({
       title: '加载中...'
     })
@@ -96,8 +88,6 @@ class DTabContent extends Component {
   }
 
   async loadMore() {
-    // todo: 等待传递 写死 questionBankType=9
-
     let sortTemp = this.requestParams.selectType + this.requestParams.sortType
     sortTemp = sortTemp == '00' ? '0' : sortTemp
     let currentPage = this.state.page
@@ -105,7 +95,6 @@ class DTabContent extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-
 
       let { pageTotal, rows: list } = await getJSON({
         url: apis.getQuestionList,
@@ -125,9 +114,7 @@ class DTabContent extends Component {
         list: this.state.list.concat(list)
       })
       Taro.hideLoading()
-
     }
-
   }
 
   renderFunc(item, index, pageIndex) {

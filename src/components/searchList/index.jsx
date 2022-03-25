@@ -30,21 +30,13 @@ class SearchList extends Component {
         width='100%'
         upperThreshold={100}
         lowerThreshold={100}
-
         height={this.props.scrollHeight}
-        // height={300}
         bounces={false}
-        // upperThreshold={100}
-        // lowerThreshold={100}
         overscanCount={30}
 
         onScroll={({ scrollDirection, scrollOffset, detail }) => {
-          // 上拉加载
           if (!this.props.loading &&
-            // 只有往前滚动我们才触发
             scrollDirection === 'forward' &&
-            // 5 = (列表高度 / 单项列表高度)
-            // 100 = 滚动提前加载量，可根据样式情况调整
             scrollOffset > (dataLen * itemSize - 600)
           ) {
 

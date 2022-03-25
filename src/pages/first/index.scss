@@ -1,8 +1,3 @@
-// @font-face {
-//   font-family: 'HanTi'; // --自定义名字就好
-//   src: url('http://teachoss.itheima.net/heimaQuestionMiniapp/assets/fonts/Han.otf'); // --下载的字体文件路径
-// }
-
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -75,7 +70,6 @@
 
 .clock_text-wrap-top {
   font-size: 24px;
-  // font-family: 'Hanti';
 }
 
 .clock_text-wrap-top-number {
@@ -94,7 +88,6 @@
   border: none;
   border-radius: 0;
   padding: 0;
-  // width: 234px;
   height: 70px;
   margin: 0 auto;
   font-size: 40px;
@@ -106,15 +99,8 @@
   border: none;
 }
 
-.clock_text-wrap-top,
-.clock_text-wrap-bottom,
-.clock_text {
-  // font-family: 'HanTi';
-}
-
 // 搜索框
 .at-search-bar {
   width: 560px;
   padding-left: 32px;
-  // box-sizing: border-box;
 }

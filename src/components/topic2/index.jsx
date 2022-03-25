@@ -43,7 +43,6 @@ class Topic extends Component {
         this.initByTabChange(currentIndex)
       })
     }
-
   }
 
   initByTabChange(currentIndex = 0) {
@@ -80,25 +79,18 @@ class Topic extends Component {
           <VirtualList
             className='List'
             height={this.props.scrollHeight}
-            // height={300}
             itemData={list}
             itemCount={dataLen}
             itemSize={itemSize}
             width='100%'
             bounces={false}
-            // upperThreshold={100}
-            // lowerThreshold={100}
             overscanCount={30}
             enhanced
             showScrollbar={false}
             onScroll={({ scrollDirection, scrollOffset, detail }) => {
               this.handleScroll = throttle(() => {
-                // 上拉加载
                 if (!this.props.loading &&
-                  // 只有往前滚动我们才触发
                   scrollDirection === 'forward' &&
-                  // 5 = (列表高度 / 单项列表高度)
-                  // 100 = 滚动提前加载量，可根据样式情况调整
                   scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
                 ) {
                   if ((page + 1) <= pageTotal) {

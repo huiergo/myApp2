@@ -16,11 +16,10 @@ const initialState = {
   recordList: storage_record || [],
   isEdit: false,
   page: 1,
-  list: [], //搜索结果列表
+  list: [],
   hasInput: false,
 };
 const handleUnShiftRecord = (state, action) => {
-  // todo: 需要remove, 然后unshift
   const { item } = action.payload;
   let index = state.recordList.indexOf(item);
   if (index > -1) {

@@ -1,5 +1,3 @@
-import classNames from 'classnames'
-import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
 import { Text, View, Image } from '@tarojs/components'
 import './index.css'
@@ -12,7 +10,6 @@ export default class SortItem extends Component {
   handleItemFlag() {
     this.props.onStatus(this.props.index)
   }
-
 
   render() {
     return (
@@ -30,7 +27,6 @@ export default class SortItem extends Component {
                   src={require('../../assets/sort_icon/chevron-states-down.png')}
                 />)
               : <Image className='filter-sort-arrow' src={require('../../assets/sort_icon/chevron-states.png')} />)
-
         }
       </View>
     )

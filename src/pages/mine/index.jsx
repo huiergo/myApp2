@@ -14,11 +14,6 @@ import { gotoPage, loggingDecorator } from '../../utils/index'
 import ClockInModel from "../../components/clockInModel";
 import './index.scss'
 
-// * 1、获取用户数据
-// pageshow时候: 刷新页面（点赞数和签到数）
-// * 3、flag: 判断签到模块的展示
-// * 4、点击签到，请求接口
-
 class Mine extends Component {
   constructor(props) {
     super(props)
@@ -164,14 +159,6 @@ class Mine extends Component {
             <Image className='mine-list-item-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/right_arrow_icon.png' />
           </View>
         </View>
-
-        <AtCurtain
-          closeBtnPosition='top-right'
-          isOpened={this.state.isOpened}
-          onClose={this.onClose.bind(this)}
-        >
-          <ClockInModel avatar={avatar} nickName={nickName} />
-        </AtCurtain>
       </View>
     )
   }

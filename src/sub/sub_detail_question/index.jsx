@@ -201,10 +201,6 @@ class SubDetail extends Component {
           <Image className='favorite-btn' src={collectFlag ? require('../../assets/zan_fav_btns/fav_select.png') : require('../../assets/zan_fav_btns/fav.png')} onClick={() => this.handleFavorite(collectFlag)} />
           <Image className='zan-btn' src={likeFlag ? require('../../assets/zan_fav_btns/zan_select.png') : require('../../assets/zan_fav_btns/zan.png')} onClick={() => this.handleZan(likeFlag)} />
         </View>
-
-
-        {/* 上一题下一题 */}
-        {/* <CustomPagination lastId={1} nextId={5} pageClick={this.pageClick} /> */}
       </View>
     )
   }

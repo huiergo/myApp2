@@ -12,21 +12,12 @@ import * as favoriteActions from "../../actions/favorite.action"
 class Favorite extends Component {
   constructor() {
     super(...arguments)
-    this.state = {
-      hasLogin: false
-    }
+
   }
 
   componentDidMount() {
     let { nickName } = this.props.userInfo
-    if (nickName) {
-      this.setState({
-        hasLogin: true
-      })
-    } else {
-      this.setState({
-        hasLogin: false
-      })
+    if (!nickName) {
       Taro.showToast({
         title: '请先登录',
         icon: 'error'
@@ -92,7 +83,6 @@ class Favorite extends Component {
             chineseTabList.map((item, idx) => {
               return (
                 <AtTabsPane key={idx} current={currentIdx} index={idx} >
-                  {/* index-{item.title} - {idx} */}
                   {idx === 0 ?
                     <Topic
                       scrollHeight={scrollHeight}
@@ -136,9 +126,7 @@ class Favorite extends Component {
 
 const mapStateToProps = (state) => {
   let { currentIdx } = state.favorite
-  // 其实是筛选了下 ：结果是 ['recommand','lastest']
   let tabList = Object.keys(state.favorite).filter(i => i !== 'currentIdx')
-  //  组合下为了适配taro 组件属性： [{title:'推荐'，{title:'最新'}}]
   let chineseTabList = tabList.map(k => state.favorite[k].des).filter(i => i).map(j => ({ title: j }))
   let { userInfo } = state.common
   return {

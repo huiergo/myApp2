@@ -298,18 +298,6 @@ class HomePage extends Component {
           />
         </View>
         <DTabContent tabList={this.props.tabList} tabActiveIdx={activeIdx} index={activeIdx} scrollHeight={this.state.scrollHeight} />
-
-
-        {/* <DTabContent tabList={this.props.tabList} tabActiveIdx={activeIdx} index={activeIdx} scrollHeight={this.state.scrollHeight} /> */}
-        <View>
-          <AtCurtain
-            closeBtnPosition='top-right'
-            isOpened={isCurtainOpened}
-            onClose={() => this.onClose()}
-          >
-            <ClockInModel avatar={avatar} nickName={nickName} />
-          </AtCurtain>
-        </View>
         <Image style={{ display: 'none' }} src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/share_bg%402x.png' />
       </View>
     )

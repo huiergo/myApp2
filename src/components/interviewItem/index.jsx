@@ -11,14 +11,6 @@ class Index extends Component {
   constructor(props) {
     super(props)
   }
-  componentWillReceiveProps(nextProps) {
-  }
-
-  componentWillUnmount() { }
-
-  componentDidShow() { }
-
-  componentDidHide() { }
 
   render() {
     let { item } = this.props

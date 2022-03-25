@@ -1,27 +1,20 @@
-import classNames from 'classnames'
-import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
-import { Text, View } from '@tarojs/components'
 import Taro, { eventCenter } from '@tarojs/taro';
-
+import classNames from 'classnames'
+import { View } from '@tarojs/components'
 import './index.css'
-import { set as setGlobalData, get as getGlobalData } from '../../global_data'
+import { set as setGlobalData } from '../../global_data'
 
 export default class DPureRadio extends Component {
-
   constructor(props) {
     super(props)
-
-    // todo  : optionsList 替换成  this.props.tabList
     this.state = {
       optionsList: []
     }
   }
 
   componentDidMount() {
-
     eventCenter.on('event_reset_pure', () => {
-      //  触发 sortRadio 刷新，数据取自 globalData
       this.resetToHandleClick()
     })
   }
@@ -33,7 +26,6 @@ export default class DPureRadio extends Component {
       })
     }
   }
-
 
   componentWillUnmount() {
     eventCenter.off('event_reset_pure')
@@ -52,7 +44,6 @@ export default class DPureRadio extends Component {
     this.setState({
       optionsList: this.state.optionsList
     })
-    // 存到全局变量里面
     setGlobalData('pure_radio_select', {
       option, index
     })
@@ -73,18 +64,14 @@ export default class DPureRadio extends Component {
     this.setState({
       optionsList: optionsList
     })
-    // 存到全局变量里面
     setGlobalData('pure_radio_select', {
       option: optionsList[resetIndex],
       index: resetIndex
     })
-
   }
 
-
-
   render() {
-    const { customStyle, className, id } = this.props
+    const { customStyle, className } = this.props
     return (
       <View className={classNames('cu-radio', className)} style={customStyle}>
         {this.state.optionsList.map((option, index) => (

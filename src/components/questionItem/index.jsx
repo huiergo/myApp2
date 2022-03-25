@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import './index.scss'
 import { gotoPage } from '../../utils'
 
@@ -35,14 +35,6 @@ class Index extends Component {
   constructor(props) {
     super(props)
   }
-  componentWillReceiveProps(nextProps) {
-  }
-
-  componentWillUnmount() { }
-
-  componentDidShow() { }
-
-  componentDidHide() { }
 
   render() {
     const { item } = this.props
