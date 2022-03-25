@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
-import { View, Image, Button } from '@tarojs/components'
+import { View, Image, Button, Text } from '@tarojs/components'
 import { AtSearchBar, AtCurtain } from 'taro-ui'
 import * as firstActions from "./first.action"
 import * as commonActions from "../../actions/common.action"
