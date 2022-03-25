@@ -11,7 +11,6 @@ import * as commonActions from "../../actions/common.action"
 
 import { gotoPage, loggingDecorator } from '../../utils/index'
 
-import ClockInModel from "../../components/clockInModel";
 import './index.scss'
 
 class Mine extends Component {
