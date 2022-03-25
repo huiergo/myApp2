@@ -57,6 +57,8 @@ class SubDetail extends Component {
   }
   url = ''
   title = ''
+  currentId = ''
+  startTime = new Date().getTime()
 
   componentDidMount() {
     this.url = getCurrentPageUrlWithArgs()
@@ -68,11 +70,25 @@ class SubDetail extends Component {
     const { id } = options
     console.log("[SubDetail questionn------]", id)
     await this.initSubQuestionDetail(id)
+    this.currentId = id
     Taro.reportEvent('question_detail', {
       id: id,
     })
   }
 
+  componentDidShow() {
+    this.startTime = new Date().getTime()
+    console.log('开始时间')
+  }
+
+  componentWillUnmount() {
+    let stayTime = (new Date().getTime() - this.startTime) / 1000
+    console.log('时间差', stayTime)
+    Taro.reportEvent('question_stay', {
+      id: this.currentId,
+      stay_time: stayTime.toString()
+    })
+  }
 
 
   async initSubQuestionDetail(id) {
