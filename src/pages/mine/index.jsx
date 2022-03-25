@@ -4,13 +4,9 @@ import Taro from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button, Text } from '@tarojs/components'
-import { AtCurtain } from "taro-ui"
-
 import * as mineActions from "../../actions/mine.action";
 import * as commonActions from "../../actions/common.action"
-
 import { gotoPage, loggingDecorator } from '../../utils/index'
-
 import './index.scss'
 
 class Mine extends Component {
