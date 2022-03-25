@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./",
-  "projectname": "myApp2",
+  "projectname": "MiniBestPractice",
   "appid": "testAppId",
   "setting": {
     "es6": false,

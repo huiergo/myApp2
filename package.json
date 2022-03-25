@@ -1,8 +1,8 @@
 {
-  "name": "myApp2",
+  "name": "MiniBestPractice",
   "version": "1.0.0",
   "private": true,
-  "description": "myApp2",
+  "description": "MiniBestPractice",
   "templateInfo": {
     "name": "default",
     "typescript": false,
