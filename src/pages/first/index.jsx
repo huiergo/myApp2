@@ -20,7 +20,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollHeight: '',
+      scrollHeight: 0,
       filterOpen: false,
       isCurtainOpened: false,
     }
@@ -243,6 +243,18 @@ class HomePage extends Component {
     })
   }
 
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '搞定企业面试真题，就用面试宝典',
+      path: '/pages/first/index',
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
+    }
+  }
+
   render() {
     let { flag, activeIdx = 0, tabList } = this.props
     let { isCurtainOpened } = this.state
@@ -264,8 +276,8 @@ class HomePage extends Component {
             <View className='first_clock_wrap' onClick={() => gotoPage({ url: '../../sub/share/index' })}>
               <Image className='first-clock-in-btn' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/clock_img.png' />
               <View className='clock_text-wrap'>
-                <View className='clock_text-wrap-top'>{clockinNumbers}天</View>
-                <View className='clock_text-wrap-bottom'>连续签到</View>
+                <View className='clock_text-wrap-top'><Text className='clock_text-wrap-top-number'>{clockinNumbers}</Text>天</View>
+                <View className='clock_text-wrap-bottom'>连续打卡</View>
               </View>
             </View>
           ) : (
@@ -277,7 +289,7 @@ class HomePage extends Component {
         </View>
 
         {/* 占位图片 */}
-        <Image className='index__swiper-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png' />
+        <Image className='index__swiper-img' src={require('../../assets/ad.png')} />
         {/* 筛选区域 */}
         <Filter filterOpen={this.state.filterOpen} hideModel={() => this.hideModel()} />
         {/* tabs联动组件 */}
@@ -302,6 +314,7 @@ class HomePage extends Component {
             <ClockInModel avatar={avatar} nickName={nickName} />
           </AtCurtain>
         </View>
+        <Image style={{ display: 'none' }} src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/share_bg%402x.png' />
       </View>
     )
   }

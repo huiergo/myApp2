@@ -13,7 +13,7 @@ class Search extends Component {
     super(props)
     this.state = {
       keyword: '',
-      scrollHeight: '',
+      scrollHeight: 0,
       searchAction: SEARCH_DEFAULT
     }
 
@@ -61,7 +61,7 @@ class Search extends Component {
   // 搜索按钮回调：用keyword, 更新record的值和刷新列表
   onSearchBtnClick() {
     console.log('[this.recordRef]', this.recordRef)
-    this.state.keyword && this.child.insertSearchKey(this.state.keyword)
+    this.state.keyword.trim() && this.child.insertSearchKey(this.state.keyword)
     this.setState({
       keyword: this.state.keyword,
       searchAction: SEARCH_CLICK
@@ -76,6 +76,18 @@ class Search extends Component {
     })
   }
 
+
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '搞定企业面试真题，就用面试宝典',
+      path: '/pages/first/index',
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
+    }
+  }
 
   render() {
 

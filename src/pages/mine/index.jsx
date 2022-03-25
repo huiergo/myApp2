@@ -42,7 +42,7 @@ class Mine extends Component {
 
   handleListClick({ type }) {
     if (type === 'aboutUs') {
-      gotoPage({ url: '../sub/sub_aboutUs/index' })
+      gotoPage({ url: '../../sub/sub_aboutUs/index' })
     }
   }
 
@@ -74,7 +74,7 @@ class Mine extends Component {
     return {
       title: '搞定企业面试真题，就用面试宝典',
       path: '/pages/first/index',
-      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/other_icons/swiper_img.png'
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
     }
   }
 
@@ -132,7 +132,7 @@ class Mine extends Component {
                   </Button>
                 </View>
               </View>
-              <View className='user-clock-status' onClick={() => flag ? gotoPage({ url: '../../sub/share/index' }) : this.handleClockInClick(flag)}>{flag ? `连续签到 ${clockinNumbers} 天 ✓` : '签到'}</View>
+              <View className='user-clock-status' onClick={() => flag ? gotoPage({ url: '../../sub/share/index' }) : this.handleClockInClick(flag)}>{flag ? `连续打卡 ${clockinNumbers} 天 >` : '签到'}</View>
             </View>
           )}
 

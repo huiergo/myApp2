@@ -14,7 +14,6 @@ export default defineAppConfig({
         'sub_detail_interview/index',
         'sub_detail_question/index',
         'sub_history/index',
-        'sub_zan/index',
         'sub_aboutUs/index',
         'login/index',
       ],
@@ -54,6 +53,7 @@ export default defineAppConfig({
     borderStyle: 'white',
   },
   window: {
+    backgroundColor: '#fff',
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',

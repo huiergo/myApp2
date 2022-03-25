@@ -12,12 +12,14 @@ $hard-color: #f2994a;
   margin: 0 auto;
   border-bottom: 20rpx solid #f6f7f9;
   box-sizing: border-box;
+  height: 290px;
+  // overflow: hidden;
 
   &__top {
     display: flex;
     flex-direction: row;
     padding-bottom: 20px;
-    padding-top: 30px;
+    padding-top: 27px;
     align-items: center;
     &-avatar {
       width: 60px;
@@ -35,7 +37,7 @@ $hard-color: #f2994a;
       /* autoprefixer: on */
       overflow: hidden;
       text-overflow: ellipsis;
-      font-size: 30px;
+      font-size: 32px;
       font-weight: bold;
       color: #121826;
     }
@@ -51,7 +53,7 @@ $hard-color: #f2994a;
     flex-direction: row;
     align-items: flex-start;
     color: #848484;
-    font-size: 24px;
+    font-size: 28px;
     justify-content: space-between;
     &-img {
       width: 200px;

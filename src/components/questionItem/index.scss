@@ -59,6 +59,7 @@ $hard-color: #f2994a;
     /* autoprefixer: on */
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-all;
   }
   &__bottom {
     display: flex;

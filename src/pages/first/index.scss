@@ -74,7 +74,14 @@
 }
 
 .clock_text-wrap-top {
+  font-size: 24px;
+  // font-family: 'Hanti';
+}
+
+.clock_text-wrap-top-number {
+  font-family: 'AlibabaPuHuiTiH';
   font-size: 42px;
+  line-height: 0;
 }
 
 .clock_text-wrap-bottom {
@@ -92,6 +99,7 @@
   margin: 0 auto;
   font-size: 40px;
   line-height: 40px;
+  font-family: 'HanTi';
 }
 
 .clock_text::after {
@@ -101,7 +109,7 @@
 .clock_text-wrap-top,
 .clock_text-wrap-bottom,
 .clock_text {
-  font-family: 'HanTi';
+  // font-family: 'HanTi';
 }
 
 // 搜索框

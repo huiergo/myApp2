@@ -140,7 +140,29 @@ class DTabContent extends Component {
   }
 
   onPageScrollToLower = () => {
-    this.loadMore()
+    const throttle = (fn, delay = 300) => {
+      let timer = null
+
+      let flag = true;
+      console.log(111, flag)
+      return () => {
+        console.log(222, flag)
+        if (!flag) return;
+        flag = false;
+        timer = setTimeout(() => {
+          console.log(333)
+          fn();
+          flag = true;
+        }, delay);
+      };
+    }
+
+
+    let fn = () => {
+      console.log('嗯嗯嗯')
+      this.loadMore()
+    }
+    throttle(fn, 300)()
   }
 
   onComplete = () => {

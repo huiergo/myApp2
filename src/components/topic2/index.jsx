@@ -5,6 +5,7 @@ import { View, Image, Button } from '@tarojs/components'
 import VirtualList from '@tarojs/components/virtual-list'
 import InterviewItem from '../interviewItem'
 import './index.scss'
+import { throttle } from "../../utils";
 
 const Row = React.memo(({ id, index, style, data }) => {
   return (
@@ -71,7 +72,7 @@ class Topic extends Component {
     const { type, list, page, pageTotal, initData, loadMore, current, index, optType } = this.props
 
     const dataLen = list.length
-    const itemSize = 140
+    const itemSize = 145
 
     return (
       <View>
@@ -91,22 +92,21 @@ class Topic extends Component {
             enhanced
             showScrollbar={false}
             onScroll={({ scrollDirection, scrollOffset, detail }) => {
-              console.log('scrollOffset---', scrollOffset, dataLen * itemSize)
-              console.log('scroll  top -----', detail.scrollTop)
-
-              // 上拉加载
-              if (!this.props.loading &&
-                // 只有往前滚动我们才触发
-                scrollDirection === 'forward' &&
-                // 5 = (列表高度 / 单项列表高度)
-                // 100 = 滚动提前加载量，可根据样式情况调整
-                scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
-              ) {
-
-                if ((page + 1) <= pageTotal) {
-                  loadMore({ type, page: page + 1, current, index, optType })
+              this.handleScroll = throttle(() => {
+                // 上拉加载
+                if (!this.props.loading &&
+                  // 只有往前滚动我们才触发
+                  scrollDirection === 'forward' &&
+                  // 5 = (列表高度 / 单项列表高度)
+                  // 100 = 滚动提前加载量，可根据样式情况调整
+                  scrollOffset >= (dataLen * itemSize - this.props.scrollHeight - 50)
+                ) {
+                  if ((page + 1) <= pageTotal) {
+                    loadMore({ type, page: page + 1, current, index, optType, questionBankType: this.props.questionBankType, })
+                  }
                 }
-              }
+              }, 300, 300);
+              this.handleScroll()
             }}
           >
             {Row}
@@ -115,7 +115,7 @@ class Topic extends Component {
             {/* 内容展示区 */}
             <View className='blank-content'>
               <Image className='blank-img' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/login_share_icons/blank.png' />
-              <View className='blank-des'>暂无题目浏览记录</View>
+              <View className='blank-des'>暂无记录</View>
             </View>
           </View>
         }

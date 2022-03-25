@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro, { eventCenter } from '@tarojs/taro';
+import Taro, { eventCenter, getCurrentInstance } from '@tarojs/taro';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Image, Button } from '@tarojs/components';
@@ -7,29 +7,57 @@ import { AtTabs, AtTabsPane } from 'taro-ui'
 import Topic from '../../components/topic'
 import Topic2 from '../../components/topic2'
 import * as sub_historyActions from "../../actions/sub_history.action"
+import './index.css'
 
 class Sub extends Component {
 
   constructor() {
     super(...arguments)
     this.state = {
-      scrollHeight: 550
+      scrollHeight: 0
     }
   }
 
   mCurIndex = this.props.currentIdx || 0
+  $instance = getCurrentInstance()
+
+  componentWillMount() {
+    const onReadyEventId = this.$instance.router.onReady
+    let viewPortHeight = 0
+    let tabbodyTop = 0
+    let tabHeight = 44
+    let searchBarHeight = 0
+    let _this = this
+    Taro.setStorageSync('at_tabs_height', tabHeight)
+    eventCenter.once(onReadyEventId, () => {
+      // onReady 触发后才能获取小程序渲染层的节点
+
+      let tabBarHeight = Taro.getStorageSync('at_tabs_height')
+
+      Taro.createSelectorQuery().selectViewport().boundingClientRect(async function (res) {
+        let total = res.height
+        let scrollHeight = total - tabBarHeight
+        _this.setState({
+          scrollHeight: scrollHeight
+        })
+      }).exec()
+    })
+  }
 
   componentDidMount() {
     // this.change(0)
     Taro.setNavigationBarTitle({
       title: this.handleNavTitle(this.props.optType)
     })
-    this.getScrollHeight()
 
   }
 
   componentDidShow() {
     this.triggerEvent(this.mCurIndex, true)
+  }
+
+  componentWillUnmount() {
+    this.props.changeTab(0)
   }
 
   change(index) {
@@ -62,17 +90,17 @@ class Sub extends Component {
     }
   }
 
-  getScrollHeight() {
-    let _this = this
-    let tabBarHeight = Taro.getStorageSync('at_tabs_height')
 
-    Taro.createSelectorQuery().selectViewport().boundingClientRect(async function (res) {
-      let total = res.height
-      let scrollHeight = total - tabBarHeight
-      _this.setState({
-        scrollHeight: scrollHeight
-      })
-    }).exec()
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '搞定企业面试真题，就用面试宝典',
+      path: '/pages/first/index',
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
+    }
   }
 
   render() {

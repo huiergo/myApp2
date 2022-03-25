@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Taro from '@tarojs/taro';
-import { View, Image, Button, Text } from '@tarojs/components';
+import { View, Image, Button, Text, RichText } from '@tarojs/components';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as commonActions from "../../actions/common.action"
 import apis from '../../services/apis';
-import { loggingDecorator } from "../../utils/index"
+import { loggingDecorator, getCurrentPageUrlWithArgs } from "../../utils/index"
 
 import { getJSON, postJSON } from "../../services/method";
 
@@ -55,12 +55,41 @@ class SubDetail extends Component {
       item: {}
     }
   }
+  url = ''
+  title = ''
+  currentId = ''
+  startTime = new Date().getTime()
+
+  componentDidMount() {
+    this.url = getCurrentPageUrlWithArgs()
+    console.log('url------', this.url)
+  }
+
   // onLoad
   async onLoad(options) {
     const { id } = options
     console.log("[SubDetail questionn------]", id)
     await this.initSubQuestionDetail(id)
+    this.currentId = id
+    Taro.reportEvent('question_detail', {
+      id: id,
+    })
   }
+
+  componentDidShow() {
+    this.startTime = new Date().getTime()
+    console.log('开始时间')
+  }
+
+  componentWillUnmount() {
+    let stayTime = (new Date().getTime() - this.startTime) / 1000
+    console.log('时间差', stayTime)
+    Taro.reportEvent('question_stay', {
+      id: this.currentId,
+      stay_time: stayTime.toString()
+    })
+  }
+
 
   async initSubQuestionDetail(id) {
     Taro.showLoading({
@@ -71,20 +100,35 @@ class SubDetail extends Component {
     await this.setState({
       item: result
     })
+
+    this.title = result.stem
+    console.log('this.title----', this.title)
     Taro.hideLoading()
   }
 
   // 赞 事件
   async handleZan(flag) {
     const fn = async () => {
-      console.log("点赞id----", this.state.item.id)
       let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 1 })
       await result && this.setState({
         item: {
           ...this.state.item,
           likeFlag: !flag
         }
+      }, () => {
+        if (flag) {
+          Taro.showToast({
+            title: '点赞已取消',
+            duration: 1000
+          })
+        } else {
+          Taro.showToast({
+            title: '感谢您的认可',
+            duration: 1000
+          })
+        }
       })
+
     }
     loggingDecorator(fn)
   }
@@ -92,15 +136,26 @@ class SubDetail extends Component {
   // 收藏 事件
   async handleFavorite(flag) {
     const fn = async () => {
-      console.log("收藏 id----", this.state.item.id)
       let result = await this.unitOptRequest({ action: flag ? 'unOpt' : 'opt', id: this.state.item.id, type: 0, optType: 2 })
-      console.log("题目详情页： 收藏 请求 结果----", result)
       await result && this.setState({
         item: {
           ...this.state.item,
           collectFlag: !flag
         }
+      }, () => {
+        if (flag) {
+          Taro.showToast({
+            title: '收藏已取消',
+            duration: 1000
+          })
+        } else {
+          Taro.showToast({
+            title: '收藏成功',
+            duration: 1000
+          })
+        }
       })
+
     }
     loggingDecorator(fn)
   }
@@ -116,13 +171,28 @@ class SubDetail extends Component {
 
     return result
   }
+
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: this.title,
+      path: this.url,
+      imageUrl: 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/share/share_common.png'
+    }
+  }
+
   render() {
     let { item } = this.state
     let { collectFlag, likeFlag } = item
     console.log('是否会变----', likeFlag, collectFlag)
     return (
       <View className='index'>
-        <IconText title='题目：' des={item.stem} />
+        <IconText title='题目：' />
+        <View className='des-content'>{item.stem}</View>
+
         <View className='detail-item__tag-wrapper'>
           <View className={`detail-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}
@@ -134,12 +204,14 @@ class SubDetail extends Component {
 
         <HorizonLine />
         <IconText title='答案：' />
-        <View className='detail-content' dangerouslySetInnerHTML={{ __html: item.answer }} ></View>
+        <View className='detail-content'>
+          <RichText nodes={item.answer} />
+        </View>
 
         {/* 点赞和收藏按钮 */}
         <View className='zan-favorite-btns'>
-          <Image className='favorite-btn' src={collectFlag ? 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/fav_select.png' : 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/fav.png'} onClick={() => this.handleFavorite(collectFlag)} />
-          <Image className='zan-btn' src={likeFlag ? 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/zan_select.png' : 'http://teachoss.itheima.net/heimaQuestionMiniapp/assets/new-zan-fav/zan.png'} onClick={() => this.handleZan(likeFlag)} />
+          <Image className='favorite-btn' src={collectFlag ? require('../../assets/zan_fav_btns/fav_select.png') : require('../../assets/zan_fav_btns/fav.png')} onClick={() => this.handleFavorite(collectFlag)} />
+          <Image className='zan-btn' src={likeFlag ? require('../../assets/zan_fav_btns/zan_select.png') : require('../../assets/zan_fav_btns/zan.png')} onClick={() => this.handleZan(likeFlag)} />
         </View>
 
 
