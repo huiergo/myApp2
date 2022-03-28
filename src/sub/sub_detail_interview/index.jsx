@@ -27,10 +27,20 @@ class SubDetail extends Component {
   title = ''
   currentId = ''
   startTime = new Date().getTime()
+  isUpload = false
 
   componentDidMount() {
     this.url = getCurrentPageUrlWithArgs()
-    console.log('url------', this.url)
+    setTimeout(() => {
+      this._observer = Taro.createIntersectionObserver()
+      this._observer
+        .relativeToViewport()
+        .observe('.detail-blank-area', (res) => {
+          if (!this.isUpload) {
+            this.isUpload = true
+          }
+        })
+    }, 1000);
   }
 
 
@@ -51,8 +61,10 @@ class SubDetail extends Component {
   componentWillUnmount() {
     let stayTime = (new Date().getTime() - this.startTime) / 1000
     console.log('时间差', stayTime)
-    Taro.reportEvent('interview_stay', {
-      id: this.currentId,
+
+    Taro.reportEvent("interview_info", {
+      "id": this.currentId,
+      "exp": this.isUpload.toString(),
       stay_time: stayTime.toString()
     })
   }
@@ -190,6 +202,7 @@ class SubDetail extends Component {
         {/* dangerouslySetInnerHTML={{ __html: item.content }} */}
         <View className='detail-content detail-content-interview' >
           <RichText className='rich-text' nodes={item.content} />
+          <View className='detail-blank-area'></View>
         </View>
 
         {/* 点赞和收藏按钮 */}
