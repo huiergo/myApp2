@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Taro from '@tarojs/taro';
+import '@tarojs/taro/html.css'
 import { View, Image, Button, Text, RichText } from '@tarojs/components';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -10,6 +11,14 @@ import { loggingDecorator, getCurrentPageUrlWithArgs } from "../../utils/index"
 import { getJSON, postJSON } from "../../services/method";
 
 import './index.scss'
+
+Taro.options.html.transformText = (taroText) => {
+  let text = document.createElement('text');
+  text.setAttribute('class', 'custom-text-style');
+  text.setAttribute('decode', 'true');
+  text.appendChild(taroText);
+  return text;
+};
 
 const handleTag = (tag) => {
   switch (tag) {
@@ -205,7 +214,10 @@ class SubDetail extends Component {
         <HorizonLine />
         <IconText title='答案：' />
         <View className='detail-content'>
-          <RichText nodes={item.answer} />
+
+          {item.answer && item.answer.indexOf('code') > -1
+            ? <View className='taro_html' dangerouslySetInnerHTML={{ __html: item.answer }}></View>
+            : <RichText className='taro_html rich-text' nodes={item.answer} />}
         </View>
 
         {/* 点赞和收藏按钮 */}
