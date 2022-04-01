@@ -4,21 +4,18 @@ import '@tarojs/taro/html.css'
 import { View, Image, Button, Text, RichText } from '@tarojs/components';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import hljs from 'highlight.js/lib/common';
+import { decode } from 'html-entities';
 import * as commonActions from "../../actions/common.action"
 import apis from '../../services/apis';
 import { loggingDecorator, getCurrentPageUrlWithArgs } from "../../utils/index"
-
 import { getJSON, postJSON } from "../../services/method";
-
 import './index.scss'
 
-Taro.options.html.transformText = (taroText) => {
-  let text = document.createElement('text');
-  text.setAttribute('class', 'custom-text-style');
-  text.setAttribute('decode', 'true');
-  text.appendChild(taroText);
-  return text;
-};
+const replaceCode = (html) => {
+  const result = html.replace(/<code>([\s\S]*?)<\/code>/g, (match, p1) => `<code class="hljs">${hljs.highlightAuto(decode(p1)).value}</code>`);
+  return result
+}
 
 const handleTag = (tag) => {
   switch (tag) {
@@ -111,7 +108,6 @@ class SubDetail extends Component {
     })
 
     this.title = result.stem
-    console.log('this.title----', this.title)
     Taro.hideLoading()
   }
 
@@ -214,10 +210,7 @@ class SubDetail extends Component {
         <HorizonLine />
         <IconText title='答案：' />
         <View className='detail-content'>
-
-          {item.answer && item.answer.indexOf('code') > -1
-            ? <View className='taro_html' dangerouslySetInnerHTML={{ __html: item.answer }}></View>
-            : <RichText className='taro_html rich-text' nodes={item.answer} />}
+          {item.answer && <RichText className='taro_html rich-text' nodes={replaceCode(item.answer)} />}
         </View>
 
         {/* 点赞和收藏按钮 */}

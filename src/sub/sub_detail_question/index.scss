@@ -1,6 +1,7 @@
 $simple-color: #27ae60;
-$normal-color: #3266ee;
+$normal-color: hsl(223, 85%, 56%);
 $hard-color: #f2994a;
+@import 'highlight.js/styles/base16/tomorrow.css';
 
 // 带竖线的标题
 .icon-text {
@@ -121,4 +122,16 @@ $hard-color: #f2994a;
 
 .taro_html > .custom-text-style {
   display: none;
+}
+
+.hljs {
+  display: block;
+  font-size: 24px;
+  padding: 30px 24px;
+  margin: 0;
+  word-break: normal;
+  display: block;
+  overflow-x: auto;
+  color: #333;
+  background: #f8f8f8;
 }
