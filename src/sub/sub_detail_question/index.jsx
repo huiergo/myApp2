@@ -210,7 +210,10 @@ class SubDetail extends Component {
         <HorizonLine />
         <IconText title='答案：' />
         <View className='detail-content'>
-          {item.answer && <RichText className='taro_html rich-text' nodes={replaceCode(item.answer)} />}
+          {item.answer && item.answer.indexOf('<code>') > -1
+            ? <RichText className='taro_html rich-text' nodes={replaceCode(item.answer)} />
+            : <RichText className='taro_html rich-text' nodes={item.answer} />
+          }
         </View>
 
         {/* 点赞和收藏按钮 */}
