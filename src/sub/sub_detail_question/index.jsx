@@ -192,7 +192,6 @@ class SubDetail extends Component {
   render() {
     let { item } = this.state
     let { collectFlag, likeFlag } = item
-    console.log('是否会变----', likeFlag, collectFlag)
     return (
       <View className='index'>
         <IconText title='题目：' />
@@ -202,9 +201,11 @@ class SubDetail extends Component {
           <View className={`detail-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}
           </View>
-          <View className={`detail-item__tag ${handleTag(2).className}`}>
-            {item.stage}
-          </View>
+          {item.stage && item.stage.map((i, index) => (
+            <View className={`detail-item__tag ${handleTag(2).className}`} key={index}>
+              {i}
+            </View>
+          ))}
         </View>
 
         <HorizonLine />
