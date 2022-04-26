@@ -136,3 +136,20 @@ $hard-color: #f2994a;
   display: block;
   overflow-x: auto;
 }
+
+.detail-feedback {
+  font-size: 24px;
+  color: #687fb9;
+  margin: 66px 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.detail-feedback-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+}

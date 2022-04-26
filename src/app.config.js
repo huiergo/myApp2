@@ -16,6 +16,7 @@ export default defineAppConfig({
         'sub_history/index',
         'sub_aboutUs/index',
         'login/index',
+        'feedback/index',
       ],
     },
   ],

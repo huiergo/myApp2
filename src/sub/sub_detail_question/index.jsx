@@ -8,7 +8,7 @@ import hljs from 'highlight.js/lib/common';
 import { decode } from 'html-entities';
 import * as commonActions from "../../actions/common.action"
 import apis from '../../services/apis';
-import { loggingDecorator, getCurrentPageUrlWithArgs } from "../../utils/index"
+import { loggingDecorator, getCurrentPageUrlWithArgs, gotoPage } from "../../utils/index"
 import { getJSON, postJSON } from "../../services/method";
 import './index.scss'
 
@@ -189,6 +189,10 @@ class SubDetail extends Component {
     }
   }
 
+  handleFeedback(id) {
+    gotoPage({ url: `../../sub/feedback/index?id=${id}` })
+  }
+
   render() {
     let { item } = this.state
     let { collectFlag, likeFlag } = item
@@ -215,6 +219,10 @@ class SubDetail extends Component {
             ? <RichText className='taro_html rich-text' nodes={replaceCode(item.answer)} />
             : <RichText className='taro_html rich-text' nodes={item.answer} />
           }
+          <View className='detail-feedback' onClick={() => this.handleFeedback(item.id)}>
+            <Image className='detail-feedback-icon' src='http://teachoss.itheima.net/heimaQuestionMiniapp/assets/feedback/feed-icon.png' />
+            有问题？点我反馈
+          </View>
         </View>
 
         {/* 点赞和收藏按钮 */}

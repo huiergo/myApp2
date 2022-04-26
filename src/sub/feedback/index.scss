@@ -1,0 +1,143 @@
+.feed-box {
+  position: relative;
+}
+.feed-btn-wrap {
+  position: fixed;
+  bottom: 98px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.feed-btn {
+  width: 656px;
+  height: 90px;
+}
+
+.feed-title {
+  padding: 32px 0;
+}
+.feed-span-warn {
+  color: red;
+}
+
+.feed-textarea {
+  background-color: #f6f7f9;
+  border: none;
+}
+
+.at-checkbox::before {
+  border: none;
+}
+
+.at-checkbox__option + .at-checkbox__option .at-checkbox__option-wrap::after {
+  border-color: #ededed;
+}
+
+.feed-card {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.feed-card-first {
+  border-bottom: 10px solid #f6f7f9;
+}
+
+.mine-list-item {
+  display: flex;
+  flex-direction: row;
+  height: 92px;
+  padding-left: 30px;
+  padding-right: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 334px;
+}
+
+.mine-list-item-text {
+  font-size: 30px;
+  color: #121826;
+}
+
+.mine-list-item-icon {
+  width: 34px;
+  height: 34px;
+  margin-left: 16px;
+}
+.mine-list-item-btn {
+  margin-left: 0;
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.mine-list-item-btn::after {
+  border: none;
+}
+
+.feed-layout-title {
+  width: 100%;
+  height: 102px;
+  line-height: 102px;
+  text-align: center;
+  font-size: 30px;
+  color: #121826;
+}
+
+.at-float-layout__container {
+  border-top-left-radius: 56px;
+  border-top-right-radius: 56px;
+}
+.feed-layout .layout-body,
+.feed-layout .layout-body__content {
+  height: 800px;
+  border-top-left-radius: 56px;
+  border-top-right-radius: 56px;
+}
+
+.feed-layout .layout-header {
+  border-top-left-radius: 42px;
+  border-top-right-radius: 42px;
+}
+
+.feed-modal {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  height: 600px;
+  position: relative;
+}
+
+.feed-check-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 30px;
+  margin-top: 60px;
+}
+
+.feed-modal-title {
+  font-size: 30px;
+  color: #3c3e42;
+  margin-bottom: 10px;
+}
+
+.feed-modal-desc {
+  font-size: 24px;
+  color: #c3c3c5;
+}
+.feed-modal-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.feed-modal-btn-icon {
+  width: 334px;
+  height: 92px;
+}
