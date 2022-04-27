@@ -11,7 +11,7 @@ class SubAboutUs extends Component {
     constructor() {
         super(...arguments)
         this.state = {
-            checkedList: [1],
+            checkedList: [],
             value: '',
             isOpened: false
         }
