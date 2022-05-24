@@ -208,7 +208,11 @@ class SubDetail extends Component {
     return (
       <View className='index'>
         <IconText title='题目：' />
-        <View className='des-content'>{item.stem}</View>
+        <View className='des-content'>
+          {item.stem && item.stem.indexOf('<code>') > -1
+            ? <RichText className='taro_html rich-text' nodes={replaceCode(item.stem)} />
+            : <RichText className='taro_html rich-text' nodes={item.stem} />
+          }</View>
 
         <View className='detail-item__tag-wrapper'>
           <View className={`detail-item__tag ${handleTag(item.difficulty).className}`}>
