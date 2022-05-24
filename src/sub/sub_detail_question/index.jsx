@@ -115,8 +115,8 @@ class SubDetail extends Component {
     await this.setState({
       item: result
     })
-
-    this.title = result.stem
+    const temp = result.stem?.replace(/<[^>]+>/g, ''); // html是一个要去除html标记的文档
+    this.title = temp
     Taro.hideLoading()
   }
 
