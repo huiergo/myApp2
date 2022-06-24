@@ -23,7 +23,7 @@ class Index extends Component {
   render() {
     let { item } = this.props
     return (
-      <View className='interview-item' onClick={() => gotoPage({ url: `../../sub/sub_detail_interview/index?id=${item.id}` })}>
+      <View className='interview-item' onClick={() => gotoPage({ url: `../../sub/sub_detail_interview/index?id=${item.id}&questionNo=${item.questionNo}` })}>
         <View className='interview-item__top'>
           <Image className='interview-item__top-avatar' src={item.creatorAvatar} />
           <View className='interview-item__top-content'>

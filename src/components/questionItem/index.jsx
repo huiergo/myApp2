@@ -47,7 +47,7 @@ class Index extends Component {
   render() {
     const { item } = this.props
     return (
-      <View className='question-item' onClick={() => gotoPage({ url: `../../sub/sub_detail_question/index?id=${item.id}` })}>
+      <View className='question-item' onClick={() => gotoPage({ url: `../../sub/sub_detail_question/index?id=${item.id}&questionNo=${item.questionNo}` })}>
         <View className='question-item__top'>
           <View className={`question-item__tag ${handleTag(item.difficulty).className}`}>
             {handleTag(item.difficulty).des}

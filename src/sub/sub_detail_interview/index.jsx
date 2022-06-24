@@ -26,6 +26,7 @@ class SubDetail extends Component {
   url = ''
   title = ''
   currentId = ''
+  currentQuestionNo = ''
   startTime = new Date().getTime()
   isUpload = false
 
@@ -45,11 +46,13 @@ class SubDetail extends Component {
 
 
   async onLoad(options) {
-    const { id } = options
+    const { id, questionNo } = options
     await this.initSubInterviewDetail(id)
     this.currentId = id
+    this.currentQuestionNo = questionNo
     Taro.reportEvent('interview_detail', {
       id: id,
+      questionNo: questionNo
     })
   }
 
@@ -65,7 +68,8 @@ class SubDetail extends Component {
     Taro.reportEvent("interview_info", {
       "id": this.currentId,
       "exp": this.isUpload.toString(),
-      stay_time: stayTime.toString()
+      stay_time: stayTime.toString(),
+      questionNo: this.currentQuestionNo
     })
   }
 
